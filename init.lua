@@ -115,9 +115,7 @@ do
 
   -- Make line numbers default
   vim.o.number = true
-  -- You can also add relative line numbers, to help with jumping.
-  --  Experiment for yourself to see if you like it!
-  -- vim.o.relativenumber = true
+  vim.o.relativenumber = true
 
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
@@ -207,6 +205,61 @@ do
 
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+  -- [[ Common Keymaps — hoạt động ở cả terminal và VSCode ]]
+
+  -- Visual-line movement: j/k không skip wrapped lines, nhưng vẫn giữ behavior khi có count (5j, 10k)
+  vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+  vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
+  -- Căn giữa màn hình sau khi nhảy paragraph
+  vim.keymap.set('n', '}', '}zz', { desc = 'Next paragraph (centered)' })
+  vim.keymap.set('n', '{', '{zz', { desc = 'Prev paragraph (centered)' })
+
+  -- Break line tại vị trí cursor mà không cần vào insert mode
+  vim.keymap.set('n', 'B', 'i<CR><Esc>', { desc = 'Break line at cursor' })
+
+  -- Buffer navigation
+  vim.keymap.set('n', '<S-h>', '<cmd>bprevious<CR>', { desc = 'Prev buffer' })
+  vim.keymap.set('n', '<S-l>', '<cmd>bnext<CR>', { desc = 'Next buffer' })
+  vim.keymap.set('n', '<leader>bq', '<cmd>bdelete<CR>', { desc = '[B]uffer [Q]uit' })
+  vim.keymap.set('n', '<leader>bn', '<cmd>enew<CR>', { desc = '[B]uffer [N]ew' })
+  vim.keymap.set('n', '<leader>by', '<cmd>%y+<CR>', { desc = '[B]uffer [Y]ank all' })
+
+  -- Save từ insert và normal mode
+  vim.keymap.set('i', '<C-s>', '<cmd>w<CR><Esc>', { desc = 'Save file' })
+  vim.keymap.set('n', '<C-s>', '<cmd>w<CR>', { desc = 'Save file' })
+
+  -- Indent/outdent: visual mode giữ nguyên selection sau khi indent
+  vim.keymap.set('v', '<tab>', '>gv', { desc = 'Indent selection' })
+  vim.keymap.set('v', '<S-tab>', '<gv', { desc = 'Outdent selection' })
+
+  -- Move lines: visual mode dùng C-j/C-k (không conflict vì window nav chỉ ở normal mode)
+  vim.keymap.set('v', '<C-j>', ":m '>+1<CR>gv=gv", { silent = true, desc = 'Move lines down' })
+  vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv=gv", { silent = true, desc = 'Move lines up' })
+
+  -- Move line ở normal mode: dùng Alt thay vì Ctrl để không conflict với window nav
+  vim.keymap.set('n', '<A-j>', '<cmd>m .+1<CR>==', { desc = 'Move line down' })
+  vim.keymap.set('n', '<A-k>', '<cmd>m .-2<CR>==', { desc = 'Move line up' })
+
+  -- Splits
+  vim.keymap.set('n', '<leader>v', '<cmd>vsplit<CR>', { desc = '[V]ertical split' })
+  vim.keymap.set('n', '<leader>S', '<cmd>split<CR>', { desc = '[S]plit horizontal' })
+
+  -- Misc
+  vim.keymap.set('n', '<leader>n', '<cmd>nohlsearch<CR>', { desc = '[N]o highlight search' })
+  vim.keymap.set('n', '<leader>y', '<cmd>registers<CR>', { desc = 'Show [Y]ank registers' })
+
+  -- Paste over text objects (thay thế nội dung bên trong bằng clipboard)
+  -- Ví dụ: <leader>piq → thay thế nội dung trong dấu nháy gần nhất
+  vim.keymap.set('n', '<leader>piq', 'viqp', { desc = 'Paste inside quote' })
+  vim.keymap.set('n', '<leader>paq', 'vaqp', { desc = 'Paste around quote' })
+  vim.keymap.set('n', '<leader>piB', 'viB"_dP', { desc = 'Paste inside {}' })
+  vim.keymap.set('n', '<leader>paB', 'vaB"_dP', { desc = 'Paste around {}' })
+  vim.keymap.set('n', '<leader>pib', 'vib"_dP', { desc = 'Paste inside ()' })
+  vim.keymap.set('n', '<leader>pab', 'vab"_dP', { desc = 'Paste around ()' })
+  vim.keymap.set('n', '<leader>pit', 'vit"_dP', { desc = 'Paste inside tag' })
+  vim.keymap.set('n', '<leader>pat', 'vat"_dP', { desc = 'Paste around tag' })
+
   -- Manual plugin update command (works with vim.pack, terminal only)
   -- Run: :PackUpdate
   if not is_vscode then
@@ -228,13 +281,19 @@ do
   -- or just use <C-\><C-n> to exit terminal mode
   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+  -- File explorer toggle
+  -- Terminal: netrw built-in | VSCode: sidebar (mapped in Section 9)
+  if not is_vscode then
+    vim.keymap.set('n', '<leader>e', '<cmd>Lexplore<CR>', { desc = 'Toggle file [E]xplorer' })
+  end
+
   -- Keybinds to make split navigation easier.
   --  Use CTRL+<hjkl> to switch between windows
   --
   --  See `:help wincmd` for a list of all window commands
   --
-  -- NOTE: In VSCode, <C-h/j/k/l> conflict with VSCode shortcuts and pane focus is
-  -- handled by VSCode itself. These are mapped in the VSCode section below instead.
+  -- NOTE: In VSCode, <C-j>/<C-k> are used for moving lines (matching user's vscodevim setup).
+  -- Pane focus in VSCode is handled via <leader>w prefix in Section 9.
   if not is_vscode then
     vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
     vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -416,6 +475,25 @@ do
     vim.pack.add { gh 'folke/todo-comments.nvim' }
     require('todo-comments').setup { signs = false }
 
+    -- flash.nvim: thay thế vim-sneak (s + 2 ký tự) và vim-easymotion
+    -- s{char}{char}  → nhảy đến vị trí khớp với 2 ký tự (sneak mode)
+    -- <leader>.      → treesitter-aware search (easymotion-like)
+    -- r{char}{char}  → remote flash (dùng trong operator-pending, vd: yr{ab} )
+    vim.pack.add { gh 'folke/flash.nvim' }
+    require('flash').setup {
+      modes = {
+        search = { enabled = false }, -- không override / và ? mặc định
+        char = {
+          -- dùng f/t/F/T thông thường, không override bằng flash
+          enabled = false,
+        },
+      },
+    }
+    vim.keymap.set({ 'n', 'x', 'o' }, 's', function() require('flash').jump() end, { desc = 'Flash jump (sneak)' })
+    vim.keymap.set({ 'n', 'x', 'o' }, 'S', function() require('flash').treesitter() end, { desc = 'Flash treesitter select' })
+    vim.keymap.set('o', 'r', function() require('flash').remote() end, { desc = 'Flash remote operator' })
+    vim.keymap.set({ 'n', 'x' }, '<leader>.', function() require('flash').jump { search = { mode = 'fuzzy' } } end, { desc = 'Flash fuzzy (easymotion-like)' })
+
     -- Simple and easy statusline.
     local statusline = require 'mini.statusline'
     -- Set `use_icons` to true if you have a Nerd Font
@@ -566,6 +644,12 @@ if not is_vscode then do
       -- Execute a code action, usually your cursor needs to be on top of an error
       -- or a suggestion from your LSP for this to activate.
       map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+
+      -- Shortcut: gd → definition (mirrors user's vscodevim gd binding)
+      map('gd', vim.lsp.buf.definition, '[G]oto [D]efinition (shortcut)')
+
+      -- Show hover documentation (mirrors user's gk binding)
+      map('gk', vim.lsp.buf.hover, 'Show hover [K]')
 
       -- WARN: This is not Goto Definition, this is Goto Declaration.
       map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -827,39 +911,120 @@ end end
 
 -- ============================================================
 -- SECTION 9: VSCODE-SPECIFIC KEYMAPS
--- When running inside VSCode, map leader keys and LSP-style keys
--- to equivalent VSCode commands via require('vscode').action().
+-- Port từ vscodevim settings (vim.normalModeKeyBindingsNonRecursive, v.v.)
+-- sang vscode-neovim + kickstart. Dùng require('vscode').action() để
+-- gọi VSCode commands thay vì Telescope / LSP / neovim built-ins.
 -- ============================================================
 if is_vscode then
   local vscode = require 'vscode'
+  local function act(cmd) return function() vscode.action(cmd) end end
 
-  -- File & search navigation (mirrors terminal Telescope mappings)
-  vim.keymap.set('n', '<leader>sf', function() vscode.action 'workbench.action.quickOpen' end, { desc = '[S]earch [F]iles' })
-  vim.keymap.set('n', '<leader>sg', function() vscode.action 'workbench.action.findInFiles' end, { desc = '[S]earch by [G]rep' })
-  vim.keymap.set('n', '<leader><leader>', function() vscode.action 'workbench.action.showAllEditors' end, { desc = 'Find existing editors' })
-  vim.keymap.set('n', '<leader>/', function() vscode.action 'workbench.action.findInFiles' end, { desc = '[/] Search in files' })
+  -- ── File & Search ────────────────────────────────────────────
+  vim.keymap.set('n', '<C-p>', act 'workbench.action.quickOpen', { desc = 'Quick Open file' })
+  vim.keymap.set('n', '<C-f>', act 'actions.find', { desc = 'Find in current file' })
+  vim.keymap.set('n', '<leader>sf', act 'workbench.action.quickOpen', { desc = '[S]earch [F]iles' })
+  vim.keymap.set('n', '<leader>sg', act 'workbench.action.findInFiles', { desc = '[S]earch by [G]rep' })
+  vim.keymap.set('n', '<leader><leader>', act 'workbench.action.showAllEditors', { desc = 'Find existing editors' })
+  vim.keymap.set('n', '<leader>/', act 'fuzzySearch.activeTextEditor', { desc = '[/] Fuzzy search in file' })
+  vim.keymap.set('v', '<leader>/', act 'fuzzySearch.activeTextEditorWithCurrentSelection', { desc = '[/] Fuzzy search selection' })
 
-  -- LSP-like actions (VSCode handles the language intelligence)
-  vim.keymap.set('n', 'grr', function() vscode.action 'editor.action.goToReferences' end, { desc = '[G]oto [R]eferences' })
-  vim.keymap.set('n', 'grd', function() vscode.action 'editor.action.revealDefinition' end, { desc = '[G]oto [D]efinition' })
-  vim.keymap.set('n', 'gri', function() vscode.action 'editor.action.goToImplementation' end, { desc = '[G]oto [I]mplementation' })
-  vim.keymap.set('n', 'grt', function() vscode.action 'editor.action.goToTypeDefinition' end, { desc = '[G]oto [T]ype Definition' })
-  vim.keymap.set('n', 'grn', function() vscode.action 'editor.action.rename' end, { desc = '[R]e[n]ame' })
-  vim.keymap.set({ 'n', 'x' }, 'gra', function() vscode.action 'editor.action.quickFix' end, { desc = 'Code [A]ction' })
-  vim.keymap.set('n', 'grD', function() vscode.action 'editor.action.revealDeclaration' end, { desc = '[G]oto [D]eclaration' })
+  -- Find It Faster (cần extension: find-it-faster)
+  vim.keymap.set('n', '<leader>ff', act 'find-it-faster.findFiles', { desc = '[F]ind [F]iles (fzf)' })
+  vim.keymap.set('n', '<leader>fF', act 'find-it-faster.findFilesWithType', { desc = '[F]ind Files with [F]iletype' })
+  vim.keymap.set('n', '<leader>fs', act 'find-it-faster.findWithinFiles', { desc = '[F]ind within file[s]' })
+  vim.keymap.set('n', '<leader>fS', act 'find-it-faster.findWithinFilesWithType', { desc = '[F]ind within files + [S]elect type' })
 
-  -- Format & diagnostics
-  vim.keymap.set({ 'n', 'v' }, '<leader>f', function() vscode.action 'editor.action.formatDocument' end, { desc = '[F]ormat' })
-  vim.keymap.set('n', '<leader>q', function() vscode.action 'workbench.actions.view.problems' end, { desc = 'Open [Q]uickfix/Problems' })
+  -- ── LSP / Code Actions ───────────────────────────────────────
+  -- g-prefixed: mirrors user's vscodevim gd, gr, gi, gt... bindings
+  vim.keymap.set('n', 'gd', act 'editor.action.revealDefinition', { desc = '[G]oto [D]efinition' })
+  vim.keymap.set('n', 'gp', act 'editor.action.peekDefinition', { desc = '[G]oto [P]eek definition' })
+  vim.keymap.set('n', 'gD', act 'editor.action.revealDeclaration', { desc = '[G]oto [D]eclaration' })
+  vim.keymap.set('n', 'gr', act 'editor.action.goToReferences', { desc = '[G]oto [R]eferences' })
+  vim.keymap.set('n', 'gR', act 'references-view.find', { desc = '[G]oto [R]eferences (panel)' })
+  vim.keymap.set('n', 'gi', act 'editor.action.goToImplementation', { desc = '[G]oto [I]mplementation' })
+  vim.keymap.set('n', 'gt', act 'editor.action.peekTypeDefinition', { desc = '[G]oto [T]ype definition' })
+  vim.keymap.set('n', 'gs', act 'workbench.action.gotoSymbol', { desc = '[G]oto document [S]ymbol' })
+  vim.keymap.set('n', 'gS', act 'workbench.action.showAllSymbols', { desc = '[G]oto workspace [S]ymbol' })
+  vim.keymap.set('n', 'gk', act 'editor.action.showHover', { desc = 'Show hover [K] (docs)' })
+  vim.keymap.set('n', 'gf', act 'fuzzySearch.activeTextEditor', { desc = '[G]o [F]uzzy search' })
 
-  -- Pane navigation (VSCode manages editor groups, not Neovim splits)
-  vim.keymap.set('n', '<C-h>', function() vscode.action 'workbench.action.focusLeftGroup' end, { desc = 'Focus left editor group' })
-  vim.keymap.set('n', '<C-l>', function() vscode.action 'workbench.action.focusRightGroup' end, { desc = 'Focus right editor group' })
-  vim.keymap.set('n', '<C-k>', function() vscode.action 'workbench.action.focusAboveGroup' end, { desc = 'Focus above editor group' })
-  vim.keymap.set('n', '<C-j>', function() vscode.action 'workbench.action.focusBelowGroup' end, { desc = 'Focus below editor group' })
+  -- gr-prefixed: kickstart-style aliases
+  vim.keymap.set('n', 'grr', act 'editor.action.goToReferences', { desc = '[G]oto [R]eferences' })
+  vim.keymap.set('n', 'grd', act 'editor.action.revealDefinition', { desc = '[G]oto [D]efinition' })
+  vim.keymap.set('n', 'gri', act 'editor.action.goToImplementation', { desc = '[G]oto [I]mplementation' })
+  vim.keymap.set('n', 'grt', act 'editor.action.goToTypeDefinition', { desc = '[G]oto [T]ype Definition' })
+  vim.keymap.set('n', 'grn', act 'editor.action.rename', { desc = '[R]e[n]ame' })
+  vim.keymap.set({ 'n', 'x' }, 'gra', act 'editor.action.quickFix', { desc = 'Code [A]ction' })
+  vim.keymap.set('n', 'grD', act 'editor.action.revealDeclaration', { desc = '[G]oto [D]eclaration' })
 
-  -- Inlay hints toggle (VSCode has its own implementation)
-  vim.keymap.set('n', '<leader>th', function() vscode.action 'editor.action.inlayHints.toggle' end, { desc = '[T]oggle Inlay [H]ints' })
+  -- ── Format & Diagnostics ─────────────────────────────────────
+  vim.keymap.set({ 'n', 'v' }, '<leader>f', act 'editor.action.formatDocument', { desc = '[F]ormat document' })
+  vim.keymap.set('n', '<leader>q', act 'workbench.actions.view.problems', { desc = 'Open [Q]uickfix/Problems' })
+  vim.keymap.set('n', '<leader>th', act 'editor.action.inlayHints.toggle', { desc = '[T]oggle Inlay [H]ints' })
+
+  -- ── Rename / Refactor ────────────────────────────────────────
+  vim.keymap.set('n', '<leader>r', act 'editor.action.rename', { desc = '[R]ename symbol' })
+  vim.keymap.set('v', '<leader>;', act 'editor.action.refactor', { desc = 'Refactor' })
+
+  -- ── Buffer / Editor ──────────────────────────────────────────
+  vim.keymap.set('n', '<leader>bq', act 'workbench.action.closeActiveEditor', { desc = '[B]uffer [Q]uit' })
+  vim.keymap.set('n', '<leader>bn', act 'workbench.action.files.newUntitledFile', { desc = '[B]uffer [N]ew' })
+  vim.keymap.set('n', '<C-m>', act 'workbench.action.editor.changeLanguageMode', { desc = 'Change language mode' })
+
+  -- ── Sidebar & UI ─────────────────────────────────────────────
+  vim.keymap.set('n', '<leader>e', act 'workbench.action.toggleSidebarVisibility', { desc = 'Toggle [E]xplorer sidebar' })
+  vim.keymap.set('n', '<leader>>', act 'workbench.action.showCommands', { desc = 'Command [>] palette' })
+
+  -- ── Pane / Window focus ──────────────────────────────────────
+  -- NOTE: <C-j>/<C-k> ở đây là move lines (đã set ở Section 1 visual mode)
+  -- Để focus pane dùng <leader>w prefix
+  vim.keymap.set('n', '<leader>wh', act 'workbench.action.focusLeftGroup', { desc = '[W]indow focus left' })
+  vim.keymap.set('n', '<leader>wl', act 'workbench.action.focusRightGroup', { desc = '[W]indow focus right' })
+  vim.keymap.set('n', '<leader>wk', act 'workbench.action.focusAboveGroup', { desc = '[W]indow focus above' })
+  vim.keymap.set('n', '<leader>wj', act 'workbench.action.focusBelowGroup', { desc = '[W]indow focus below' })
+  -- C-h/C-l vẫn dùng cho focus (không có conflict với line move)
+  vim.keymap.set('n', '<C-h>', act 'workbench.action.focusLeftGroup', { desc = 'Focus left editor group' })
+  vim.keymap.set('n', '<C-l>', act 'workbench.action.focusRightGroup', { desc = 'Focus right editor group' })
+  -- C-j/C-k: move lines trong normal mode ở VSCode (khác terminal dùng C-j/k cho window)
+  vim.keymap.set('n', '<C-j>', act 'editor.action.moveLinesDownAction', { desc = 'Move line down' })
+  vim.keymap.set('n', '<C-k>', act 'editor.action.moveLinesUpAction', { desc = 'Move line up' })
+
+  -- ── Terminal ─────────────────────────────────────────────────
+  vim.keymap.set('n', '<leader>tf', act 'workbench.action.terminal.focus', { desc = '[T]erminal [F]ocus' })
+  vim.keymap.set('n', '<leader>tn', act 'workbench.action.terminal.new', { desc = '[T]erminal [N]ew' })
+  vim.keymap.set('n', '<leader>tk', act 'workbench.action.terminal.killTerminalAfterUse', { desc = '[T]erminal [K]ill' })
+
+  -- ── Git ──────────────────────────────────────────────────────
+  vim.keymap.set('n', '<leader>gd', act 'git.viewChanges', { desc = '[G]it [D]iff changes' })
+  vim.keymap.set('n', '<leader>ga', act 'git.stageAll', { desc = '[G]it [A]dd all (stage)' })
+  vim.keymap.set('n', '<leader>gc', act 'git.commit', { desc = '[G]it [C]ommit' })
+  vim.keymap.set('n', '<leader>gp', act 'git.pushTo', { desc = '[G]it [P]ush to...' })
+  vim.keymap.set('n', '<leader>gP', act 'git.pullFrom', { desc = '[G]it [P]ull from...' })
+  vim.keymap.set('n', '<leader>gk', act 'git.checkout', { desc = '[G]it chec[K]out branch' })
+  vim.keymap.set('n', '<leader>gu', act 'git.unstage', { desc = '[G]it [U]nstage' })
+  vim.keymap.set('n', '<leader>guc', act 'git.undoCommit', { desc = '[G]it [U]ndo [C]ommit' })
+  vim.keymap.set('n', '<leader>goc', act 'git.viewChanges', { desc = '[G]it [O]pen [C]hanges' })
+  vim.keymap.set('n', '<leader>gos', act 'git.viewStagedChanges', { desc = '[G]it [O]pen [S]taged' })
+  vim.keymap.set('n', '<leader>gcp', act 'git.cherryPick', { desc = '[G]it [C]herry [P]ick' })
+  vim.keymap.set('n', '<leader>gdb', act 'git.deleteBranch', { desc = '[G]it [D]elete [B]ranch' })
+
+  -- ── Bookmarks (cần extension: alefragnani.Bookmarks) ─────────
+  vim.keymap.set('n', '<leader>mt', act 'bookmarks.toggle', { desc = '[M]ark [T]oggle' })
+  vim.keymap.set('n', '<leader>me', act 'bookmarks.toggleLabeled', { desc = '[M]ark [E]dit label' })
+  vim.keymap.set('n', '<leader>mn', act 'bookmarks.jumpToNext', { desc = '[M]ark [N]ext' })
+  vim.keymap.set('n', '<leader>mp', act 'bookmarks.jumpToPrevious', { desc = '[M]ark [P]rev' })
+  vim.keymap.set('n', '<leader>ml', act 'bookmarks.list', { desc = '[M]ark [L]ist (file)' })
+  vim.keymap.set('n', '<leader>mL', act 'bookmarks.listFromAllFiles', { desc = '[M]ark [L]ist (all files)' })
+  vim.keymap.set('n', '<leader>mC', act 'bookmarks.clear', { desc = '[M]ark [C]lear' })
+
+  -- ── Harpoon (cần extension: ThePrimeagen.harpoon) ────────────
+  vim.keymap.set('n', '<leader>hp', act 'vscode-harpoon.editorQuickPick', { desc = '[H]arpoon [P]ick' })
+  vim.keymap.set('n', '<leader>ha', act 'vscode-harpoon.addEditor', { desc = '[H]arpoon [A]dd' })
+  vim.keymap.set('n', '<leader>he', act 'vscode-harpoon.editEditors', { desc = '[H]arpoon [E]dit list' })
+
+  -- ── Settings ─────────────────────────────────────────────────
+  vim.keymap.set('n', '<leader>su', act 'workbench.action.openSettings', { desc = '[S]ettings [U]I' })
+  vim.keymap.set('n', '<leader>sj', act 'workbench.action.openSettingsJson', { desc = '[S]ettings [J]SON' })
 end
 
 -- ============================================================
