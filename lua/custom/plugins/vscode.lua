@@ -2,12 +2,15 @@
 -- Map các VSCode command vào Neovim keymaps để dùng workflow quen thuộc
 -- Bao gồm: LSP, git, terminal, sidebar, bookmarks, harpoon, project manager
 -- Extension cần: vscode-neovim, Find It Faster, Fuzzy Search, Bookmarks, Harpoon, Project Manager
-
-if vim.g.vscode == nil then return end
+if vim.g.vscode == nil then
+  return
+end
 
 local vscode = require 'vscode'
 local function act(cmd)
-  return function() vscode.action(cmd) end
+  return function()
+    vscode.action(cmd)
+  end
 end
 
 -- Shorthand để map VSCode action theo mode:
@@ -15,10 +18,26 @@ end
 --   v  → visual only
 --   nv → normal + visual
 --   nx → normal + visual block (dùng cho operator-pending như gra)
-local function n(key, cmd, desc) vim.keymap.set('n', key, act(cmd), { desc = desc }) end
-local function v(key, cmd, desc) vim.keymap.set('v', key, act(cmd), { desc = desc }) end
-local function nv(key, cmd, desc) vim.keymap.set({ 'n', 'v' }, key, act(cmd), { desc = desc }) end
-local function nx(key, cmd, desc) vim.keymap.set({ 'n', 'x' }, key, act(cmd), { desc = desc }) end
+local function n(key, cmd, desc)
+  vim.keymap.set('n', key, act(cmd), {
+    desc = desc
+  })
+end
+local function v(key, cmd, desc)
+  vim.keymap.set('v', key, act(cmd), {
+    desc = desc
+  })
+end
+local function nv(key, cmd, desc)
+  vim.keymap.set({'n', 'v'}, key, act(cmd), {
+    desc = desc
+  })
+end
+local function nx(key, cmd, desc)
+  vim.keymap.set({'n', 'x'}, key, act(cmd), {
+    desc = desc
+  })
+end
 
 -- ### FILE & SEARCH
 n('<C-p>', 'workbench.action.quickOpen', 'Quick Open file')

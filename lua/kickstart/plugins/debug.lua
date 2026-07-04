@@ -5,7 +5,6 @@
 -- Primarily focused on configuring the debugger for Go, but can
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
-
 vim.pack.add {
   'https://github.com/mfussenegger/nvim-dap',
   'https://github.com/rcarriga/nvim-dap-ui',
@@ -16,14 +15,42 @@ vim.pack.add {
 }
 
 -- Basic debugging keymaps, feel free to change to your liking!
-vim.keymap.set('n', '<F5>', function() require('dap').continue() end, { desc = 'Debug: Start/Continue' })
-vim.keymap.set('n', '<F1>', function() require('dap').step_into() end, { desc = 'Debug: Step Into' })
-vim.keymap.set('n', '<F2>', function() require('dap').step_over() end, { desc = 'Debug: Step Over' })
-vim.keymap.set('n', '<F3>', function() require('dap').step_out() end, { desc = 'Debug: Step Out' })
-vim.keymap.set('n', '<leader>b', function() require('dap').toggle_breakpoint() end, { desc = 'Debug: Toggle Breakpoint' })
-vim.keymap.set('n', '<leader>B', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, { desc = 'Debug: Set Breakpoint' })
+vim.keymap.set('n', '<F5>', function()
+  require('dap').continue()
+end, {
+  desc = 'Debug: Start/Continue'
+})
+vim.keymap.set('n', '<F1>', function()
+  require('dap').step_into()
+end, {
+  desc = 'Debug: Step Into'
+})
+vim.keymap.set('n', '<F2>', function()
+  require('dap').step_over()
+end, {
+  desc = 'Debug: Step Over'
+})
+vim.keymap.set('n', '<F3>', function()
+  require('dap').step_out()
+end, {
+  desc = 'Debug: Step Out'
+})
+vim.keymap.set('n', '<leader>b', function()
+  require('dap').toggle_breakpoint()
+end, {
+  desc = 'Debug: Toggle Breakpoint'
+})
+vim.keymap.set('n', '<leader>B', function()
+  require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+end, {
+  desc = 'Debug: Set Breakpoint'
+})
 -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-vim.keymap.set('n', '<F7>', function() require('dapui').toggle() end, { desc = 'Debug: See last session result.' })
+vim.keymap.set('n', '<F7>', function()
+  require('dapui').toggle()
+end, {
+  desc = 'Debug: See last session result.'
+})
 
 local dap = require 'dap'
 local dapui = require 'dapui'
@@ -39,10 +66,8 @@ require('mason-nvim-dap').setup {
 
   -- You'll need to check that you have the required things installed
   -- online, please don't ask me how to install them :)
-  ensure_installed = {
-    -- Update this to ensure that you have the debuggers for the langs you want
-    'delve',
-  },
+  ensure_installed = { -- Update this to ensure that you have the debuggers for the langs you want
+  'delve'}
 }
 
 -- Dap UI setup
@@ -52,7 +77,11 @@ dapui.setup {
   -- Set icons to characters that are more likely to work in every terminal.
   --    Feel free to remove or use ones that you like more! :)
   --    Don't feel like these are good choices.
-  icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+  icons = {
+    expanded = '▾',
+    collapsed = '▸',
+    current_frame = '*'
+  },
   ---@diagnostic disable-next-line: missing-fields
   controls = {
     icons = {
@@ -64,9 +93,9 @@ dapui.setup {
       step_back = 'b',
       run_last = '▶▶',
       terminate = '⏹',
-      disconnect = '⏏',
-    },
-  },
+      disconnect = '⏏'
+    }
+  }
 }
 
 -- Change breakpoint icons
@@ -90,6 +119,6 @@ require('dap-go').setup {
   delve = {
     -- On Windows delve must be run attached or it crashes.
     -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-    detached = vim.fn.has 'win32' == 0,
-  },
+    detached = vim.fn.has 'win32' == 0
+  }
 }
