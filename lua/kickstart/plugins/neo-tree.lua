@@ -14,6 +14,19 @@ end
 vim.pack.add(plugins)
 
 vim.keymap.set('n', '\\', '<Cmd>Neotree reveal<CR>', { desc = 'NeoTree reveal', silent = true })
+vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', { desc = 'Mở/đóng file explorer' })
+
+-- Tự mở neo-tree khi: không có arg (cùng dashboard) hoặc mở thư mục (nvim .)
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    local argc = vim.fn.argc()
+    local is_dir = argc == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1
+    if argc == 0 or is_dir then
+      -- defer để dashboard render xong trước
+      vim.defer_fn(function() vim.cmd 'Neotree show' end, 100)
+    end
+  end,
+})
 
 require('neo-tree').setup {
   filesystem = {

@@ -126,10 +126,8 @@ do
   -- Thoát terminal mode bằng Esc Esc (mặc định phải dùng C-\ C-n)
   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Thoát terminal mode' })
 
-  -- File explorer: netrw ở terminal, sidebar ở VSCode (Section 9)
-  if not is_vscode then
-    vim.keymap.set('n', '<leader>e', '<cmd>Lexplore<CR>', { desc = 'Mở/đóng file explorer' })
-  end
+  -- File explorer: VSCode dùng sidebar (Section 9); terminal dùng neo-tree (keymap đặt trong neo-tree.lua)
+
 
   -- ### WINDOW NAVIGATION (chỉ terminal)
   -- VSCode: C-j/k dùng để move lines; focus pane dùng <leader>w ở Section 9
@@ -205,12 +203,12 @@ require 'custom.plugins'
 -- Bỏ comment để bật; khởi động lại Neovim sau khi thay đổi
 -- ============================================================
 do
-  -- require 'kickstart.plugins.debug'        -- DAP debugger
-  -- require 'kickstart.plugins.indent_line'  -- indent guides
-  -- require 'kickstart.plugins.lint'         -- linter
-  -- require 'kickstart.plugins.autopairs'    -- tự đóng ngoặc
-  -- require 'kickstart.plugins.neo-tree'     -- file explorer nâng cao
-  -- require 'kickstart.plugins.gitsigns'     -- git keymaps đầy đủ
+  require 'kickstart.plugins.autopairs'        -- tự đóng ngoặc
+  -- require 'kickstart.plugins.indent_line'      -- indent guides
+  -- require 'kickstart.plugins.debug'         -- DAP debugger
+  -- require 'kickstart.plugins.lint'          -- linter
+  require 'kickstart.plugins.neo-tree'      -- file explorer nâng cao
+  -- require 'kickstart.plugins.gitsigns'      -- git keymaps đầy đủ
 end
 
 -- vim: ts=2 sts=2 sw=2 et
