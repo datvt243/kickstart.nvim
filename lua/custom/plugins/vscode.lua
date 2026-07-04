@@ -1,3 +1,8 @@
+-- VSCode keymaps (chỉ chạy khi vscode-neovim active)
+-- Map các VSCode command vào Neovim keymaps để dùng workflow quen thuộc
+-- Bao gồm: LSP, git, terminal, sidebar, bookmarks, harpoon, project manager
+-- Extension cần: vscode-neovim, Find It Faster, Fuzzy Search, Bookmarks, Harpoon, Project Manager
+
 if vim.g.vscode == nil then return end
 
 local vscode = require 'vscode'

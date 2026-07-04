@@ -1,3 +1,9 @@
+-- Fuzzy finder: Telescope
+-- Tìm file, grep toàn project, xem buffer, LSP symbols, git commits...
+-- telescope-fzf-native: tăng tốc bằng native C (cần make)
+-- telescope-ui-select: dùng Telescope làm UI picker cho vim.ui.select (code actions...)
+-- https://github.com/nvim-telescope/telescope.nvim
+
 local function gh(repo) return 'https://github.com/' .. repo end
 
 if vim.g.vscode ~= nil then return end

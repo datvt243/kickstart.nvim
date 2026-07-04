@@ -1,3 +1,11 @@
+-- LSP: nvim-lspconfig + Mason
+-- nvim-lspconfig: cấu hình LSP client cho từng ngôn ngữ (ts_ls, lua_ls...)
+-- Mason: cài đặt và quản lý LSP servers, formatter, linter tự động
+-- fidget: hiển thị tiến trình LSP ở góc màn hình
+-- https://github.com/neovim/nvim-lspconfig
+-- https://github.com/mason-org/mason.nvim
+-- https://github.com/j-hui/fidget.nvim
+
 local function gh(repo) return 'https://github.com/' .. repo end
 
 if vim.g.vscode ~= nil then return end

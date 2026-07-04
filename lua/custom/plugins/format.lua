@@ -1,3 +1,8 @@
+-- Formatter: conform.nvim
+-- Chạy formatter bên ngoài (prettier, stylua...) và apply kết quả vào buffer
+-- Hỗ trợ format-on-save và format theo range (visual selection)
+-- https://github.com/stevearc/conform.nvim
+
 local function gh(repo) return 'https://github.com/' .. repo end
 
 if vim.g.vscode ~= nil then return end

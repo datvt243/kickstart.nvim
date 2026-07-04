@@ -1,3 +1,12 @@
+-- UI plugins (chạy ở cả terminal lẫn VSCode trừ khi ghi chú khác)
+-- mini.nvim: bộ plugin nhỏ gọn — mini.ai (text objects), mini.surround, mini.statusline
+-- guess-indent: tự detect tabsize/expandtab khi mở file
+-- tokyonight: colorscheme (terminal only)
+-- which-key: hiển thị gợi ý keymap khi gõ leader (terminal only)
+-- gitsigns: ký hiệu git diff trong gutter + blame inline (terminal only)
+-- todo-comments: highlight TODO/FIXME/NOTE trong code (terminal only)
+-- flash.nvim: nhảy nhanh đến bất kỳ vị trí nào bằng s/S (terminal only)
+
 local is_vscode = vim.g.vscode ~= nil
 local function gh(repo) return 'https://github.com/' .. repo end
 

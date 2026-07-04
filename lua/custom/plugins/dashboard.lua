@@ -1,3 +1,8 @@
+-- Start screen: dashboard-nvim
+-- Hiển thị màn hình chào khi mở Neovim không có file (nvim)
+-- Theme "hyper": header ASCII art + shortcuts + recent projects + MRU files
+-- https://github.com/nvimdev/dashboard-nvim
+
 if vim.g.vscode ~= nil then return end
 
 vim.pack.add { 'https://github.com/nvimdev/dashboard-nvim' }

@@ -1,3 +1,9 @@
+-- Autocomplete: blink.cmp + LuaSnip
+-- blink.cmp: engine autocomplete hiện đại, nhanh hơn nvim-cmp, dùng Rust
+-- LuaSnip: snippet engine; blink.cmp dùng làm nguồn snippet
+-- https://github.com/saghen/blink.cmp
+-- https://github.com/L3MON4D3/LuaSnip
+
 local function gh(repo) return 'https://github.com/' .. repo end
 
 if vim.g.vscode ~= nil then return end
