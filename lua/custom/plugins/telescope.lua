@@ -13,9 +13,7 @@ local telescope_plugins = {
   gh 'nvim-telescope/telescope.nvim',
   gh 'nvim-telescope/telescope-ui-select.nvim',
 }
-if vim.fn.executable 'make' == 1 then
-  table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim')
-end
+if vim.fn.executable 'make' == 1 then table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim') end
 vim.pack.add(telescope_plugins)
 
 require('telescope').setup {
@@ -42,16 +40,24 @@ vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommand
 vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'Tìm buffer đang mở' })
 vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch file [N]eovim config' })
 
-vim.keymap.set('n', '<leader>/', function()
-  builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
-end, { desc = 'Tìm kiếm mờ trong buffer hiện tại' })
+vim.keymap.set(
+  'n',
+  '<leader>/',
+  function()
+    builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+      winblend = 10,
+      previewer = false,
+    })
+  end,
+  { desc = 'Tìm kiếm mờ trong buffer hiện tại' }
+)
 
-vim.keymap.set('n', '<leader>s/', function()
-  builtin.live_grep { grep_open_files = true, prompt_title = 'Grep trong các file đang mở' }
-end, { desc = '[S]earch trong file đang mở' })
+vim.keymap.set(
+  'n',
+  '<leader>s/',
+  function() builtin.live_grep { grep_open_files = true, prompt_title = 'Grep trong các file đang mở' } end,
+  { desc = '[S]earch trong file đang mở' }
+)
 
 -- Gán LSP pickers tự động khi LSP attach vào buffer
 vim.api.nvim_create_autocmd('LspAttach', {

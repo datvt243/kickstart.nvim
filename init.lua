@@ -21,7 +21,7 @@ do
   vim.o.showmode = false
   vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
   vim.o.breakindent = true
-  vim.o.undofile = true       -- lưu lịch sử undo sau khi đóng file
+  vim.o.undofile = true -- lưu lịch sử undo sau khi đóng file
   vim.o.ignorecase = true
   vim.o.smartcase = true
   vim.o.signcolumn = 'yes'
@@ -31,7 +31,7 @@ do
   vim.o.splitbelow = true
   vim.o.list = true
   vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-  vim.o.inccommand = 'split'  -- xem trước kết quả :s/... theo thời gian thực
+  vim.o.inccommand = 'split' -- xem trước kết quả :s/... theo thời gian thực
   vim.o.cursorline = true
   vim.o.scrolloff = 10
   vim.o.confirm = true
@@ -48,9 +48,7 @@ do
     virtual_text = true,
     virtual_lines = false,
     jump = {
-      on_jump = function(_, bufnr)
-        vim.diagnostic.open_float { bufnr = bufnr, scope = 'cursor', focus = false }
-      end,
+      on_jump = function(_, bufnr) vim.diagnostic.open_float { bufnr = bufnr, scope = 'cursor', focus = false } end,
     },
   }
 
@@ -128,7 +126,6 @@ do
 
   -- File explorer: VSCode dùng sidebar (Section 9); terminal dùng neo-tree (keymap đặt trong neo-tree.lua)
 
-
   -- ### WINDOW NAVIGATION (chỉ terminal)
   -- VSCode: C-j/k dùng để move lines; focus pane dùng <leader>w ở Section 9
   if not is_vscode then
@@ -149,51 +146,51 @@ end
 -- ============================================================
 -- SECTION 2: PLUGIN MANAGER — vim.pack (chỉ terminal)
 -- ============================================================
-if not is_vscode then do
-  -- vim.pack: plugin manager tích hợp sẵn trong Neovim
-  -- Cập nhật:        :lua vim.pack.update()
-  -- Xem trạng thái:  :lua vim.pack.update(nil, { offline = true })
-  -- Cập nhật nhanh:  :PackUpdate
+if not is_vscode then
+  do
+    -- vim.pack: plugin manager tích hợp sẵn trong Neovim
+    -- Cập nhật:        :lua vim.pack.update()
+    -- Xem trạng thái:  :lua vim.pack.update(nil, { offline = true })
+    -- Cập nhật nhanh:  :PackUpdate
 
-  local function run_build(name, cmd, cwd)
-    local result = vim.system(cmd, { cwd = cwd }):wait()
-    if result.code ~= 0 then
-      local stderr = result.stderr or ''
-      local stdout = result.stdout or ''
-      local output = stderr ~= '' and stderr or stdout
-      if output == '' then output = 'Không có output.' end
-      vim.notify(('Build thất bại cho %s:\n%s'):format(name, output), vim.log.levels.ERROR)
+    local function run_build(name, cmd, cwd)
+      local result = vim.system(cmd, { cwd = cwd }):wait()
+      if result.code ~= 0 then
+        local stderr = result.stderr or ''
+        local stdout = result.stdout or ''
+        local output = stderr ~= '' and stderr or stdout
+        if output == '' then output = 'Không có output.' end
+        vim.notify(('Build thất bại cho %s:\n%s'):format(name, output), vim.log.levels.ERROR)
+      end
     end
-  end
 
-  -- Chạy build step sau khi plugin được cài/cập nhật
-  vim.api.nvim_create_autocmd('PackChanged', {
-    callback = function(ev)
-      local name = ev.data.spec.name
-      local kind = ev.data.kind
-      if kind ~= 'install' and kind ~= 'update' then return end
-      if not name then return end
+    -- Chạy build step sau khi plugin được cài/cập nhật
+    vim.api.nvim_create_autocmd('PackChanged', {
+      callback = function(ev)
+        local name = ev.data.spec.name
+        local kind = ev.data.kind
+        if kind ~= 'install' and kind ~= 'update' then return end
+        if not name then return end
 
-      if name == 'telescope-fzf-native.nvim' and vim.fn.executable 'make' == 1 then
-        run_build(name, { 'make' }, ev.data.path)
-        return
-      end
-
-      if name == 'LuaSnip' then
-        if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then
-          run_build(name, { 'make', 'install_jsregexp' }, ev.data.path)
+        if name == 'telescope-fzf-native.nvim' and vim.fn.executable 'make' == 1 then
+          run_build(name, { 'make' }, ev.data.path)
+          return
         end
-        return
-      end
 
-      if name == 'nvim-treesitter' then
-        if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
-        vim.cmd 'TSUpdate'
-        return
-      end
-    end,
-  })
-end end
+        if name == 'LuaSnip' then
+          if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then run_build(name, { 'make', 'install_jsregexp' }, ev.data.path) end
+          return
+        end
+
+        if name == 'nvim-treesitter' then
+          if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
+          vim.cmd 'TSUpdate'
+          return
+        end
+      end,
+    })
+  end
+end
 
 -- Load tất cả plugin từ lua/custom/plugins/
 require 'custom.plugins'
@@ -203,11 +200,11 @@ require 'custom.plugins'
 -- Bỏ comment để bật; khởi động lại Neovim sau khi thay đổi
 -- ============================================================
 do
-  require 'kickstart.plugins.autopairs'        -- tự đóng ngoặc
+  require 'kickstart.plugins.autopairs' -- tự đóng ngoặc
   -- require 'kickstart.plugins.indent_line'      -- indent guides
   -- require 'kickstart.plugins.debug'         -- DAP debugger
   -- require 'kickstart.plugins.lint'          -- linter
-  require 'kickstart.plugins.neo-tree'      -- file explorer nâng cao
+  require 'kickstart.plugins.neo-tree' -- file explorer nâng cao
   -- require 'kickstart.plugins.gitsigns'      -- git keymaps đầy đủ
 end
 

@@ -87,7 +87,7 @@ if not is_vscode then
   require('flash').setup {
     modes = {
       search = { enabled = false }, -- không override / và ?
-      char = { enabled = false },   -- không override f/t/F/T
+      char = { enabled = false }, -- không override f/t/F/T
     },
   }
   vim.keymap.set({ 'n', 'x', 'o' }, 's', function() require('flash').jump() end, { desc = 'Flash jump' })
