@@ -1022,6 +1022,12 @@ if is_vscode then
   vim.keymap.set('n', '<leader>ha', act 'vscode-harpoon.addEditor', { desc = '[H]arpoon [A]dd' })
   vim.keymap.set('n', '<leader>he', act 'vscode-harpoon.editEditors', { desc = '[H]arpoon [E]dit list' })
 
+  -- ── Project Manager (cần extension: alefragnani.project-manager) ──
+  vim.keymap.set('n', '<leader>pl', act 'projectManager.listProjectsNewWindow', { desc = '[P]roject [L]ist (new window)' })
+  vim.keymap.set('n', '<leader>pL', act 'projectManager.listProjects', { desc = '[P]roject [L]ist (current window)' })
+  vim.keymap.set('n', '<leader>pe', act 'projectManager.editProjects', { desc = '[P]roject [E]dit' })
+  vim.keymap.set('n', '<leader>pr', act 'projectManager.refreshProjects', { desc = '[P]roject [R]efresh' })
+
   -- ── Settings ─────────────────────────────────────────────────
   vim.keymap.set('n', '<leader>su', act 'workbench.action.openSettings', { desc = '[S]ettings [U]I' })
   vim.keymap.set('n', '<leader>sj', act 'workbench.action.openSettingsJson', { desc = '[S]ettings [J]SON' })
