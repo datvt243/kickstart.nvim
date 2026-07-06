@@ -44,9 +44,17 @@ n('<C-p>', 'workbench.action.quickOpen', 'Quick Open file')
 n('<C-f>', 'actions.find', 'Tìm trong file hiện tại')
 n('<leader>sf', 'workbench.action.quickOpen', '[S]earch [F]iles')
 n('<leader>sg', 'workbench.action.findInFiles', '[S]earch by [G]rep')
-n('<leader><leader>', 'workbench.action.showAllEditors', 'Tìm editor đang mở')
+-- n('<leader><leader>', 'workbench.action.showAllEditors', 'Tìm editor đang mở')
 n('<leader>/', 'fuzzySearch.activeTextEditor', 'Fuzzy search trong file')
 v('<leader>/', 'fuzzySearch.activeTextEditorWithCurrentSelection', 'Fuzzy search selection')
+
+-- MOVE
+n('<leader><Left>', 'workbench.action.decreaseViewSize', 'Decrease View Size')
+n('<leader><Right>', 'workbench.action.increaseViewSize', 'Increase View Size')
+
+-- ### TAB / INDENT
+n('<tab>', 'editor.action.indentLines', 'Indent lines')
+n('<S-tab>', 'editor.action.outdentLines', 'Outdent lines')
 
 -- Find It Faster (yêu cầu: fzf + rg + bat trên PATH)
 n('<leader>ff', 'find-it-faster.findFiles', '[F]ind [F]iles (fzf)')
@@ -163,3 +171,16 @@ n('<leader>sku', 'workbench.action.openGlobalKeybindings', '[S]ettings [K]eybind
 n('<leader>skj', 'workbench.action.openGlobalKeybindingsFile', '[S]ettings [K]eybindings JSON')
 n('<leader>st', 'workbench.action.selectTheme', '[S]ettings color [T]heme')
 n('<leader>si', 'workbench.action.selectIconTheme', '[S]ettings [I]con theme')
+
+-- ### KEYS CÒN TRỐNG (chưa dùng ở đâu trong vscode.lua/init.lua, để dành cho sau)
+-- <leader> không đụng lệnh Vim gốc nào (Space bare chỉ là "di chuyển phải"),
+-- nên toàn bộ danh sách dưới đây an toàn 100%, không cần lo conflict.
+--
+-- <leader> + chữ thường còn trống: a c d i j k l o u x z
+-- <leader> + chữ HOA còn trống (trừ D, S đã dùng): A B C E F G H I J K L M N O P Q R T U V W X Y Z
+-- <leader> + ký hiệu còn trống: . , ' ` - _ = + [ ] { } | \ ~ ? ! @ # $ % ^ & * ( )
+-- <leader> + số (0-9): còn trống hết
+--
+-- Lưu ý: các phím KHÔNG có <leader> (bare key, vd 's', 'Q'...) hầu hết đã bị
+-- Vim gốc chiếm dụng (:help index.txt) — chỉ nên map bare key khi chắc chắn
+-- không cần lệnh gốc đó (xem lại vụ 'mt' đụng lệnh mark `m` ở trên).
