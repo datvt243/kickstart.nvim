@@ -1,5 +1,8 @@
 -- Neo-tree is a Neovim plugin to browse the file system
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
+
+if vim.g.vscode ~= nil then return end
+
 local plugins = {{
   src = 'https://github.com/nvim-neo-tree/neo-tree.nvim',
   version = vim.version.range '*'
