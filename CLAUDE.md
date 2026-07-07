@@ -93,7 +93,7 @@ Các marker `###` nằm rải rác trong các file plugin:
 | `### LSP KEYMAPS` | `lsp.lua` | gd, gk, grn, gra |
 | `### BLINK.CMP KEYMAPS` | `completion.lua` | autocomplete |
 | `### FORMAT KEYMAP` | `format.lua` | `<leader>f` |
-| `### JUMP` | `vscode.lua` | s (word), S (line) — jumpy |
+| `### JUMP` | `vscode.lua` | `<leader>j` (word) — jumpy |
 | `### SYSTEM SHORTCUTS` | `vscode.lua` | C-c/x/v/z/n/g/S-f |
 | `### FILE & SEARCH` | `vscode.lua` | C-p, C-f, C-S-f, leader sf/sg/ff/fs |
 | `### LSP / CODE ACTIONS` | `vscode.lua` | gd, gr, gk, grn, gra |

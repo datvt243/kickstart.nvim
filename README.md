@@ -45,6 +45,8 @@ lua/
     ui.lua                      — mini.nvim, flash.nvim, tokyonight, gitsigns...
     vscode.lua                  — VSCode keymaps (VSCode only)
   kickstart/plugins/            — optional plugins (bật ở Section 10 của init.lua)
+vscode/
+  settings.json                 — VSCode settings (cross-platform: Mac + Windows)
 ```
 
 ## Keymaps nổi bật
@@ -64,7 +66,7 @@ lua/
 
 | Phím | Mô tả |
 |---|---|
-| `s` / `S` | Jumpy word / line jump |
+| `<leader>j` | Jumpy word jump |
 | `C-c/x/v` | Copy / Cut / Paste |
 | `C-z` / `C-g` | Undo / Go to line |
 | `C-f` / `C-S-f` | Tìm trong file / Tìm trong tất cả file |
