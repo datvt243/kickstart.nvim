@@ -172,6 +172,16 @@ n('<leader>skj', 'workbench.action.openGlobalKeybindingsFile', '[S]ettings [K]ey
 n('<leader>st', 'workbench.action.selectTheme', '[S]ettings color [T]heme')
 n('<leader>si', 'workbench.action.selectIconTheme', '[S]ettings [I]con theme')
 
+-- ### SYSTEM SHORTCUTS (C-c / C-v / C-z / C-n)
+-- Neovim mặc định chiếm: C-v=visual-block, C-c=interrupt, C-z=suspend, C-n=completion
+-- C-v visual block: dùng <C-q> thay thế khi cần
+nv('<C-c>', 'editor.action.clipboardCopyAction', 'Copy')
+nv('<C-x>', 'editor.action.clipboardCutAction', 'Cut')
+nv('<C-v>', 'editor.action.clipboardPasteAction', 'Paste')
+nv('<C-z>', 'undo', 'Undo')
+n('<C-n>', 'workbench.action.files.newUntitledFile', 'New file')
+n('<C-g>', 'workbench.action.gotoLine', 'Go to line')
+
 -- ### KEYS CÒN TRỐNG (chưa dùng ở đâu trong vscode.lua/init.lua, để dành cho sau)
 -- <leader> không đụng lệnh Vim gốc nào (Space bare chỉ là "di chuyển phải"),
 -- nên toàn bộ danh sách dưới đây an toàn 100%, không cần lo conflict.
