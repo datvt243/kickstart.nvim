@@ -40,10 +40,9 @@ local function nx(key, cmd, desc)
 end
 
 -- ### JUMP (wmaurer.vscode-jumpy — thay thế flash.nvim trong VSCode)
--- s → word mode: hiện label 2 ký tự trên từng từ, gõ 2 ký tự để nhảy
--- S → line mode: hiện label theo dòng
-n('s', 'extension.jumpy-word', 'Jump word (jumpy)')
-n('S', 'extension.jumpy-line', 'Jump line (jumpy)')
+-- <leader>j → word mode: hiện label 2 ký tự trên từng từ, gõ 2 ký tự để nhảy
+n('<leader>j', 'extension.jumpy-word', 'Jump word (jumpy)')
+-- n('S', 'extension.jumpy-line', 'Jump line (jumpy)')
 
 -- ### FILE & SEARCH
 n('<C-p>', 'workbench.action.quickOpen', 'Quick Open file')
