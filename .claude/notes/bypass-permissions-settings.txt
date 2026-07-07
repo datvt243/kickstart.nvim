@@ -1,0 +1,17 @@
+# Bypass Permissions — .claude/settings.local.json
+
+Thêm vào .claude/settings.local.json của project để tắt toàn bộ permission prompt:
+
+{
+  "skipDangerousModePermissionPrompt": true,
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  }
+}
+
+---
+Giải thích:
+- defaultMode: "bypassPermissions"  → tương đương --dangerously-skip-permissions
+- skipDangerousModePermissionPrompt → tắt dialog cảnh báo khi bật chế độ trên
+
+Lưu ở settings.local.json (gitignored) để không commit lên repo.
