@@ -122,7 +122,7 @@ n('<leader>tk', 'workbench.action.terminal.killTerminalAfterUse', '[T]erminal ki
 n('<leader>gd', 'git.viewChanges', '[G]it diff')
 n('<leader>ga', 'git.stageAll', '[G]it add all')
 n('<leader>gc', 'git.commit', '[G]it commit')
-n('<leader>gp', 'git.pushTo', '[G]it push')
+n('<leader>gpl', 'multiCommand.runGitPush', '[G]it push (multiCommand)')
 n('<leader>gP', 'git.pullFrom', '[G]it pull')
 n('<leader>gk', 'git.checkout', '[G]it checkout')
 n('<leader>gu', 'git.unstage', '[G]it unstage')
