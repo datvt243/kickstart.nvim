@@ -910,69 +910,68 @@
       "bindings": [
         {
           "key": "/",
-          "name": "Search Commits",
+          "name": "Search Commits — Tìm kiếm commit",
           "command": "gitlens.showCommitSearch",
           "type": "command",
           "when": "gitlens:enabled && config.gitlens.keymap == 'alternate'"
         },
         {
           "key": ".",
-          "name": "View Changes (Review)",
+          "name": "View Changes (Review) — Xem thay đổi",
           "type": "command",
           "command": "git.viewChanges"
         },
-
         {
           "key": "a",
-          "name": "Stage All Change (git [a]dd .)",
+          "name": "Stage All Change (git [a]dd .) — Stage toàn bộ",
           "type": "command",
           "command": "git.stageAll"
         },
         {
           "key": "c",
-          "name": "[c]ommit",
+          "name": "[c]ommit — Tạo commit",
           "type": "command",
           "command": "git.commit"
         },
         {
           "key": "p",
-          "name": "[p]ush to ...",
+          "name": "[p]ush to ... — Đẩy lên remote",
           "type": "command",
           "command": "git.pushTo"
           // "command": "multiCommand.pushTo"
         },
         {
           "key": "P",
-          "name": "[p]ull from ...",
+          "name": "[P]ull from ... — Kéo từ remote",
           "type": "command",
           "command": "git.pullFrom"
         },
         {
           "key": "u",
-          "name": "Unstage (git reset <file>)",
+          "name": "[u]nstage (git reset <file>) — Bỏ stage file",
           "type": "command",
           "command": "git.unstage"
         },
         {
           "key": "k",
-          "name": "Chec[k]out",
+          "name": "Chec[k]out — Chuyển nhánh",
           "type": "command",
           "command": "git.checkout"
         },
         {
           "key": "C",
-          "name": "[C]herry [+]",
+          "name": "[C]herry [+] — Cherry pick",
           "type": "bindings",
           "bindings": [
             {
               "key": "p",
-              "name": "Cherry [p]ick...",
+              "name": "Cherry [p]ick... — Áp dụng commit",
               "type": "command",
               "command": "git.cherryPick"
             },
             {
               "key": "a",
-              "name": "[a]bort Cherry Pick",
+              "name": "[a]bort Cherry Pick — Hủy cherry pick",
               "type": "command",
               "command": "git.cherryPickAbort"
             }
@@ -980,18 +979,18 @@
         },
         {
           "key": "d",
-          "name": "[d]elete [+]",
+          "name": "[d]elete [+] — Xóa",
           "type": "bindings",
           "bindings": [
             {
               "key": "b",
-              "name": "Delete [b]ranch",
+              "name": "Delete [b]ranch — Xóa nhánh local",
               "type": "command",
               "command": "git.deleteBranch"
             },
             {
               "key": "r",
-              "name": "Delete [R]emote Branch",
+              "name": "Delete [r]emote Branch — Xóa nhánh remote",
               "type": "command",
               "command": "git.deleteRemoteBranch"
             }
@@ -999,18 +998,18 @@
         },
         {
           "key": "D",
-          "name": "[d]iscard [+]",
+          "name": "[D]iscard [+] — Hủy thay đổi",
           "type": "bindings",
           "bindings": [
             {
               "key": "c",
-              "name": "Discard Changes (Current file)",
+              "name": "Discard Changes (Current file) — Hủy thay đổi file hiện tại",
               "type": "command",
               "command": "git.clean"
             },
             {
               "key": "a",
-              "name": "Discard Changes (All)",
+              "name": "Discard Changes (All) — Hủy toàn bộ thay đổi",
               "type": "command",
               "command": "git.cleanAll"
             }
@@ -1018,24 +1017,24 @@
         },
         {
           "key": "o",
-          "name": "[o]pen [+]",
+          "name": "[o]pen [+] — Mở",
           "type": "bindings",
           "bindings": [
             {
               "key": "c",
-              "name": "Open Changes",
+              "name": "Open Changes — Mở diff thay đổi",
               "type": "command",
               "command": "git.viewChanges"
             },
             {
               "key": "s",
-              "name": "Open Staged Changes",
+              "name": "Open Staged Changes — Mở diff đã stage",
               "type": "command",
               "command": "git.viewStagedChanges"
             },
             {
               "key": "b",
-              "name": "Browse... (Open File In Remote)",
+              "name": "Browse... (Open File In Remote) — Mở file trên remote",
               "type": "command",
               "command": "gitlens.openFileInRemote"
             }
@@ -1043,28 +1042,84 @@
         },
         {
           "key": "t",
-          "name": "[t]ag [+]",
+          "name": "[t]ag [+] — Tag",
           "type": "bindings",
           "bindings": [
             {
               "key": "c",
-              "name": "[c]reate Tag",
+              "name": "[c]reate Tag — Tạo tag",
               "type": "command",
               "command": "git.createTag"
             },
             {
               "key": "p",
-              "name": "[p]ush Tags",
+              "name": "[p]ush Tags — Đẩy tag lên remote",
               "type": "command",
               "command": "git.pushTags"
             },
             {
               "key": "d",
-              "name": "[d]elete Tag",
+              "name": "[d]elete Tag — Xóa tag",
               "type": "command",
               "command": "git.deleteTag"
             }
           ]
+        },
+        {
+          "key": "f",
+          "name": "[f]etch [+] — Fetch",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "f",
+              "name": "[f]etch — Fetch remote hiện tại",
+              "type": "command",
+              "command": "git.fetch"
+            },
+            {
+              "key": "a",
+              "name": "Fetch [a]ll — Fetch tất cả remote",
+              "type": "command",
+              "command": "git.fetchAll"
+            }
+          ]
+        },
+        {
+          "key": "s",
+          "name": "[s]ync — Đồng bộ (pull + push)",
+          "type": "command",
+          "command": "git.sync"
+        },
+        {
+          "key": "b",
+          "name": "[b]ranch [+] — Nhánh",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "c",
+              "name": "[c]reate Branch — Tạo nhánh mới",
+              "type": "command",
+              "command": "git.createBranch"
+            },
+            {
+              "key": "r",
+              "name": "[r]ename Branch — Đổi tên nhánh",
+              "type": "command",
+              "command": "git.renameBranch"
+            }
+          ]
+        },
+        {
+          "key": "U",
+          "name": "[U]ndo Last Commit — Hoàn tác commit cuối (giữ changes)",
+          "type": "command",
+          "command": "git.undoCommit"
+        },
+        {
+          "key": "R",
+          "name": "[R]evert Commit — Revert một commit cụ thể",
+          "type": "command",
+          "command": "git.revertCommit"
         }
       ]
     },
@@ -1126,9 +1181,69 @@
       "bindings": [
         {
           "key": "r",
-          "name": "[r]eload Window",
+          "name": "[r]eload Window — Tải lại cửa sổ",
           "type": "command",
           "command": "workbench.action.reloadWindow"
+        },
+        {
+          "key": "d",
+          "name": "[d]ev Tools — Mở Developer Tools",
+          "type": "command",
+          "command": "workbench.action.toggleDevTools"
+        },
+        {
+          "key": "p",
+          "name": "[p]rocess Explorer — Trình khám phá tiến trình",
+          "type": "command",
+          "command": "workbench.action.openProcessExplorer"
+        },
+        {
+          "key": "e",
+          "name": "Running [e]xtensions — Các extension đang chạy",
+          "type": "command",
+          "command": "workbench.action.showRuntimeExtensions"
+        },
+        {
+          "key": "i",
+          "name": "[i]nspect Tokens & Scopes — Kiểm tra token/scope",
+          "type": "command",
+          "command": "editor.action.inspectTMScopes"
+        },
+        {
+          "key": "l",
+          "name": "Show [l]ogs — Xem logs",
+          "type": "command",
+          "command": "workbench.action.showLogs"
+        },
+        {
+          "key": "L",
+          "name": "Set [L]og Level — Đặt mức log",
+          "type": "command",
+          "command": "workbench.action.setLogLevel"
+        },
+        {
+          "key": "o",
+          "name": "[o]pen Logs Folder — Mở thư mục logs",
+          "type": "command",
+          "command": "workbench.action.openLogsFolder"
+        },
+        {
+          "key": "t",
+          "name": "Generate Color [t]heme — Tạo theme từ setting hiện tại",
+          "type": "command",
+          "command": "workbench.action.generateColorTheme"
+        },
+        {
+          "key": "s",
+          "name": "[s]tart Extension Host Profile — Bắt đầu profile extension",
+          "type": "command",
+          "command": "workbench.action.extensionHostProfiler.start"
+        },
+        {
+          "key": "S",
+          "name": "[S]top Extension Host Profile — Dừng profile extension",
+          "type": "command",
+          "command": "workbench.action.extensionHostProfiler.stop"
         }
       ]
     },
