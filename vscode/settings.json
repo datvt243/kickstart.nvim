@@ -1,0 +1,1261 @@
+{
+  // --------------------------------------
+  //
+  // --------------------------------------
+
+  // Tự động xuống dòng khi dòng quá dài (không cần scroll ngang)
+  "editor.wordWrap": "on",
+
+  // Số khoảng trắng cho mỗi tab (thường dùng 2 cho frontend)
+  "editor.tabSize": 2,
+
+  // Kích thước chữ trong editor
+  "editor.fontSize": 14,
+
+  // Hiệu ứng nhấp nháy của con trỏ (phase = mượt, dễ nhìn)
+  "editor.cursorBlinking": "phase",
+
+  // Hiệu ứng trượt mượt khi di chuyển con trỏ (caret animation)
+  "editor.cursorSmoothCaretAnimation": "on",
+
+  // Hiển thị ký tự khoảng trắng (space, tab) → dễ phát hiện lỗi format
+  "editor.renderWhitespace": "all",
+
+  // Sửa đồng thời các thẻ/keyword liên quan (HTML, JSX, XML...)
+  "editor.linkedEditing": true,
+
+  // Hiển thị số dòng tương đối (phù hợp Vim mode)
+  "editor.lineNumbers": "relative",
+
+  // Không tự động phát hiện indentation từ file, giữ nguyên giá trị tabSize.
+  "editor.detectIndentation": false,
+
+  // Luôn hiển thị nút gập/mở code (fold/unfold) ở lề trái editor
+  "editor.showFoldingControls": "always",
+
+  // ẨN mini-map
+  "editor.minimap.enabled": false,
+
+  // Cho phép sử dụng Ctrl (Windows/Linux) hoặc Cmd (macOS) để thêm nhiều con trỏ (multi-cursor).
+  "editor.multiCursorModifier": "ctrlCmd",
+
+  // Kiểu hiển thị con trỏ dạng vạch đứng (line cursor)
+  "editor.cursorStyle": "line",
+
+  // Tắt Sticky Scroll (không ghim header function/class ở trên cùng khi scroll)
+  "editor.stickyScroll.enabled": true,
+
+  // Hiển thị các đường guide dọc theo mức thụt dòng (indentation guides)
+  "editor.guides.indentation": true,
+
+  // Độ dài tối đa của dòng trước khi word wrap (chỉ có tác dụng khi wordWrap ≠ off)
+  "editor.wordWrapColumn": 160,
+
+  // Font chữ dùng cho editor (ưu tiên FiraCode Nerd Font Mono, fallback nếu không có)
+  "editor.fontFamily": "FiraCode Nerd Font Mono, Menlo, Monaco, 'Courier New', monospace",
+
+  // Cỡ chữ trong popup gợi ý code (IntelliSense)
+  "editor.suggestFontSize": 14,
+
+  // Danh sách extension KHÔNG đồng bộ khi dùng Settings Sync
+  "settingsSync.ignoredExtensions": [],
+
+  // --------------------------------------
+  // BREADCRUMBS
+  // --------------------------------------
+  // Tắt Breadcrumbs (thanh điều hướng ở trên editor)
+  "breadcrumbs.enabled": false,
+  "breadcrumbs.icons": true,
+  "breadcrumbs.filePath": "on",
+  "breadcrumbs.symbolPath": "on",
+
+  // --------------------------------------
+  // WINDOW
+  // --------------------------------------
+  // Tắt Command Center (thanh lệnh ở giữa title bar)
+  "window.commandCenter": false,
+
+  // Kích thước cửa sổ khi mở VS Code instance mới
+  "window.newWindowDimensions": "default",
+
+  // --------------------------------------
+  // CHAT
+  // --------------------------------------
+  "chat.commandCenter.enabled": false,
+
+  // --------------------------------------
+  // TERMINAL
+  // --------------------------------------
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono",
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+
+  // --------------------------------------
+  // FILES
+  // --------------------------------------
+  "files.autoSave": "onFocusChange",
+  "files.eol": "\n", // Xác định kiểu ký tự kết thúc dòng (End Of Line - EOL) khi lưu file.
+  "files.trimTrailingWhitespace": false, // Tự động xóa khoảng trắng dư thừa ở cuối dòng khi lưu file.
+  "files.insertFinalNewline": true, // Thêm một dòng trống cuối file khi lưu.
+
+  // --------------------------------------
+  // ZEN MODE
+  // --------------------------------------
+  "zenMode.hideLineNumbers": false,
+  "zenMode.hideStatusBar": false,
+  "zenMode.fullScreen": true,
+
+  // --------------------------------------
+  // WORKBENCH
+  // --------------------------------------
+  // Theme màu giao diện VS Code
+  "workbench.colorTheme": "Dracula Theme",
+
+  // Vị trí thanh Side Bar (Explorer, Search, Git…)
+  "workbench.sideBar.location": "right",
+
+  // Bộ icon cho file & folder trong Explorer
+  "workbench.iconTheme": "material-icon-theme",
+
+  // Cách hiển thị tab editor (chỉ hiện 1 tab duy nhất)
+  "workbench.editor.showTabs": "single",
+
+  // Khi mở VS Code: không mở Welcome, không mở file nào
+  "workbench.startupEditor": "none",
+
+  // Tắt các tips/mẹo hướng dẫn của VS Code
+  "workbench.tips.enabled": false,
+
+  // Tắt Sticky Scroll trong cây thư mục (Explorer)
+  "workbench.tree.enableStickyScroll": false,
+
+  // Luôn hiển thị đường kẻ hướng dẫn cấp bậc thư mục
+  "workbench.tree.renderIndentGuides": "always",
+
+  // Khoảng thụt mỗi cấp thư mục trong Explorer (px)
+  "workbench.tree.indent": 16,
+
+  // Tắt nút điều khiển layout (Move/Reset layout)
+  "workbench.layoutControl.enabled": false,
+
+  // Tắt nút điều hướng (Back / Forward)
+  "workbench.navigationControl.enabled": false,
+
+  // --------------------------------------
+  // MATERIAL ICON THEME
+  // --------------------------------------
+  "material-icon-theme.hidesExplorerArrows": true, // Ẩn mủi tên xuống
+  "material-icon-theme.files.color": "#42a5f5",
+
+  // --------------------------------------
+  // EXPLORER
+  // --------------------------------------
+  // Không gộp các thư mục lồng nhau chỉ có 1 con thành 1 dòng
+  // (hiển thị đầy đủ từng cấp)
+  "explorer.compactFolders": false,
+
+  // Hiện hộp thoại xác nhận khi kéo–thả file/thư mục
+  "explorer.confirmDragAndDrop": true,
+
+  // Tắt hộp thoại xác nhận khi xóa file/thư mục
+  "explorer.confirmDelete": false,
+
+  // Hiển thị badges (ký hiệu) trên file/thư mục: Git, lỗi, cảnh báo…
+  "explorer.decorations.badges": true,
+
+  // Hiển thị ký hiệu Git (M, A, D, U…) trong Explorer
+  "git.decorations.enabled": true,
+
+  // --------------------------------------
+  // TAILWIND CSS
+  // --------------------------------------
+  "tailwindCSS.emmetCompletions": true,
+
+  // --------------------------------------
+  // GITLENS
+  // --------------------------------------
+  // Tắt indicator GitLens Launchpad (biểu tượng/đếm issue, PR…)
+  "gitlens.launchpad.indicator.enabled": false,
+
+  // Tắt hiển thị trạng thái Git Graph trên Status Bar
+  "gitlens.graph.statusBar.enabled": false,
+
+  // Cấu hình nâng cao cho GitLens (ẩn các thông báo nâng cao)
+  "gitlens.advanced.messages": {
+    // Không hiển thị cảnh báo khi Git không được tìm thấy
+    "suppressGitMissingWarning": true,
+  },
+
+  // --------------------------------------
+  // [TYPESCRIPT]
+  // --------------------------------------
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+
+  // --------------------------------------
+  // PEACOCK
+  // --------------------------------------
+  "peacock.affectStatusBar": false,
+
+  // Định nghĩa danh sách các màu yêu thích để dễ dàng chọn nhanh
+  "peacock.affectActivityBar": true,
+
+  "peacock.showColorInStatusBar": false,
+  "peacock.favoriteColors": [
+    { "name": "Jazzberry Jam", "value": "#AC1754" },
+    { "name": "Dark Cerulean", "value": "#205781" },
+    { "name": "Persian Blue", "value": "#211C84" },
+    { "name": "Tangerine", "value": "#C14600" },
+    { "name": "Rich Lavender", "value": "#AA60C8" },
+    { "name": "Blue Lagoon", "value": "#0A97B0" },
+    { "name": "Dark Gunmetal", "value": "#343131" },
+    { "name": "Medium Aquamarine", "value": "#66D2CE" },
+  ],
+
+  // --------------------------------------
+  // FIND IT FASTER
+  // --------------------------------------
+  "find-it-faster.general.useTerminalInEditor": true,
+  "find-it-faster.general.killTerminalAfterUse": true,
+  // "find-it-faster.general.shellPathForTerminal": "",
+  "find-it-faster.general.batTheme": "Dracula",
+  "find-it-faster.general.shellPathForTerminal": "C:\\Program Files\\Git\\bin\\bash.exe",
+  // --------------------------------------
+  // NEO VIM 
+  // --------------------------------------
+  "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
+  "vscode-neovim.neovimInitVimPaths.darwin": "/Users/_david/.config/nvim/init.lua",
+  "vscode-neovim.statusLineModeDisplayStyle": "background",
+
+  // --------------------------------------
+  //  VIM
+  // --------------------------------------
+  // Phím leader của Vim
+  "vim.leader": "<Space>",
+
+  // Áp dụng ignorecase + smartcase cho sneak (nhảy nhanh bằng s, S)
+  "vim.sneakUseIgnorecaseAndSmartcase": true,
+
+  // Bật highlight vùng text vừa yank (copy)
+  "vim.highlightedyank.enable": true,
+
+  // Màu highlight khi yank (RGBA – có alpha)
+  "vim.highlightedyank.color": "#a9dc7660",
+
+  // Thời gian highlight yank (ms)
+  "vim.highlightedyank.duration": 250,
+
+  // Sử dụng clipboard hệ thống
+  "vim.useSystemClipboard": true,
+
+  // Ghi đè hành vi copy của VS Code, dùng `y` để copy thẳng vào clipboard
+  "vim.overrideCopy": true,
+
+  // Highlight kết quả tìm kiếm
+  "vim.hlsearch": true,
+
+  // Màu nền highlight kết quả tìm kiếm
+  "vim.searchHighlightColor": "#FFBF00",
+
+  // Màu chữ của kết quả tìm kiếm
+  "vim.searchHighlightTextColor": "#FFFFFF",
+
+  // Màu chữ của match hiện tại
+  "vim.searchMatchTextColor": "pink",
+
+  // Hiển thị kết quả tìm kiếm ngay khi đang nhập
+  "vim.incsearch": true,
+
+  // Không phân biệt hoa/thường khi tìm kiếm
+  "vim.ignorecase": true,
+
+  // Tự động phân biệt hoa/thường nếu trong pattern có chữ hoa
+  "vim.smartcase": true,
+
+  // Dùng chuột chọn text → tự vào Visual mode
+  "vim.mouseSelectionGoesIntoVisualMode": true,
+
+  // Bật các phím Ctrl của Vim (Ctrl+d, Ctrl+u, Ctrl+r…)
+  "vim.useCtrlKeys": true,
+
+  // Tự động indent theo ngữ cảnh code
+  "vim.autoindent": true,
+
+  // Hiển thị command đang gõ (vd: d2w, ci")
+  "vim.showcmd": true,
+
+  // ReplaceWithRegister
+  "vim.replaceWithRegister": false,
+
+  // vim-sneak - used key `s <char> <char>`
+  // Cho phép nhảy nhanh bằng ký tự
+  "vim.sneak": true,
+
+  // vim-easymotion
+  // giúp bạn di chuyển con trỏ trong Vim/Neovim cực nhanh
+  "vim.easymotion": true, // Bật chế độ di chuyển nhanh
+  "vim.easymotionMarkerBackgroundColor": "#FFBF00",
+  "vim.easymotionMarkerForegroundColorOneChar": "#DC143C",
+  "vim.easymotionMarkerForegroundColorTwoCharFirst": "#DC143C",
+  "vim.easymotionMarkerForegroundColorTwoCharSecond": "#D84315",
+  "vim.easymotionIncSearchForegroundColor": "#FFBF00",
+  "vim.easymotionDimColor": "#777777",
+
+  // vim-airline
+  // thay thế thanh trạng thái mặc định của Vim bằng một thanh trực quan hơn
+  "vim.statusBarColorControl": true,
+  "vim.statusBarColors.normal": ["#1F7D53", "#ffffff"],
+  "vim.statusBarColors.insert": ["#E52020", "#ffffff"],
+  "vim.statusBarColors.visual": ["#9C27B0", "#ffffff"],
+  "vim.statusBarColors.visualline": ["#8E24AA", "#ffffff"],
+  "vim.statusBarColors.visualblock": ["#6A1B9A", "#ffffff"],
+  "vim.statusBarColors.replace": ["#D84315", "#ffffff"],
+  "vim.statusBarColors.commandlineinprogress": ["#DC143C", "#ffffff"],
+  "vim.statusBarColors.searchinprogressmode": ["#FF0B55", "#ffffff"],
+  "vim.statusBarColors.easymotionmode": ["#3A59D1", "#ffffff"],
+  "vim.statusBarColors.easymotioninputmode": ["#03A9F4", "#ffffff"],
+  "vim.statusBarColors.surroundinputmode": ["#222222", "#ffffff"],
+
+  // vim-surround
+  // cho phép thao tác với các “bao quanh” (surroundings),
+  "vim.surround": true,
+
+  "vim.normalModeKeyBindingsNonRecursive": [
+    // Quick-key
+    { "before": ["\\"], "commands": ["whichkey.show"] },
+    // Break line
+    { "before": ["B"], "after": ["i", "<Enter>", "<Esc>"] },
+
+    // vim-easymotion
+    { "before": ["<leader>", "."], "after": ["<leader>", "<leader>", "/"] },
+    { "before": ["<S-tab>"], "commands": ["editor.action.outdentLines"] },
+    { "before": ["<tab>"], "commands": ["editor.action.indentLines"] },
+
+    // Move
+    { "before": ["j"], "after": ["g", "j"] },
+    { "before": ["k"], "after": ["g", "k"] },
+    { "before": ["<Down>"], "after": ["g", "j"] },
+    { "before": ["<Up>"], "after": ["g", "k"] },
+    { "before": ["}"], "after": ["}", "z", "z"] },
+    { "before": ["{"], "after": ["{", "z", "z"] },
+
+    {
+      "before": ["<leader>", "<Left>"],
+      "commands": ["workbench.action.decreaseViewSize"],
+    },
+    {
+      "before": ["<leader>", "<Right>"],
+      "commands": ["workbench.action.increaseViewSize"],
+    },
+
+    // used Ctrl `C`
+    // Move lines
+    // not use C-x C-c C-v
+    { "before": ["<C-j>"], "commands": ["editor.action.moveLinesDownAction"] },
+    {
+      "before": ["<C-Down>"],
+      "commands": ["editor.action.moveLinesDownAction"],
+    },
+    { "before": ["<C-k>"], "commands": ["editor.action.moveLinesUpAction"] },
+    { "before": ["<C-Up>"], "commands": ["editor.action.moveLinesUpAction"] },
+    { "before": ["<C-f>"], "commands": ["actions.find"] },
+    { "before": ["<C-p>"], "commands": ["workbench.action.quickOpen"] },
+    {
+      "before": ["<C-m>"],
+      "commands": ["workbench.action.editor.changeLanguageMode"],
+    },
+
+    // vim-sneak
+    // giúp bạn nhảy đến vị trí bất kỳ trong file chỉ bằng 2 ký tự
+    // used key `s`
+
+    // LSP
+    // used key `g`
+    { "before": ["g", "d"], "commands": ["editor.action.revealDefinition"] },
+    { "before": ["g", "p"], "commands": ["editor.action.peekDefinition"] },
+    { "before": ["g", "D"], "commands": ["editor.action.revealDeclaration"] },
+    { "before": ["g", "r"], "commands": ["editor.action.goToReferences"] },
+    { "before": ["g", "R"], "commands": ["references-view.find"] },
+    { "before": ["g", "i"], "commands": ["editor.action.goToImplementation"] },
+    { "before": ["g", "t"], "commands": ["editor.action.peekTypeDefinition"] },
+    { "before": ["g", "s"], "commands": ["workbench.action.gotoSymbol"] },
+    { "before": ["g", "S"], "commands": ["workbench.action.showAllSymbols"] },
+    { "before": ["g", "f"], "commands": ["fuzzySearch.activeTextEditor"] },
+    { "before": ["g", "k"], "commands": ["editor.action.showHover"] },
+
+    // #Bookmarks - use extension Bookmarks
+    // used key `m`
+    { "before": ["<leader>", "m", "t"], "commands": ["bookmarks.toggle"] },
+    {
+      "before": ["<leader>", "m", "e"],
+      "commands": ["bookmarks.toggleLabeled"],
+    },
+    { "before": ["<leader>", "m", "n"], "commands": ["bookmarks.jumpToNext"] },
+    {
+      "before": ["<leader>", "m", "p"],
+      "commands": ["bookmarks.jumpToPrevious"],
+    },
+    { "before": ["<leader>", "m", "l"], "commands": ["bookmarks.list"] },
+    {
+      "before": ["<leader>", "m", "L"],
+      "commands": ["bookmarks.listFromAllFiles"],
+    },
+    { "before": ["<leader>", "m", "C"], "commands": ["bookmarks.clear"] },
+
+    // Buffers
+    { "before": ["<S-h>"], "commands": [":bprevious"] },
+    { "before": ["<S-l>"], "commands": [":bnext"] },
+    {
+      "before": ["<leader>", "b", "n"],
+      "commands": ["workbench.action.files.newUntitledFile"],
+    },
+    {
+      "before": ["<leader>", "b", "q"],
+      "commands": ["workbench.action.closeActiveEditor"],
+    },
+    // { "before": ["<leader>", "b", "u"], "commands": ["workbench.action.reopenClosedEditor"] },
+    {
+      // copy all file (Ctr+A - Ctrl C )
+      "before": ["<leader>", "b", "y"],
+      "commands": [
+        "editor.action.selectAll",
+        "editor.action.clipboardCopyAction",
+        "cancelSelection",
+      ],
+    },
+    {
+      // selected all file and paste
+      "before": ["<leader>", "b", "p"],
+      "commands": [
+        "editor.action.selectAll",
+        "editor.action.clipboardPasteAction",
+        "cancelSelection",
+      ],
+    },
+
+    // -------
+    {
+      "before": ["<leader>", ">"],
+      "commands": ["workbench.action.showCommands"],
+    },
+    {
+      "before": ["<leader>", "e"],
+      "commands": ["workbench.action.toggleSidebarVisibility"],
+    },
+    {
+      "before": ["<leader>", "e", "e"],
+      "commands": ["workbench.view.explorer"],
+    },
+    {
+      "before": ["<leader>", "e", "g"],
+      "commands": ["workbench.view.cms"],
+    },
+    {
+      "before": ["<leader>", "e", "s"],
+      "commands": ["workbench.view.search"],
+    },
+    {
+      "before": ["<leader>", "s", "f"],
+      "commands": ["workbench.action.focusSideBar"],
+    },
+    {
+      "before": ["<leader>", "v", "e"],
+      "commands": [
+        "workbench.view.explorer",
+        "workbench.action.focusActiveEditorGroup",
+      ],
+    },
+    // splits - mở cửa sổ editer trái phải
+    // { "before": ["<leader>", "v"], "commands": [":vsplit"] },
+    // { "before": ["<leader>", "s"], "commands": [":split"] },
+
+    // custom paste <leader-p>
+    { "before": ["<leader>", "p", "i", "q"], "after": ["v", "i", "q", "p"] },
+    { "before": ["<leader>", "p", "a", "q"], "after": ["v", "a", "q", "p"] },
+    { "before": ["<leader>", "p", "i", "B"], "after": ["v", "i", "B", "p"] },
+    { "before": ["<leader>", "p", "a", "B"], "after": ["v", "a", "B", "p"] },
+    { "before": ["<leader>", "p", "i", "b"], "after": ["v", "i", "b", "p"] },
+    { "before": ["<leader>", "p", "a", "b"], "after": ["v", "a", "b", "p"] },
+    { "before": ["<leader>", "p", "i", "t"], "after": ["v", "i", "t", "p"] },
+    { "before": ["<leader>", "p", "a", "t"], "after": ["v", "a", "t", "p"] },
+
+    // #GIT
+    {
+      "before": ["<leader>", "g", "l"],
+      "commands": ["multiCommand.runGitLog"],
+    },
+    { "before": ["<leader>", "g", "d"], "commands": ["git.viewChanges"] },
+    // { "before": ["<leader>", "g", "f"], "commands": ["git.fetch"] },
+    { "before": ["<leader>", "g", "s", "a"], "commands": ["git.stageAll"] },
+    { "before": ["<leader>", "g", "c", "m"], "commands": ["git.commit"] },
+    {
+      "before": ["<leader>", "g", "p", "s"],
+      "commands": ["multiCommand.runGitPush"],
+    },
+    {
+      "before": ["<leader>", "g", "p", "l"],
+      "commands": ["multiCommand.runGitPull"],
+    },
+    { "before": ["<leader>", "g", "k"], "commands": ["git.checkout"] },
+    { "before": ["<leader>", "g", "u", "c"], "commands": ["git.undoCommit"] },
+    {
+      "before": ["<leader>", "g", "m"],
+      "commands": ["gitlens.createPullRequestOnRemote"],
+    },
+    {
+      "before": ["<leader>", "g", "h"],
+      "commands": ["gitlens.gitCommand.history"],
+    },
+    { "before": ["<leader>", "g", "c", "p"], "commands": ["git.cherryPick"] },
+
+    // #Terminar
+    {
+      "before": ["<leader>", "t", "f"],
+      "commands": ["workbench.action.terminal.focus"],
+    },
+    {
+      "before": ["<leader>", "t", "n"],
+      "commands": ["workbench.action.terminal.new"],
+    },
+    {
+      "before": ["<leader>", "t", "k"],
+      "commands": ["workbench.action.terminal.killTerminalAfterUse"],
+    },
+    {
+      "before": ["<leader>", "r"],
+      "commands": ["editor.action.rename"],
+      "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly",
+    },
+    {
+      "before": ["<leader>", "/"],
+      "commands": ["fuzzySearch.activeTextEditor"],
+    },
+
+    // # find - need installed extension FindItFaster
+    {
+      "before": ["<leader>", "f", "f"],
+      "commands": ["find-it-faster.findFiles"],
+    },
+    {
+      "before": ["<leader>", "f", "F"],
+      "commands": ["find-it-faster.findFilesWithType"],
+    },
+    {
+      "before": ["<leader>", "f", "s"],
+      "commands": ["find-it-faster.findWithinFiles"],
+    },
+    {
+      "before": ["<leader>", "f", "S"],
+      "commands": ["find-it-faster.findWithinFilesWithType"],
+    },
+
+    // #harpoon - need installed extension Harpoon
+    {
+      "before": ["<leader>", "h", "p"],
+      "commands": ["vscode-harpoon.editorQuickPick"],
+    },
+    {
+      "before": ["<leader>", "h", "a"],
+      "commands": ["vscode-harpoon.addEditor"],
+    },
+    {
+      "before": ["<leader>", "h", "e"],
+      "commands": ["vscode-harpoon.editEditors"],
+    },
+
+    //
+    { "before": ["<leader>", "y"], "commands": [":reg"] },
+    { "before": ["<leader>", "n"], "commands": [":nohlsearch"] },
+  ],
+  "vim.visualModeKeyBindings": [
+    { "before": ["\\"], "commands": ["whichkey.show"] },
+    {
+      "before": ["<leader>", ">"],
+      "commands": ["workbench.action.showCommands"],
+    },
+
+    // Fuzzy search
+    {
+      "before": ["g", "f"],
+      "commands": ["fuzzySearch.activeTextEditorWithCurrentSelection"],
+    },
+    {
+      "before": ["<leader>", "/"],
+      "commands": ["fuzzySearch.activeTextEditorWithCurrentSelection"],
+    },
+
+    //
+    {
+      "before": ["<leader>", ";"],
+      "commands": ["editor.action.refactor"],
+      "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly",
+    },
+
+    // vim-comment
+    { "before": ["<leader>", "c"], "commands": ["editor.action.blockComment"] },
+
+    // Stay in visual mode while indenting
+    { "before": ["<S-tab>"], "commands": ["editor.action.outdentLines"] },
+    { "before": ["<tab>"], "commands": ["editor.action.indentLines"] },
+
+    // Move selected lines while staying in visual mode
+    { "before": ["<C-j>"], "commands": ["editor.action.moveLinesDownAction"] },
+    { "before": ["<C-k>"], "commands": ["editor.action.moveLinesUpAction"] },
+    { "before": ["<C-f>"], "commands": ["actions.find"] },
+  ],
+  "vim.insertModeKeyBindings": [
+    { "before": ["<D-s>"], "commands": [":w", "<Esc>"] },
+    { "before": ["<C-s>"], "commands": [":w", "<Esc>"] },
+    { "before": ["<C-z>"], "commands": ["undo"] },
+    { "before": ["<C-f>"], "commands": ["actions.find"] },
+  ],
+  "vim.handleKeys": {
+    "<C-c>": false, // copy
+    "<C-v>": false, // past
+    "<C-n>": false, // new file - vscode default
+    "<C-z>": false,
+    "<C-x>": false,
+    "<C-g>": false,
+  },
+
+  // --------------------------------------
+  // VSCode Animations:
+  // --------------------------------------
+  // Hiệu ứng animation khi mở Command Palette (Ctrl/Cmd + Shift + P)
+  "animations.Command-Palette": "Slide", // None | Scale | Slide | Fade
+
+  // Hiệu ứng animation khi chuyển / mở tab editor
+  "animations.Tabs": "Scale", // None | Scale | Slide | Flip
+
+  // Hiệu ứng animation khi cuộn nội dung
+  "animations.Scrolling": "None", // None | Scale | Slide | Fade
+
+  // Hiệu ứng cho item đang active (tab / item được focus)
+  "animations.Active": "Indent", // None | Scale | Indent
+
+  // Bật animation cho con trỏ khi editor mất focus
+  "animations.CursorAnimation": true,
+
+  // Tuỳ chọn chi tiết cho animation con trỏ
+  "animations.CursorAnimationOptions": {
+    // Màu của hiệu ứng con trỏ (sẽ bị override nếu dùng cursor color)
+    "Color": "#333",
+
+    // Kiểu con trỏ dùng cho animation
+    "CursorStyle": "line",
+
+    // Độ dài “vệt” animation theo sau con trỏ
+    "TrailLength": 8,
+  },
+
+  // Dùng màu con trỏ hiện tại thay vì màu custom ở trên
+  "animations.UseCursorColorForCursorAnimation": true,
+
+  // Mức độ làm mờ khi editor mất focus (0–100)
+  "animations.Focus-Dimming-Amount": 100,
+
+  // Phạm vi làm mờ khi mất focus
+  "animations.Focus-Dimming-Mode": "Full Window", // Full Window | Editor | Tab
+
+  // Cách extension inject animation (Custom CSS & JS)
+  "animations.Install-Method": "Custom CSS and JS",
+
+  // --------------------------------------
+  // VSCODE CUSTOM CSS
+  // --------------------------------------
+  "vscode_custom_css.imports": [
+    "file:///Users/_david/vscode-custom/src/vscode-script.js",
+    "file:///Users/_david/vscode-custom/src/vscode-styles.css",
+    "file:///Users/_david/.vscode/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js",
+  ],
+  //   "vscode_custom_css.imports": [
+  //   "file:///C:/Users/DanielVo/Documents/vscode-settings/vscode-script.js",
+  //   "file:///C:/Users/DanielVo/Documents/vscode-settings/vscode-styles.css",
+  //   "file:///C:/Users/DanielVo/.vscode/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js"
+  // ],
+
+  // --------------------------------------
+  //  WHICH KEY
+  // --------------------------------------
+  "whichkey.sortOrder": "none",
+  "whichkey.showIcons": true,
+  "whichkey.delay": 0,
+  "whichkey.bindings": [
+    {
+      "key": "q",
+      "name": "[q]uick Motion",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "f",
+          "name": "[f]ormat Document",
+          "type": "command",
+          "command": "editor.action.formatDocument",
+          "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor",
+        },
+        {
+          "key": "F",
+          "name": "[F]ormat Document With ...",
+          "type": "command",
+          "command": "editor.action.formatDocument.multiple",
+          "when": "editorHasDocumentFormattingProvider && editorTextFocus",
+        },
+        {
+          "key": "o",
+          "name": "Quick [o]pen Files Recent",
+          "type": "command",
+          "command": "workbench.action.quickOpen",
+        },
+        {
+          "key": "c",
+          "name": "[c]hange Language Mode",
+          "type": "command",
+          "command": "workbench.action.editor.changeLanguageMode",
+        },
+        {
+          "key": "p",
+          "name": "Show All Commands",
+          "type": "command",
+          "command": "workbench.action.showCommands",
+        },
+      ],
+    },
+    {
+      "key": "f",
+      "name": "[f]ind & Replace",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "f",
+          "name": "[f]ind and Replace In File",
+          "type": "command",
+          "command": "editor.action.startFindReplaceAction",
+        },
+        {
+          "key": "r",
+          "name": "Find and [r]eplace In Files",
+          "type": "command",
+          "command": "workbench.action.replaceInFiles",
+        },
+      ],
+    },
+    {
+      "key": "p",
+      "name": "[p]roject Manager",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "l",
+          "name": "[l]ist Projects to Open in New Window",
+          "type": "command",
+          "command": "projectManager.listProjectsNewWindow",
+        },
+        {
+          "key": "L",
+          "name": "[L]ist Projects to Open",
+          "type": "command",
+          "command": "projectManager.listProjects",
+        },
+        {
+          "key": "e",
+          "name": "[e]dit Project",
+          "type": "command",
+          "command": "projectManager.editProjects",
+        },
+        {
+          "key": "r",
+          "name": "[r]efresh Projects",
+          "type": "command",
+          "command": "projectManager.refreshProjects",
+        },
+        {
+          "key": "w",
+          "name": "[w]hat's News",
+          "type": "command",
+          "command": "projectManager.whatsNew",
+        },
+      ],
+    },
+    {
+      "key": "c",
+      "name": "[c]odeSnap",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "s",
+          "type": "command",
+          "name": "[s]tart CodeSnap",
+          "command": "codesnap.start",
+          "when": "selected && editorTextFocus",
+        },
+      ],
+    },
+    {
+      "key": "m",
+      "name": "Book[m]arks",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "t",
+          "name": "[t]oggle Bookmarks",
+          "type": "command",
+          "command": "bookmarks.toggle",
+          "when": "editorTextFocus",
+        },
+        {
+          "key": "n",
+          "name": "Toggle Lable [n]ame",
+          "type": "command",
+          "command": "bookmarks.toggleLabeled",
+          "when": "editorTextFocus",
+        },
+        {
+          "key": "l",
+          "name": "[l]ist Bookmarks (In File)",
+          "type": "command",
+          "command": "bookmarks.list",
+          "when": "editorTextFocus",
+        },
+        {
+          "key": "L",
+          "name": "[L]ist Bookmarks (All Files)",
+          "type": "command",
+          "command": "bookmarks.listFromAllFiles",
+          "when": "editorTextFocus",
+        },
+        {
+          "key": "r",
+          "name": "[r]efresh",
+          "type": "command",
+          "command": "bookmarks.refresh",
+        },
+        {
+          "key": "c",
+          "name": "[c]lear",
+          "type": "command",
+          "command": "bookmarks.clear",
+        },
+        {
+          "key": "C",
+          "name": "[C]lear (All Files)",
+          "type": "command",
+          "command": "bookmarks.clearFromAllFiles",
+        },
+        {
+          "key": "s",
+          "name": "[s]upport",
+          "type": "command",
+          "command": "bookmarks.supportBookmarks",
+        },
+      ],
+    },
+    {
+      "key": "g",
+      "name": "[g]it",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "/",
+          "name": "Search Commits",
+          "command": "gitlens.showCommitSearch",
+          "type": "command",
+          "when": "gitlens:enabled && config.gitlens.keymap == 'alternate'",
+        },
+        {
+          "key": ".",
+          "name": "View Changes (Review)",
+          "type": "command",
+          "command": "git.viewChanges",
+        },
+
+        {
+          "key": "a",
+          "name": "Stage All Change (git [a]dd .)",
+          "type": "command",
+          "command": "git.stageAll",
+        },
+        {
+          "key": "c",
+          "name": "[c]ommit",
+          "type": "command",
+          "command": "git.commit",
+        },
+        {
+          "key": "p",
+          "name": "[p]ush to ...",
+          "type": "command",
+          "command": "git.pushTo",
+          // "command": "multiCommand.pushTo"
+        },
+        {
+          "key": "P",
+          "name": "[p]ull from ...",
+          "type": "command",
+          "command": "git.pullFrom",
+        },
+        {
+          "key": "u",
+          "name": "Unstage (git reset <file>)",
+          "type": "command",
+          "command": "git.unstage",
+        },
+        {
+          "key": "k",
+          "name": "Chec[k]out",
+          "type": "command",
+          "command": "git.checkout",
+        },
+        {
+          "key": "C",
+          "name": "[C]herry [+]",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "p",
+              "name": "Cherry [p]ick...",
+              "type": "command",
+              "command": "git.cherryPick",
+            },
+            {
+              "key": "a",
+              "name": "[a]bort Cherry Pick",
+              "type": "command",
+              "command": "git.cherryPickAbort",
+            },
+          ],
+        },
+        {
+          "key": "d",
+          "name": "[d]elete [+]",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "b",
+              "name": "Delete [b]ranch",
+              "type": "command",
+              "command": "git.deleteBranch",
+            },
+            {
+              "key": "r",
+              "name": "Delete [R]emote Branch",
+              "type": "command",
+              "command": "git.deleteRemoteBranch",
+            },
+          ],
+        },
+        {
+          "key": "D",
+          "name": "[d]iscard [+]",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "c",
+              "name": "Discard Changes (Current file)",
+              "type": "command",
+              "command": "git.clean",
+            },
+            {
+              "key": "a",
+              "name": "Discard Changes (All)",
+              "type": "command",
+              "command": "git.cleanAll",
+            },
+          ],
+        },
+        {
+          "key": "o",
+          "name": "[o]pen [+]",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "c",
+              "name": "Open Changes",
+              "type": "command",
+              "command": "git.viewChanges",
+            },
+            {
+              "key": "s",
+              "name": "Open Staged Changes",
+              "type": "command",
+              "command": "git.viewStagedChanges",
+            },
+            {
+              "key": "b",
+              "name": "Browse... (Open File In Remote)",
+              "type": "command",
+              "command": "gitlens.openFileInRemote",
+            },
+          ],
+        },
+        {
+          "key": "t",
+          "name": "[t]ag [+]",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "c",
+              "name": "[c]reate Tag",
+              "type": "command",
+              "command": "git.createTag",
+            },
+            {
+              "key": "p",
+              "name": "[p]ush Tags",
+              "type": "command",
+              "command": "git.pushTags",
+            },
+            {
+              "key": "d",
+              "name": "[d]elete Tag",
+              "type": "command",
+              "command": "git.deleteTag",
+            },
+          ],
+        },
+      ],
+    },
+
+    {
+      "key": "s",
+      "name": "[s]ettings",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "u",
+          "name": "Open Settings ([u]I)",
+          "type": "command",
+          "command": "workbench.action.openSettings",
+        },
+        {
+          "key": "j",
+          "name": "Open Settings ([j]SON)",
+          "type": "command",
+          "command": "workbench.action.openSettingsJson",
+        },
+        {
+          "key": "k",
+          "name": "[K]eybindings [+]",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "u",
+              "name": "Open Keybindings ([u]I)",
+              "type": "command",
+              "command": "workbench.action.openGlobalKeybindings",
+            },
+            {
+              "key": "j",
+              "name": "Open Keybindings ([j]SON)",
+              "type": "command",
+              "command": "workbench.action.openGlobalKeybindingsFile",
+            },
+          ],
+        },
+        {
+          "key": "t",
+          "name": "Select Color [t]heme",
+          "type": "command",
+          "command": "workbench.action.selectTheme",
+        },
+        {
+          "key": "i",
+          "name": "Toggle [i]con Theme",
+          "type": "command",
+          "command": "workbench.action.selectIconTheme",
+        },
+      ],
+    },
+    {
+      "key": "D",
+      "name": "[D]eveloper [+]",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "r",
+          "name": "[r]eload Window",
+          "type": "command",
+          "command": "workbench.action.reloadWindow",
+        },
+      ],
+    },
+    {
+      "key": "E",
+      "name": "[E]xtensions [+]",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "c",
+          "name": "Extension [c]ustom CSS and JS Loaded [+]",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "r",
+              "name": "[r]eload/update",
+              "type": "command",
+              "command": "extension.updateCustomCSS",
+            },
+          ],
+        },
+        {
+          "key": "p",
+          "name": "Extension [p]eacock [+]",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "c",
+              "name": "[c]hange to a Favorite Color",
+              "type": "command",
+              "command": "peacock.changeColorToFavorite",
+            },
+            {
+              "key": "e",
+              "name": "[e]nter a Color",
+              "type": "command",
+              "command": "peacock.enterColor",
+            },
+            {
+              "key": "s",
+              "name": "[s]ave Current Color to Favorites",
+              "type": "command",
+              "command": "peacock.saveColorToFavorites",
+            },
+            {
+              "key": "r",
+              "name": "Surprise Me with a [r]andom Color",
+              "type": "command",
+              "command": "peacock.changeColorToRandom",
+            },
+            {
+              "key": "R",
+              "name": "[R]eset Workspace Colors",
+              "type": "command",
+              "command": "peacock.resetWorkspaceColors",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+
+  // --------------------------------------
+  //  ryuta46.multi-command
+  // --------------------------------------
+  "multiCommand.commands": [
+    {
+      "command": "multiCommand.runGitLog",
+      "sequence": [
+        "workbench.action.terminal.focus",
+        "workbench.action.terminal.new",
+        {
+          "command": "workbench.action.terminal.sendSequence",
+          "args": { "text": "git log --oneline\n" },
+        },
+      ],
+    },
+    {
+      "command": "multiCommand.runGitPush",
+      "sequence": [
+        "workbench.action.terminal.focus",
+        "workbench.action.terminal.new",
+        {
+          "command": "workbench.action.terminal.sendSequence",
+          "args": {
+            "text": "git push -u origin $(git branch --show-current)\u000D",
+          },
+        },
+      ],
+    },
+    {
+      "command": "multiCommand.runGitPull",
+      "sequence": [
+        "workbench.action.terminal.focus",
+        "workbench.action.terminal.new",
+        {
+          "command": "workbench.action.terminal.sendSequence",
+          "args": {
+            "text": "git pull origin $(git branch --show-current)\u000D",
+          },
+        },
+      ],
+    },
+  ],
+
+  // To improve performance
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1,
+    "asvetliakov.vscode-neovim": 1
+  },
+
+  // --------------------------------------
+  //  WORKBENCH COLOR CUSTOM
+  // --------------------------------------
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#2c25ae",
+    "activityBar.background": "#2c25ae",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#d2352d",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#2c25ae",
+    "titleBar.activeBackground": "#211c84",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#211c8499",
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "statusBar.background": "#1F7D53",
+    "statusBar.noFolderBackground": "#1F7D53",
+    "statusBar.debuggingBackground": "#1F7D53",
+    "statusBar.foreground": "#ffffff",
+    "statusBar.debuggingForeground": "#ffffff"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar",
+  },
+  "leetcode.hint.configWebviewMarkdown": false,
+  "leetcode.workspaceFolder": "/Users/_david/.leetcode",
+  "leetcode.hint.commentDescription": false,
+  "leetcode.defaultLanguage": "javascript",
+  "terminal.integrated.defaultProfile.osx": "bash",
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+  "chat.viewSessions.orientation": "stacked",
+  "workbench.editor.empty.hint": "hidden",
+  "terminal.integrated.profiles.osx": {
+    "bash": {
+      "path": "/bin/bash",
+      "args": [
+        "-l"
+      ]
+    },
+    "zsh": {
+      "path": "zsh",
+      "args": [
+        "-l"
+      ]
+    },
+    "fish": {
+      "path": "fish",
+      "args": [
+        "-l"
+      ]
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    }
+  },
+  "claudeCode.preferredLocation": "panel",
+  "luahelper.format.continuation_indent_width": 2,
+  "luahelper.format.indent_width": 2,
+}

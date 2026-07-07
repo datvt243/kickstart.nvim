@@ -93,10 +93,17 @@ Các marker `###` nằm rải rác trong các file plugin:
 | `### LSP KEYMAPS` | `lsp.lua` | gd, gk, grn, gra |
 | `### BLINK.CMP KEYMAPS` | `completion.lua` | autocomplete |
 | `### FORMAT KEYMAP` | `format.lua` | `<leader>f` |
-| `### FILE & SEARCH` | `vscode.lua` | C-p, C-f, leader sf/sg/ff/fs |
+| `### JUMP` | `vscode.lua` | s (word), S (line) — jumpy |
+| `### SYSTEM SHORTCUTS` | `vscode.lua` | C-c/x/v/z/n/g/S-f |
+| `### FILE & SEARCH` | `vscode.lua` | C-p, C-f, C-S-f, leader sf/sg/ff/fs |
 | `### LSP / CODE ACTIONS` | `vscode.lua` | gd, gr, gk, grn, gra |
+| `### FORMAT & DIAGNOSTICS` | `vscode.lua` | leader f, q, th, te |
+| `### RENAME / REFACTOR` | `vscode.lua` | leader r, leader ; (v), leader c (v) |
+| `### BUFFER / EDITOR` | `vscode.lua` | leader b{q,n,y,p} |
+| `### SIDEBAR & UI` | `vscode.lua` | leader e, ee, es |
+| `### PANE / WINDOW FOCUS` | `vscode.lua` | C-h/l/j/k, leader w{h,l,k,j} |
 | `### TERMINAL` | `vscode.lua` | leader tf/tn/tk |
-| `### GIT` | `vscode.lua` | leader g{d,a,c,p,k,ob,cp,db...} |
+| `### GIT` | `vscode.lua` | leader g{d,a,c,gps,gpl,k,cb,ob,fh,gl,gh,gm...} |
 | `### BOOKMARKS` | `vscode.lua` | leader m{t,e,n,p,l,L,C,A} |
 | `### HARPOON` | `vscode.lua` | leader h{p,a,e} |
 | `### PROJECT MANAGER` | `vscode.lua` | leader p{l,L,e,r} |
@@ -109,6 +116,7 @@ Các marker `###` nằm rải rác trong các file plugin:
 | Which Key | `vspacecode.whichkey` | `\` → menu gợi ý keymaps |
 | Find It Faster | `TomiTurtinen.find-it-faster` | leader ff/fF/fs/fS |
 | Fuzzy Search | `jacobdufault.fuzzy-search` | leader / |
+| Jumpy | `wmaurer.vscode-jumpy` | s/S jump nhanh (thay flash.nvim) |
 | Bookmarks | `alefragnani.Bookmarks` | leader m* |
 | Harpoon | `tobias-z.vscode-harpoon` | leader h* |
 | Project Manager | `alefragnani.project-manager` | leader p* |

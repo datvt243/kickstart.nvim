@@ -39,9 +39,16 @@ local function nx(key, cmd, desc)
   })
 end
 
+-- ### JUMP (wmaurer.vscode-jumpy — thay thế flash.nvim trong VSCode)
+-- s → word mode: hiện label 2 ký tự trên từng từ, gõ 2 ký tự để nhảy
+-- S → line mode: hiện label theo dòng
+n('s', 'extension.jumpy-word', 'Jump word (jumpy)')
+n('S', 'extension.jumpy-line', 'Jump line (jumpy)')
+
 -- ### FILE & SEARCH
 n('<C-p>', 'workbench.action.quickOpen', 'Quick Open file')
 n('<C-f>', 'actions.find', 'Tìm trong file hiện tại')
+n('<C-S-f>', 'workbench.action.findInFiles', 'Tìm trong tất cả file')
 n('<leader>sf', 'workbench.action.quickOpen', '[S]earch [F]iles')
 n('<leader>sg', 'workbench.action.findInFiles', '[S]earch by [G]rep')
 -- n('<leader><leader>', 'workbench.action.showAllEditors', 'Tìm editor đang mở')
@@ -89,18 +96,24 @@ nx('gra', 'editor.action.quickFix', 'Code action')
 nv('<leader>f', 'editor.action.formatDocument', 'Format document')
 n('<leader>q', 'workbench.actions.view.problems', 'Mở Problems panel')
 n('<leader>th', 'editor.action.inlayHints.toggle', 'Toggle Inlay Hints')
+n('<leader>te', 'errorLens.toggle', 'Toggle Error Lens')
 
 -- ### RENAME / REFACTOR
 n('<leader>r', 'editor.action.rename', 'Rename symbol')
 v('<leader>;', 'editor.action.refactor', 'Refactor')
+v('<leader>c', 'editor.action.blockComment', 'Block comment')
 
 -- ### BUFFER / EDITOR
 n('<leader>bq', 'workbench.action.closeActiveEditor', '[B]uffer đóng')
 n('<leader>bn', 'workbench.action.files.newUntitledFile', '[B]uffer mới')
+n('<leader>by', 'editor.action.selectAll', '[B]uffer [Y]ank (select all → copy)')
+vim.keymap.set('n', '<leader>bp', 'ggVGp', { desc = '[B]uffer [P]aste (replace all)', silent = true })
 n('<C-m>', 'workbench.action.editor.changeLanguageMode', 'Đổi language mode')
 
 -- ### SIDEBAR & UI
 n('<leader>e', 'workbench.action.toggleSidebarVisibility', 'Mở/đóng sidebar')
+n('<leader>ee', 'workbench.view.explorer', 'Explorer panel')
+n('<leader>es', 'workbench.view.search', 'Search panel')
 n('<leader>>', 'workbench.action.showCommands', 'Command palette')
 
 -- ### PANE / WINDOW FOCUS
@@ -122,14 +135,19 @@ n('<leader>tk', 'workbench.action.terminal.killTerminalAfterUse', '[T]erminal ki
 n('<leader>gd', 'git.viewChanges', '[G]it diff')
 n('<leader>ga', 'git.stageAll', '[G]it add all')
 n('<leader>gc', 'git.commit', '[G]it commit')
-n('<leader>gpl', 'multiCommand.runGitPush', '[G]it push (multiCommand)')
-n('<leader>gP', 'git.pullFrom', '[G]it pull')
+n('<leader>gps', 'multiCommand.runGitPush', '[G]it push (multiCommand)')
+n('<leader>gpl', 'multiCommand.runGitPull', '[G]it pull (multiCommand)')
 n('<leader>gk', 'git.checkout', '[G]it checkout')
+n('<leader>gcb', 'git.branch', '[G]it checkout -b (new branch)')
 n('<leader>gu', 'git.unstage', '[G]it unstage')
 n('<leader>guc', 'git.undoCommit', '[G]it undo commit')
 n('<leader>goc', 'git.viewChanges', '[G]it open changes')
 n('<leader>gos', 'git.viewStagedChanges', '[G]it open staged')
 n('<leader>gob', 'gitlens.openFileInRemote', '[G]it open in [R]emote (GitLens)')
+n('<leader>gfh', 'gitlens.showQuickFileHistory', '[G]it [F]ile [H]istory')
+n('<leader>gl', 'multiCommand.runGitLog', '[G]it [L]og')
+n('<leader>gh', 'gitlens.gitCommand.history', '[G]it [H]istory (GitLens)')
+n('<leader>gm', 'gitlens.createPullRequestOnRemote', '[G]it [M]ake PR')
 n('<leader>gcp', 'git.cherryPick', '[G]it cherry pick')
 n('<leader>gca', 'git.cherryPickAbort', '[G]it cherry pick abort')
 n('<leader>gdb', 'git.deleteBranch', '[G]it delete branch')
