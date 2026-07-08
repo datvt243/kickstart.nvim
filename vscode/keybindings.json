@@ -1,0 +1,68 @@
+[
+  // NAVIGATION - Chuyển giữa Terminal và Pane
+  {
+    "key": "ctrl+shift+j",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "ctrl+shift+n",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+k",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  },
+
+  // FILE TREE - Quản lý file nhanh trong Explorer
+  {
+    "key": "ctrl+z",
+    "command": "redo",
+    "when": "editorTextFocus && vim.mode == 'Insert'"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "undo",
+    "when": "editorTextFocus && vim.mode == 'Insert'"
+  },
+
+  // WHICH KEY (vspacecode.whichkey) — trigger trực tiếp từ VSCode, không qua Neovim
+  {
+    "key": "\\",
+    "command": "whichkey.show",
+    "when": "editorTextFocus && neovim.mode == 'normal'"
+  },
+
+  // JUMPY FIX — vscode-neovim không route keys qua 'type' ở normal mode nên Jumpy không bắt được ký tự.
+  // Fix: khi jumpy.isJumpyMode = true, bắt a-z tại VSCode level trước Neovim,
+  //      gọi type (để Jumpy nhận char) + vscode-neovim.escape (để sync mode về normal sau jump).
+  { "key": "a", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "a" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "b", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "b" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "c", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "c" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "d", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "d" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "e", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "e" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "f", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "f" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "g", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "g" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "h", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "h" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "i", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "i" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "j", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "j" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "k", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "k" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "l", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "l" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "m", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "m" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "n", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "n" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "o", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "o" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "p", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "p" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "q", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "q" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "r", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "r" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "s", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "s" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "t", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "t" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "u", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "u" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "v", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "v" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "w", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "w" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "x", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "x" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "y", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "y" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  { "key": "z", "command": "runCommands", "args": { "commands": [{ "command": "type", "args": { "text": "z" } }, "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" },
+  // Escape thoát jumpy mode và sync neovim
+  { "key": "escape", "command": "runCommands", "args": { "commands": ["extension.jumpy-exit", "vscode-neovim.escape"] }, "when": "jumpy.isJumpyMode && editorTextFocus" }
+]

@@ -107,7 +107,9 @@ n('<leader>bq', 'workbench.action.closeActiveEditor', '[B]uffer đóng')
 n('<leader>bn', 'workbench.action.files.newUntitledFile', '[B]uffer mới')
 n('<leader>by', 'editor.action.selectAll', '[B]uffer [Y]ank (select all → copy)')
 vim.keymap.set('n', '<leader>bp', 'ggVGp', { desc = '[B]uffer [P]aste (replace all)', silent = true })
-n('<C-m>', 'workbench.action.editor.changeLanguageMode', 'Đổi language mode')
+-- NOTE: <C-m> = <CR> nên không dùng, dễ bị conflict với Enter
+-- Dùng <leader>sl để đổi language mode thay thế
+n('<leader>sl', 'workbench.action.editor.changeLanguageMode', 'Đổi [L]anguage mode')
 
 -- ### SIDEBAR & UI
 n('<leader>e', 'workbench.action.toggleSidebarVisibility', 'Mở/đóng sidebar')
@@ -189,14 +191,10 @@ n('<leader>skj', 'workbench.action.openGlobalKeybindingsFile', '[S]ettings [K]ey
 n('<leader>st', 'workbench.action.selectTheme', '[S]ettings color [T]heme')
 n('<leader>si', 'workbench.action.selectIconTheme', '[S]ettings [I]con theme')
 
--- ### SYSTEM SHORTCUTS (C-c / C-v / C-z / C-n)
--- Neovim mặc định chiếm: C-v=visual-block, C-c=interrupt, C-z=suspend, C-n=completion
--- C-v visual block: dùng <C-q> thay thế khi cần
-nv('<C-c>', 'editor.action.clipboardCopyAction', 'Copy')
-nv('<C-x>', 'editor.action.clipboardCutAction', 'Cut')
-nv('<C-v>', 'editor.action.clipboardPasteAction', 'Paste')
-nv('<C-z>', 'undo', 'Undo')
-n('<C-n>', 'workbench.action.files.newUntitledFile', 'New file')
+-- ### SYSTEM SHORTCUTS
+-- C-c/v/x/z/n/g KHÔNG map qua Neovim — bị loại khỏi ctrlKeysForNormalMode trong settings.json
+-- → VSCode xử lý native: Ctrl+C=copy, Ctrl+V=paste, Ctrl+X=cut, Ctrl+Z=undo (Windows default)
+-- → C-v visual-block: dùng <C-q> thay thế
 n('<C-g>', 'workbench.action.gotoLine', 'Go to line')
 
 -- ### KEYS CÒN TRỐNG (chưa dùng ở đâu trong vscode.lua/init.lua, để dành cho sau)

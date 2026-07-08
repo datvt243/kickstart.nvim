@@ -24,12 +24,26 @@ vim.pack.add {gh 'nvim-mini/mini.nvim'}
 -- yiiq  → yank trong quote
 -- ci'   → thay đổi trong '
 -- aa/ii → around/inside next object
+-- ### MINI.AI
+-- af/if → around/inside function definition (treesitter)
+-- ac/ic → around/inside class (treesitter)
+-- Built-in: a)/i) a]/i] a}/i} a>/i> a'/i' a"/i" af(call)/if(call) aa/ia(argument)
 require('mini.ai').setup {
   mappings = {
     around_next = 'aa',
     inside_next = 'ii'
   },
-  n_lines = 500
+  n_lines = 500,
+  custom_textobjects = {
+    f = require('mini.ai').gen_spec.treesitter {
+      a = '@function.outer',
+      i = '@function.inner',
+    },
+    c = require('mini.ai').gen_spec.treesitter {
+      a = '@class.outer',
+      i = '@class.inner',
+    },
+  },
 }
 
 -- ### MINI.SURROUND

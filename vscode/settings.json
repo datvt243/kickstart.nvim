@@ -280,6 +280,12 @@
   "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
   "vscode-neovim.neovimInitVimPaths.darwin": "/Users/_david/.config/nvim/init.lua",
   "vscode-neovim.statusLineModeDisplayStyle": "background",
+  // Bỏ c/v/x/z/n/g → VSCode xử lý native (Ctrl+C=copy, Ctrl+V=paste, Ctrl+X=cut, Ctrl+Z=undo trên Windows)
+  // c/v/x/z là phím đặc biệt trong Neovim (interrupt, visual-block, decrement, suspend) — Lua keymap không override được
+  "vscode-neovim.ctrlKeysForNormalMode": [
+    "a", "b", "d", "e", "f", "h", "i", "j", "k", "l", "m", "o", "p", "q", "r", "s", "t", "u", "w", "y",
+    "/", "]", "right", "left", "up", "down", "backspace", "delete"
+  ],
 
   // --------------------------------------
   //  VIM
