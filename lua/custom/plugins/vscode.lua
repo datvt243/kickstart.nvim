@@ -39,10 +39,9 @@ local function nx(key, cmd, desc)
   })
 end
 
--- ### JUMP (wmaurer.vscode-jumpy — thay thế flash.nvim trong VSCode)
--- <leader>j → word mode: hiện label 2 ký tự trên từng từ, gõ 2 ký tự để nhảy
-n('<leader>j', 'extension.jumpy-word', 'Jump word (jumpy)')
--- n('S', 'extension.jumpy-line', 'Jump line (jumpy)')
+-- ### JUMP
+-- <leader>j → flash.nvim (defined in ui.lua, works in both terminal + VSCode)
+-- Jumpy extension đã bỏ: conflict với vscode-neovim do hook 'type' command
 
 -- ### FILE & SEARCH
 n('<C-p>', 'workbench.action.quickOpen', 'Quick Open file')

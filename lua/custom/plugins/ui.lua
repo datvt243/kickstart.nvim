@@ -52,6 +52,22 @@ require('mini.ai').setup {
 -- sr)'  → thay ) bằng '
 require('mini.surround').setup()
 
+-- ### FLASH.NVIM — hoạt động ở cả terminal lẫn VSCode
+-- Flash là Neovim plugin thuần: labels render qua extmarks, input qua Neovim channel
+-- → không conflict với vscode-neovim (khác Jumpy vốn hook 'type' command của VSCode)
+-- <leader>j → jump word (thay Jumpy trong VSCode)
+-- s / S     → jump / treesitter (terminal, xem thêm trong block if not is_vscode)
+vim.pack.add {gh 'folke/flash.nvim'}
+require('flash').setup {
+  modes = {
+    search = { enabled = false }, -- không override / và ?
+    char   = { enabled = false }, -- không override f/t/F/T
+  },
+}
+vim.keymap.set({'n', 'x', 'o'}, '<leader>j', function()
+  require('flash').jump()
+end, { desc = 'Flash jump' })
+
 if not is_vscode then
   if vim.g.have_nerd_font then
     vim.pack.add {gh 'nvim-tree/nvim-web-devicons'}
@@ -132,22 +148,11 @@ if not is_vscode then
     signs = false
   }
 
-  -- ### FLASH.NVIM — NHẢY NHANH (thay thế vim-sneak + vim-easymotion)
+  -- ### FLASH.NVIM — terminal-only keymaps (plugin đã load ở trên)
   -- s{2 ký tự}   → nhảy đến vị trí khớp trong file (sneak)
   -- S            → chọn node treesitter xung quanh cursor
   -- r (operator) → remote flash, vd: yr{ab} để yank từ xa
   -- <leader>.    → fuzzy jump kiểu easymotion
-  vim.pack.add {gh 'folke/flash.nvim'}
-  require('flash').setup {
-    modes = {
-      search = {
-        enabled = false
-      }, -- không override / và ?
-      char = {
-        enabled = false
-      } -- không override f/t/F/T
-    }
-  }
   vim.keymap.set({'n', 'x', 'o'}, 's', function()
     require('flash').jump()
   end, {
