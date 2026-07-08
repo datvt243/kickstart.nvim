@@ -52,6 +52,28 @@ require('mini.ai').setup {
 -- sr)'  → thay ) bằng '
 require('mini.surround').setup()
 
+-- ### MINI.MOVE — di chuyển line/selection
+-- Normal : gh/gj/gk/gl  hoặc  <Up>/<Down>
+-- Visual : gh/gj/gk/gl  hoặc  <Up>/<Down>
+require('mini.move').setup {
+  mappings = {
+    left       = 'gh',
+    right      = 'gl',
+    down       = 'gj',
+    up         = 'gk',
+    line_left  = 'gh',
+    line_right = 'gl',
+    line_down  = 'gj',
+    line_up    = 'gk',
+  },
+}
+-- Arrow key aliases
+local _move = require 'mini.move'
+vim.keymap.set('n', '<Up>',   function() _move.move_line('up') end,        { desc = 'Move line up' })
+vim.keymap.set('n', '<Down>', function() _move.move_line('down') end,      { desc = 'Move line down' })
+vim.keymap.set('x', '<Up>',   function() _move.move_selection('up') end,   { desc = 'Move selection up' })
+vim.keymap.set('x', '<Down>', function() _move.move_selection('down') end, { desc = 'Move selection down' })
+
 -- ### FLASH.NVIM — hoạt động ở cả terminal lẫn VSCode
 -- Flash là Neovim plugin thuần: labels render qua extmarks, input qua Neovim channel
 -- → không conflict với vscode-neovim (khác Jumpy vốn hook 'type' command của VSCode)
