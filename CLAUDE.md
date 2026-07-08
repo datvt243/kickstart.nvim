@@ -1,5 +1,9 @@
 # CLAUDE.md — Neovim Config (_david)
 
+## Quy tắc làm việc
+
+- **Chỉ push code khi được yêu cầu rõ ràng.** Commit xong thì dừng, không tự push.
+
 ## Tổng quan
 
 Đây là config Neovim cá nhân dựa trên kickstart.nvim, chạy được ở **hai môi trường**:
