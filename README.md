@@ -3,7 +3,7 @@
 Config Neovim cá nhân dựa trên [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim), chạy được ở **hai môi trường**:
 
 - **Terminal Neovim** — full plugin stack (LSP, Telescope, Treesitter, blink.cmp, flash.nvim...)
-- **VSCode + vscode-neovim** — keymaps qua `vscode.action()`, jump bằng jumpy
+- **VSCode + vscode-neovim** — mini.ai + mini.surround + mini.move + flash.nvim + keymaps qua `vscode.action()`
 
 ## Yêu cầu
 
@@ -42,14 +42,29 @@ lua/
     lsp.lua                     — nvim-lspconfig + Mason + fidget
     telescope.lua               — Telescope fuzzy finder
     treesitter.lua              — nvim-treesitter
-    ui.lua                      — mini.nvim, flash.nvim, tokyonight, gitsigns...
+    ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, tokyonight, gitsigns...
     vscode.lua                  — VSCode keymaps (VSCode only)
   kickstart/plugins/            — optional plugins (bật ở Section 10 của init.lua)
 vscode/
   settings.json                 — VSCode settings (cross-platform: Mac + Windows)
+  keybindings.json              — VSCode keybindings (copy vào User/keybindings.json)
 ```
 
 ## Keymaps nổi bật
+
+### Cả hai môi trường
+
+| Phím | Mô tả |
+|---|---|
+| `<leader>j` | Flash jump (2 ký tự) |
+| `gh` / `gl` | Di chuyển line/selection sang trái/phải |
+| `gj` / `gk` | Di chuyển line/selection xuống/lên |
+| `<Up>` / `<Down>` | Di chuyển line/selection lên/xuống |
+| `sa` + motion + char | Mini.surround: thêm surround |
+| `sd` + char | Mini.surround: xóa surround |
+| `sr` + old + new | Mini.surround: thay surround |
+| `yaf` / `yif` | Yank around/inside function (treesitter) |
+| `yac` / `yic` | Yank around/inside class (treesitter) |
 
 ### Terminal
 
@@ -66,19 +81,19 @@ vscode/
 
 | Phím | Mô tả |
 |---|---|
-| `<leader>j` | Jumpy word jump |
-| `C-c/x/v` | Copy / Cut / Paste |
-| `C-z` / `C-g` | Undo / Go to line |
+| `C-c` / `C-x` / `C-v` | Copy / Cut / Paste (VSCode native) |
+| `C-z` | Undo (VSCode native) |
+| `C-g` | Go to line |
 | `C-f` / `C-S-f` | Tìm trong file / Tìm trong tất cả file |
 | `gd` / `grn` / `gra` | LSP: definition / rename / code action |
 | `<leader>f` | Format document |
+| `<leader>sl` | Đổi language mode |
 | `<leader>th` / `<leader>te` | Toggle inlay hints / Toggle Error Lens |
 | `<leader>e` / `<leader>ee` / `<leader>es` | Toggle sidebar / Explorer / Search |
 | `<leader>by` / `<leader>bp` | Yank all / Paste đè toàn file |
 | `<leader>c` (visual) | Block comment |
 | `<leader>gps` / `<leader>gpl` | Git push / pull (terminal) |
 | `<leader>gl` / `<leader>gh` / `<leader>gm` | Git log / history / tạo PR |
-| `<leader>gcb` / `<leader>gfh` | New branch / File history |
 | `<leader>ff` | Find It Faster |
 
 ## VSCode — Extensions cần cài
@@ -89,12 +104,13 @@ vscode/
 | Which Key | `vspacecode.whichkey` |
 | Find It Faster | `TomiTurtinen.find-it-faster` |
 | Fuzzy Search | `jacobdufault.fuzzy-search` |
-| Jumpy | `wmaurer.vscode-jumpy` |
 | Bookmarks | `alefragnani.Bookmarks` |
 | Harpoon | `tobias-z.vscode-harpoon` |
 | Project Manager | `alefragnani.project-manager` |
 
 > Disable `vscodevim.vim` nếu đã cài: `code --disable-extension vscodevim.vim`
+
+> **Jump:** Dùng `flash.nvim` (Neovim plugin) thay Jumpy — `<leader>j`. Jumpy bị bỏ vì conflict với vscode-neovim do hook `type` command.
 
 ## Thêm LSP server
 

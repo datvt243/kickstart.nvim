@@ -9,7 +9,7 @@
 Đây là config Neovim cá nhân dựa trên kickstart.nvim, chạy được ở **hai môi trường**:
 
 - **Terminal Neovim** — full plugin stack
-- **VSCode với vscode-neovim** (`asvetliakov.vscode-neovim`) — chỉ dùng mini.ai + mini.surround + guess-indent; các lệnh editor gọi qua `vscode.action()`
+- **VSCode với vscode-neovim** (`asvetliakov.vscode-neovim`) — mini.ai + mini.surround + mini.move + flash.nvim + guess-indent; các lệnh editor gọi qua `vscode.action()`
 
 ## Cấu trúc file
 
@@ -24,7 +24,7 @@ lua/
     lsp.lua                     — nvim-lspconfig + Mason + fidget (terminal)
     telescope.lua               — Telescope fuzzy finder (terminal)
     treesitter.lua              — nvim-treesitter (terminal)
-    ui.lua                      — mini.nvim, which-key, tokyonight, flash, gitsigns... (cả hai)
+    ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, which-key, tokyonight, gitsigns... (cả hai)
     vscode.lua                  — VSCode keymaps qua vscode.action() (VSCode only)
   kickstart/plugins/            — optional plugins (bỏ comment ở Section 10 để bật)
     autopairs.lua               — [BẬT] tự đóng ngoặc
@@ -90,15 +90,16 @@ Các marker `###` nằm rải rác trong các file plugin:
 | Marker | File | Nội dung |
 |---|---|---|
 | `### KEYMAPS CHUNG` | `init.lua` | j/k, {/}, buffer, save, indent, move lines, splits |
-| `### MINI.AI` | `ui.lua` | text objects mở rộng |
+| `### MINI.AI` | `ui.lua` | text objects: af/if (function), ac/ic (class), treesitter |
 | `### MINI.SURROUND` | `ui.lua` | thêm/xóa/thay surround |
-| `### FLASH.NVIM` | `ui.lua` | jump nhanh (s, S, r, `<leader>.`) |
+| `### MINI.MOVE` | `ui.lua` | di chuyển line/selection: gh/gj/gk/gl + Up/Down |
+| `### FLASH.NVIM` | `ui.lua` | jump: `<leader>j` (cả hai), s/S/r/`<leader>.` (terminal) |
 | `### TELESCOPE KEYMAPS` | `telescope.lua` | tìm file, grep, buffer |
 | `### LSP KEYMAPS` | `lsp.lua` | gd, gk, grn, gra |
 | `### BLINK.CMP KEYMAPS` | `completion.lua` | autocomplete |
 | `### FORMAT KEYMAP` | `format.lua` | `<leader>f` |
-| `### JUMP` | `vscode.lua` | `<leader>j` (word) — jumpy |
-| `### SYSTEM SHORTCUTS` | `vscode.lua` | C-c/x/v/z/n/g/S-f |
+| `### JUMP` | `vscode.lua` | flash.nvim dùng chung (xem ui.lua) |
+| `### SYSTEM SHORTCUTS` | `vscode.lua` | C-c/x/v/z → VSCode native; C-g go to line |
 | `### FILE & SEARCH` | `vscode.lua` | C-p, C-f, C-S-f, leader sf/sg/ff/fs |
 | `### LSP / CODE ACTIONS` | `vscode.lua` | gd, gr, gk, grn, gra |
 | `### FORMAT & DIAGNOSTICS` | `vscode.lua` | leader f, q, th, te |
@@ -120,10 +121,11 @@ Các marker `###` nằm rải rác trong các file plugin:
 | Which Key | `vspacecode.whichkey` | `\` → menu gợi ý keymaps |
 | Find It Faster | `TomiTurtinen.find-it-faster` | leader ff/fF/fs/fS |
 | Fuzzy Search | `jacobdufault.fuzzy-search` | leader / |
-| Jumpy | `wmaurer.vscode-jumpy` | s/S jump nhanh (thay flash.nvim) |
 | Bookmarks | `alefragnani.Bookmarks` | leader m* |
 | Harpoon | `tobias-z.vscode-harpoon` | leader h* |
 | Project Manager | `alefragnani.project-manager` | leader p* |
+
+> **Jump:** Dùng `flash.nvim` (Neovim plugin) thay Jumpy — `<leader>j`. Jumpy conflict với vscode-neovim do hook `type` command.
 
 > **Lưu ý:** Phải disable `vscodevim.vim` nếu đã cài — hai extension conflict với nhau.
 > Chạy: `code --disable-extension vscodevim.vim`
