@@ -15,27 +15,33 @@ vim.pack.add {gh 'stevearc/conform.nvim'}
 require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
-    -- Bật autoformat khi lưu theo filetype (bỏ comment để bật):
     local enabled_filetypes = {
-      -- lua = true,
-      -- python = true,
+      lua = true,
+      typescript = true,
+      javascript = true,
+      typescriptreact = true,
+      javascriptreact = true,
+      vue = true,
+      json = true,
+      css = true,
+      html = true,
     }
     if enabled_filetypes[vim.bo[bufnr].filetype] then
-      return {
-        timeout_ms = 500
-      }
+      return { timeout_ms = 500 }
     end
   end,
   default_format_opts = {
     lsp_format = 'fallback' -- dùng formatter ngoài, fallback về LSP nếu không có
   },
   formatters_by_ft = {
-    typescript = {'prettierd'},
-    javascriptreact = {'prettierd'},
-    typescriptreact = {'prettierd'},
-    json = {'prettierd'},
-    css = {'prettierd'},
-    html = {'prettierd'}
+    typescript = { 'prettierd' },
+    javascript = { 'prettierd' },
+    javascriptreact = { 'prettierd' },
+    typescriptreact = { 'prettierd' },
+    vue = { 'prettierd' },
+    json = { 'prettierd' },
+    css = { 'prettierd' },
+    html = { 'prettierd' },
   }
 }
 

@@ -3,6 +3,7 @@
 ## Quy tắc làm việc
 
 - **Chỉ push code khi được yêu cầu rõ ràng.** Commit xong thì dừng, không tự push.
+- **Mỗi lần thay đổi keymap bất kỳ, phải update `keymaps.md`.**
 
 ## Tổng quan
 
@@ -24,12 +25,16 @@ lua/
     lsp.lua                     — nvim-lspconfig + Mason + fidget (terminal)
     telescope.lua               — Telescope fuzzy finder (terminal)
     treesitter.lua              — nvim-treesitter (terminal)
-    ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, which-key, tokyonight, gitsigns... (cả hai)
+    claudecode.lua              — Claude Code integration (terminal)
+    noice.lua                   — noice.nvim: floating cmdline + notifications (terminal)
+    project.lua                 — project.nvim: auto-detect root + Telescope picker (terminal)
+    terminal.lua                — toggleterm.nvim: terminal nhỏ ở bottom (terminal)
+    ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, which-key, tokyonight... (cả hai)
     vscode.lua                  — VSCode keymaps qua vscode.action() (VSCode only)
   kickstart/plugins/            — optional plugins (bỏ comment ở Section 10 để bật)
     autopairs.lua               — [BẬT] tự đóng ngoặc
     debug.lua                   — DAP debugger
-    gitsigns.lua                — git keymaps đầy đủ
+    gitsigns.lua                — [BẬT] git keymaps đầy đủ
     indent_line.lua             — indent guides
     lint.lua                    — linter
     neo-tree.lua                — [BẬT] file explorer nâng cao
@@ -98,6 +103,9 @@ Các marker `###` nằm rải rác trong các file plugin:
 | `### LSP KEYMAPS` | `lsp.lua` | gd, gk, grn, gra |
 | `### BLINK.CMP KEYMAPS` | `completion.lua` | autocomplete |
 | `### FORMAT KEYMAP` | `format.lua` | `<leader>f` |
+| `### CLAUDE CODE` | `claudecode.lua` | toggle terminal, send selection, accept/deny diff |
+| `### PROJECT` | `project.lua` | `<leader>sp` → danh sách project |
+| `### TERMINAL KEYMAPS` | `terminal.lua` | `<leader>tt` → toggle terminal |
 | `### JUMP` | `vscode.lua` | flash.nvim dùng chung (xem ui.lua) |
 | `### SYSTEM SHORTCUTS` | `vscode.lua` | C-c/x/v/z → VSCode native; C-g go to line |
 | `### FILE & SEARCH` | `vscode.lua` | C-p, C-f, C-S-f, leader sf/sg/ff/fs |

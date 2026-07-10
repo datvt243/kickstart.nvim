@@ -1,0 +1,36 @@
+-- Project management: ahmedkhalf/project.nvim
+-- Tự động detect project root (.git, package.json...) và tích hợp Telescope
+-- <leader>sp → danh sách project đã ghé thăm
+if vim.g.vscode ~= nil then return end
+
+local function gh(repo)
+  return 'https://github.com/' .. repo
+end
+
+vim.pack.add { gh 'ahmedkhalf/project.nvim' }
+
+require('project_nvim').setup {
+  detection_methods = { 'pattern', 'lsp' },
+  patterns = { '.git', 'package.json', 'Makefile', '.project' },
+  show_hidden = true,
+  silent_chdir = true,
+}
+
+-- ### PROJECT
+-- <leader>sp → mở Telescope picker danh sách project
+-- Sau khi chọn: cd vào project + mở Neo-tree
+vim.keymap.set('n', '<leader>sp', function()
+  require('telescope').extensions.projects.projects(require('telescope.themes').get_ivy {
+    attach_mappings = function(_, map)
+      map('i', '<CR>', function(prompt_bufnr)
+        local entry = require('telescope.actions.state').get_selected_entry()
+        require('telescope.actions').close(prompt_bufnr)
+        if entry then
+          vim.cmd('cd ' .. entry.value)
+          vim.cmd 'Neotree reveal'
+        end
+      end)
+      return true
+    end,
+  })
+end, { desc = '[S]earch [P]rojects' })

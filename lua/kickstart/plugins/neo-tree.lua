@@ -38,9 +38,16 @@ vim.api.nvim_create_autocmd('VimEnter', {
 
 require('neo-tree').setup {
   filesystem = {
+    filtered_items = {
+      visible = true,
+      hide_dotfiles = false,
+      hide_gitignored = false,
+    },
     window = {
       mappings = {
-        ['\\'] = 'close_window'
+        ['\\'] = function()
+          vim.cmd 'wincmd p' -- trả focus về editor, neo-tree vẫn mở
+        end
       }
     }
   }

@@ -67,12 +67,14 @@ require('mini.move').setup {
     line_up    = 'gk',
   },
 }
--- Arrow key aliases
-local _move = require 'mini.move'
-vim.keymap.set('n', '<Up>',   function() _move.move_line('up') end,        { desc = 'Move line up' })
-vim.keymap.set('n', '<Down>', function() _move.move_line('down') end,      { desc = 'Move line down' })
-vim.keymap.set('x', '<Up>',   function() _move.move_selection('up') end,   { desc = 'Move selection up' })
-vim.keymap.set('x', '<Down>', function() _move.move_selection('down') end, { desc = 'Move selection down' })
+-- Arrow key aliases (VSCode only — terminal dùng arrow keys để navigate cursor)
+if is_vscode then
+  local _move = require 'mini.move'
+  vim.keymap.set('n', '<Up>',   function() _move.move_line('up') end,        { desc = 'Move line up' })
+  vim.keymap.set('n', '<Down>', function() _move.move_line('down') end,      { desc = 'Move line down' })
+  vim.keymap.set('x', '<Up>',   function() _move.move_selection('up') end,   { desc = 'Move selection up' })
+  vim.keymap.set('x', '<Down>', function() _move.move_selection('down') end, { desc = 'Move selection down' })
+end
 
 -- ### FLASH.NVIM — hoạt động ở cả terminal lẫn VSCode
 -- Flash là Neovim plugin thuần: labels render qua extmarks, input qua Neovim channel
@@ -94,28 +96,6 @@ if not is_vscode then
   if vim.g.have_nerd_font then
     vim.pack.add {gh 'nvim-tree/nvim-web-devicons'}
   end
-
-  -- Ký hiệu git ở gutter (thêm/xóa/sửa dòng)
-  vim.pack.add {gh 'lewis6991/gitsigns.nvim'}
-  require('gitsigns').setup {
-    signs = {
-      add = {
-        text = '+'
-      }, ---@diagnostic disable-line: missing-fields
-      change = {
-        text = '~'
-      }, ---@diagnostic disable-line: missing-fields
-      delete = {
-        text = '_'
-      }, ---@diagnostic disable-line: missing-fields
-      topdelete = {
-        text = '‾'
-      }, ---@diagnostic disable-line: missing-fields
-      changedelete = {
-        text = '~'
-      } ---@diagnostic disable-line: missing-fields
-    }
-  }
 
   -- Hiển thị gợi ý phím khi bấm leader
   vim.pack.add {gh 'folke/which-key.nvim'}

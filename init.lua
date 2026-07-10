@@ -46,6 +46,11 @@ do
   vim.o.scrolloff = 10
   vim.o.confirm = true
 
+  vim.o.autoread = true
+  vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold' }, {
+    command = 'checktime',
+  })
+
   -- Xóa highlight tìm kiếm khi bấm Esc ở normal mode
   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -328,7 +333,7 @@ do
   -- require 'kickstart.plugins.debug'         -- DAP debugger
   -- require 'kickstart.plugins.lint'          -- linter
   require 'kickstart.plugins.neo-tree' -- file explorer nâng cao
-  -- require 'kickstart.plugins.gitsigns'      -- git keymaps đầy đủ
+  require 'kickstart.plugins.gitsigns' -- git keymaps đầy đủ
 end
 
 -- vim: ts=2 sts=2 sw=2 et

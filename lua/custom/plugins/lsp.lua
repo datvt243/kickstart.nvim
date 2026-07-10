@@ -84,7 +84,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
 ---@type table<string, vim.lsp.Config>
 local servers = {
   ts_ls = {}, -- TypeScript / JavaScript
-  eslint = {}, -- Linting JS/TS
+  eslint = {
+    on_attach = function(_, bufnr)
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        buffer = bufnr,
+        command = 'EslintFixAll',
+      })
+    end,
+  }, -- Linting JS/TS + auto-fix on save
   stylua = {}, -- Formatter Lua (dùng bởi conform.nvim)
   lua_ls = {
     on_init = function(client)
