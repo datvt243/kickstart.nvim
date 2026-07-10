@@ -46,6 +46,7 @@ require('conform').setup {
 }
 
 -- ### FORMAT KEYMAP
+-- Format buffer (normal) hoặc selection (visual) bằng formatter cấu hình trong formatters_by_ft
 vim.keymap.set({'n', 'v'}, '<leader>f', function()
   require('conform').format {
     async = true

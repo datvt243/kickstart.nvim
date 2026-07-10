@@ -15,5 +15,7 @@ require('toggleterm').setup {
 
 -- ### TERMINAL KEYMAPS
 -- <leader>tt → toggle terminal (normal + terminal mode)
+-- Bật/tắt terminal ở bottom từ normal mode
 vim.keymap.set('n', '<leader>tt', '<cmd>ToggleTerm<CR>', { desc = '[T]oggle [T]erminal' })
+-- Bật/tắt terminal ở bottom từ bên trong terminal mode (không cần thoát về normal trước)
 vim.keymap.set('t', '<leader>tt', '<cmd>ToggleTerm<CR>', { desc = '[T]oggle [T]erminal' })

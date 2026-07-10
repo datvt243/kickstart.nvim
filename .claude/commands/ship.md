@@ -13,28 +13,9 @@ Read all keymaps from source files in this order:
 
 Compare with the current `keymaps.md` and update any keys, descriptions, or sections that are missing or have changed. Preserve the existing table format and legend. Only add/edit/remove what is actually different.
 
-## Step 2 — Update CLAUDE.md
+## Step 2 — Commit and push
 
-Re-read the entire codebase (file structure, patterns, sections) and compare with the current `CLAUDE.md`. Update any outdated or missing parts:
-- File structure if files were added or removed
-- `###` marker table if new markers were added
-- VSCode extensions table if changed
-- Any new patterns worth documenting
-
-Keep the Vietnamese language and current format intact.
-
-## Step 3 — Update README.md
-
-Read the current `README.md` and update if there are changes to:
-- Main plugin list
-- Installation requirements
-- Usage instructions
-
-Keep it concise, do not add unnecessary content.
-
-## Step 4 — Commit and push
-
-After the 3 files above have been updated:
+After keymaps.md has been updated:
 
 1. Run `git status` and `git diff` to see all changes (including staged and unstaged).
 2. Read `git log --oneline -5` to understand the commit message style.

@@ -68,9 +68,13 @@ require('mini.move').setup {
 -- Arrow key aliases (VSCode only — terminal dùng arrow keys để navigate cursor)
 if is_vscode then
   local _move = require 'mini.move'
+  -- Di chuyển dòng lên bằng arrow key (alias cho gk, dùng trong VSCode thay vì terminal)
   vim.keymap.set('n', '<Up>', function() _move.move_line 'up' end, { desc = 'Move line up' })
+  -- Di chuyển dòng xuống bằng arrow key (alias cho gj)
   vim.keymap.set('n', '<Down>', function() _move.move_line 'down' end, { desc = 'Move line down' })
+  -- Di chuyển selection lên bằng arrow key
   vim.keymap.set('x', '<Up>', function() _move.move_selection 'up' end, { desc = 'Move selection up' })
+  -- Di chuyển selection xuống bằng arrow key
   vim.keymap.set('x', '<Down>', function() _move.move_selection 'down' end, { desc = 'Move selection down' })
 end
 
@@ -86,6 +90,7 @@ require('flash').setup {
     char = { enabled = false }, -- không override f/t/F/T
   },
 }
+-- Flash jump đến bất kỳ vị trí trong file; hoạt động cả ở VSCode vì dùng Neovim channel
 vim.keymap.set({ 'n', 'x', 'o' }, '<leader>j', function() require('flash').jump() end, { desc = 'Flash jump' })
 
 if not is_vscode then
@@ -155,15 +160,19 @@ if not is_vscode then
   -- S            → chọn node treesitter xung quanh cursor
   -- r (operator) → remote flash, vd: yr{ab} để yank từ xa
   -- <leader>.    → fuzzy jump kiểu easymotion
+  -- Sneak jump: gõ 2 ký tự để nhảy đến vị trí khớp (phong cách vim-sneak)
   vim.keymap.set({ 'n', 'x', 'o' }, 's', function() require('flash').jump() end, {
     desc = 'Flash jump',
   })
+  -- Treesitter jump: highlight và chọn node syntax xung quanh cursor
   vim.keymap.set({ 'n', 'x', 'o' }, 'S', function() require('flash').treesitter() end, {
     desc = 'Flash treesitter',
   })
+  -- Remote operator: thực hiện operator (y/d/c...) tại vị trí flash rồi quay về cursor
   vim.keymap.set('o', 'r', function() require('flash').remote() end, {
     desc = 'Flash remote operator',
   })
+  -- Fuzzy jump kiểu easymotion: gõ pattern mờ để nhảy đến vị trí
   vim.keymap.set({ 'n', 'x' }, '<leader>.', function()
     require('flash').jump {
       search = {

@@ -15,7 +15,11 @@ require('claudecode').setup {}
 -- <leader>cs → gửi selection hiện tại đến Claude (visual mode)
 -- <leader>ca → accept diff (khi Claude đề xuất thay đổi)
 -- <leader>cd → deny diff
+-- Bật/tắt terminal Claude Code
 vim.keymap.set('n', '<leader>cc', '<cmd>ClaudeCode<cr>',           { desc = '[C]laude [C]ode toggle' })
+-- Gửi vùng text đang chọn đến Claude để phân tích / hỗ trợ
 vim.keymap.set('v', '<leader>cs', '<cmd>ClaudeCodeSend<cr>',       { desc = '[C]laude [S]end selection' })
+-- Chấp nhận thay đổi Claude đề xuất trong diff view
 vim.keymap.set('n', '<leader>ca', '<cmd>ClaudeCodeDiffAccept<cr>', { desc = '[C]laude [A]ccept diff' })
+-- Từ chối thay đổi Claude đề xuất trong diff view
 vim.keymap.set('n', '<leader>cd', '<cmd>ClaudeCodeDiffDeny<cr>',   { desc = '[C]laude [D]eny diff' })

@@ -287,6 +287,7 @@
 
 | Phím | Mode | Env | Mô tả |
 |---|---|---|---|
+| `<leader>gs` | n | TER | Git status (floating window, đóng bằng `q`/`Esc`) |
 | `<leader>ga` | n | TER | Git add all (`git add -A`) |
 | `<leader>gc` | n | TER | Git commit (nhập message qua prompt) |
 | `<leader>gps` | n | TER | Git push |

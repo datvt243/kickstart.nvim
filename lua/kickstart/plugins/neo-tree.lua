@@ -14,10 +14,12 @@ end
 
 vim.pack.add(plugins)
 
+-- Focus + reveal file hiện tại trong Neo-tree; nhấn \ lần nữa từ Neo-tree để trả focus về editor
 vim.keymap.set('n', '\\', '<Cmd>Neotree reveal<CR>', {
   desc = 'NeoTree reveal',
   silent = true
 })
+-- Bật/tắt Neo-tree sidebar (không reveal file đang mở)
 vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', {
   desc = 'Mở/đóng file explorer'
 })

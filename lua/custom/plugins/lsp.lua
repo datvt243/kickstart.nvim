@@ -32,10 +32,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     -- ### LSP KEYMAPS
+    -- Đổi tên symbol và cập nhật tất cả references trong workspace
     map('grn', vim.lsp.buf.rename, 'Đổi tên symbol')
+    -- Hiển thị danh sách code action tại cursor (quick fix, import thiếu, extract...)
     map('gra', vim.lsp.buf.code_action, 'Code action', {'n', 'x'})
+    -- Nhảy đến nơi định nghĩa symbol (thay thế Ctrl+click)
     map('gd', vim.lsp.buf.definition, 'Goto definition')
+    -- Xem tài liệu / kiểu của symbol dưới cursor trong popup
     map('gk', vim.lsp.buf.hover, 'Hover documentation')
+    -- Nhảy đến declaration (thường là prototype/header, khác với definition)
     map('grD', vim.lsp.buf.declaration, 'Goto declaration')
 
     -- Highlight tất cả references của symbol dưới cursor
@@ -70,6 +75,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Toggle inlay hints nếu LSP hỗ trợ
     if client and client:supports_method('textDocument/inlayHint', event.buf) then
+      -- Bật/tắt inlay hints (hiển thị type annotation inline trong code)
       map('<leader>th', function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {
           bufnr = event.buf
@@ -127,8 +133,8 @@ local servers = {
 }
 
 vim.pack.add {
-  gh 'neovim/nvim-lspconfig', 
-  gh 'mason-org/mason.nvim', 
+  gh 'neovim/nvim-lspconfig',
+  gh 'mason-org/mason.nvim',
   gh 'mason-org/mason-lspconfig.nvim',
   gh 'WhoIsSethDaniel/mason-tool-installer.nvim'
 }

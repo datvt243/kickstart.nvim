@@ -80,6 +80,7 @@ do
     }
   }
 
+  -- Mở danh sách lỗi/warning từ LSP vào location list để navigate
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, {
     desc = 'Mở danh sách diagnostic'
   })
@@ -92,6 +93,7 @@ do
     expr = true,
     silent = true
   })
+  -- Tương tự j nhưng đi lên
   vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {
     expr = true,
     silent = true
@@ -101,6 +103,7 @@ do
   vim.keymap.set('n', '}', '}zz', {
     desc = 'Paragraph kế (center)'
   })
+  -- Nhảy về paragraph trước và căn giữa màn hình
   vim.keymap.set('n', '{', '{zz', {
     desc = 'Paragraph trước (center)'
   })
@@ -111,18 +114,23 @@ do
   })
 
   -- ### BUFFER
+  -- Chuyển sang buffer trước (theo thứ tự buffer list)
   vim.keymap.set('n', '<S-h>', '<cmd>bprevious<CR>', {
     desc = 'Buffer trước'
   })
+  -- Chuyển sang buffer tiếp theo
   vim.keymap.set('n', '<S-l>', '<cmd>bnext<CR>', {
     desc = 'Buffer tiếp'
   })
+  -- Đóng buffer hiện tại (không thoát Neovim)
   vim.keymap.set('n', '<leader>bq', '<cmd>bdelete<CR>', {
     desc = '[B]uffer đóng'
   })
+  -- Tạo buffer mới trống (chưa lưu file)
   vim.keymap.set('n', '<leader>bn', '<cmd>enew<CR>', {
     desc = '[B]uffer mới'
   })
+  -- Yank toàn bộ nội dung file vào clipboard hệ thống
   vim.keymap.set('n', '<leader>by', '<cmd>%y+<CR>', {
     desc = '[B]uffer yank toàn bộ'
   })
@@ -131,6 +139,7 @@ do
   vim.keymap.set('i', '<C-s>', '<cmd>w<CR><Esc>', {
     desc = 'Lưu file'
   })
+  -- Lưu file từ normal mode
   vim.keymap.set('n', '<C-s>', '<cmd>w<CR>', {
     desc = 'Lưu file'
   })
@@ -141,6 +150,7 @@ do
   vim.keymap.set('v', '<tab>', '>gv', {
     desc = 'Tăng indent'
   })
+  -- Giảm indent và giữ nguyên selection
   vim.keymap.set('v', '<S-tab>', '<gv', {
     desc = 'Giảm indent'
   })
@@ -150,6 +160,7 @@ do
     silent = true,
     desc = 'Dời dòng xuống'
   })
+  -- Dời selection lên (re-indent tự động sau khi move)
   vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv=gv", {
     silent = true,
     desc = 'Dời dòng lên'
@@ -159,14 +170,17 @@ do
   vim.keymap.set('n', '<A-j>', '<cmd>m .+1<CR>==', {
     desc = 'Dời dòng xuống'
   })
+  -- Dời dòng hiện tại lên và re-indent
   vim.keymap.set('n', '<A-k>', '<cmd>m .-2<CR>==', {
     desc = 'Dời dòng lên'
   })
 
   -- ### SPLITS
+  -- Mở split dọc (cửa sổ mới bên phải)
   vim.keymap.set('n', '<leader>v', '<cmd>vsplit<CR>', {
     desc = 'Split dọc'
   })
+  -- Mở split ngang (cửa sổ mới bên dưới)
   vim.keymap.set('n', '<leader>S', '<cmd>split<CR>', {
     desc = 'Split ngang'
   })
@@ -174,35 +188,45 @@ do
   -- ### PASTE OVER TEXT OBJECTS
   -- Thay thế nội dung bên trong/xung quanh text object bằng clipboard
   -- Ví dụ: <leader>piq → paste vào trong cặp nháy gần nhất
+  -- Paste vào trong cặp quote gần nhất (thay nội dung, giữ nguyên quote)
   vim.keymap.set('n', '<leader>piq', 'viqp', {
     desc = 'Paste inside quote'
   })
+  -- Paste đè toàn bộ cặp quote gần nhất (kể cả dấu nháy)
   vim.keymap.set('n', '<leader>paq', 'vaqp', {
     desc = 'Paste around quote'
   })
+  -- Paste vào trong cặp {} gần nhất (giữ nguyên dấu ngoặc)
   vim.keymap.set('n', '<leader>piB', 'viB"_dP', {
     desc = 'Paste inside {}'
   })
+  -- Paste đè toàn bộ cặp {} gần nhất (kể cả dấu ngoặc)
   vim.keymap.set('n', '<leader>paB', 'vaB"_dP', {
     desc = 'Paste around {}'
   })
+  -- Paste vào trong cặp () gần nhất
   vim.keymap.set('n', '<leader>pib', 'vib"_dP', {
     desc = 'Paste inside ()'
   })
+  -- Paste đè toàn bộ cặp () gần nhất
   vim.keymap.set('n', '<leader>pab', 'vab"_dP', {
     desc = 'Paste around ()'
   })
+  -- Paste vào trong HTML/XML tag gần nhất (giữ nguyên tag)
   vim.keymap.set('n', '<leader>pit', 'vit"_dP', {
     desc = 'Paste inside tag'
   })
+  -- Paste đè toàn bộ HTML/XML tag gần nhất (kể cả opening/closing tag)
   vim.keymap.set('n', '<leader>pat', 'vat"_dP', {
     desc = 'Paste around tag'
   })
 
   -- Misc
+  -- Xóa highlight kết quả tìm kiếm thủ công (khi Esc bị override ở nơi khác)
   vim.keymap.set('n', '<leader>n', '<cmd>nohlsearch<CR>', {
     desc = 'Tắt highlight tìm kiếm'
   })
+  -- Xem nội dung tất cả registers (clipboard, yank history, macro...)
   vim.keymap.set('n', '<leader>y', '<cmd>registers<CR>', {
     desc = 'Xem registers'
   })
@@ -233,15 +257,19 @@ do
   -- ### WINDOW NAVIGATION (chỉ terminal)
   -- VSCode: C-j/k dùng để move lines; focus pane dùng <leader>w ở Section 9
   if not is_vscode then
+    -- Nhảy sang cửa sổ bên trái
     vim.keymap.set('n', '<C-h>', '<C-w><C-h>', {
       desc = 'Focus cửa sổ trái'
     })
+    -- Nhảy sang cửa sổ bên phải
     vim.keymap.set('n', '<C-l>', '<C-w><C-l>', {
       desc = 'Focus cửa sổ phải'
     })
+    -- Nhảy xuống cửa sổ bên dưới
     vim.keymap.set('n', '<C-j>', '<C-w><C-j>', {
       desc = 'Focus cửa sổ dưới'
     })
+    -- Nhảy lên cửa sổ bên trên
     vim.keymap.set('n', '<C-k>', '<C-w><C-k>', {
       desc = 'Focus cửa sổ trên'
     })
