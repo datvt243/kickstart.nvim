@@ -8,6 +8,19 @@ require('gitsigns').setup {
   on_attach = function(bufnr)
     local gitsigns = require 'gitsigns'
 
+    local ok, wk = pcall(require, 'which-key')
+    if ok then
+      wk.add({
+        { '<leader>h',  buffer = bufnr, group = 'Git [H]unk' },
+        { '<leader>h',  buffer = bufnr, group = 'Git [H]unk', mode = 'v' },
+        { '<leader>tb', buffer = bufnr, desc = 'Toggle blame line' },
+        { '<leader>tw', buffer = bufnr, desc = 'Toggle word diff' },
+        { ']c',         buffer = bufnr, desc = 'Next git hunk' },
+        { '[c',         buffer = bufnr, desc = 'Prev git hunk' },
+        { 'ih',         buffer = bufnr, desc = 'Git hunk (text object)', mode = { 'o', 'x' } },
+      })
+    end
+
     local function map(mode, l, r, opts)
       opts = opts or {}
       opts.buffer = bufnr
@@ -107,3 +120,38 @@ require('gitsigns').setup {
     map({'o', 'x'}, 'ih', gitsigns.select_hunk)
   end
 }
+
+-- ### GIT COMMANDS (terminal)
+local function git_run(args, label)
+  local result = vim.fn.system(args)
+  local ok = vim.v.shell_error == 0
+  vim.notify(
+    ok and (label .. ' OK') or result:gsub('\n$', ''),
+    ok and vim.log.levels.INFO or vim.log.levels.ERROR
+  )
+end
+
+vim.keymap.set('n', '<leader>ga', function()
+  git_run({ 'git', 'add', '-A' }, 'git add -A')
+end, { desc = '[G]it [A]dd all' })
+
+vim.keymap.set('n', '<leader>gc', function()
+  vim.ui.input({ prompt = 'Commit message: ' }, function(msg)
+    if msg and msg ~= '' then
+      git_run({ 'git', 'commit', '-m', msg }, 'git commit')
+    end
+  end)
+end, { desc = '[G]it [C]ommit' })
+
+vim.keymap.set('n', '<leader>gps', function()
+  git_run({ 'git', 'push' }, 'git push')
+end, { desc = '[G]it [P]u[s]h' })
+
+vim.keymap.set('n', '<leader>gpl', function()
+  git_run({ 'git', 'pull' }, 'git pull')
+end, { desc = '[G]it [P]u[l]l' })
+
+local ok, wk = pcall(require, 'which-key')
+if ok then
+  wk.add({ { '<leader>g', group = '[G]it' } })
+end

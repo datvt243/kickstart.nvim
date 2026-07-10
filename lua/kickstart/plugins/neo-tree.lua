@@ -43,6 +43,7 @@ require('neo-tree').setup {
       hide_dotfiles = false,
       hide_gitignored = false,
     },
+    use_libuv_file_watcher = true,
     window = {
       mappings = {
         ['\\'] = function()

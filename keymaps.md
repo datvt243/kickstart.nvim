@@ -283,6 +283,17 @@
 
 ---
 
+## Git — Lệnh cơ bản (Terminal only)
+
+| Phím | Mode | Env | Mô tả |
+|---|---|---|---|
+| `<leader>ga` | n | TER | Git add all (`git add -A`) |
+| `<leader>gc` | n | TER | Git commit (nhập message qua prompt) |
+| `<leader>gps` | n | TER | Git push |
+| `<leader>gpl` | n | TER | Git pull |
+
+---
+
 ## Git — Gitsigns (Terminal only)
 
 | Phím | Mode | Env | Mô tả |
