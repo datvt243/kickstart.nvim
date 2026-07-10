@@ -9,7 +9,12 @@ Read all keymaps from source files in this order:
 - `lua/custom/plugins/lsp.lua` (marker `### LSP KEYMAPS`)
 - `lua/custom/plugins/completion.lua` (marker `### BLINK.CMP KEYMAPS`)
 - `lua/custom/plugins/format.lua` (marker `### FORMAT KEYMAP`)
+- `lua/custom/plugins/claudecode.lua` (marker `### CLAUDE CODE`)
+- `lua/custom/plugins/terminal.lua` (marker `### TERMINAL KEYMAPS`)
+- `lua/custom/plugins/project.lua` (marker `### PROJECT`)
 - `lua/custom/plugins/vscode.lua` (all `###` markers in this file)
+- `lua/kickstart/plugins/gitsigns.lua` (marker `### GIT COMMANDS`)
+- `lua/kickstart/plugins/neo-tree.lua` (tất cả `vim.keymap.set` — không có marker)
 
 Compare with the current `keymaps.md` and update any keys, descriptions, or sections that are missing or have changed. Preserve the existing table format and legend. Only add/edit/remove what is actually different.
 
