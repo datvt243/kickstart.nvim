@@ -4,11 +4,16 @@
 -- https://github.com/akinsho/bufferline.nvim
 if vim.g.vscode ~= nil then return end
 
+-- Tắt mặc định (trước đây là optional plugin, opt-in qua init.lua Section 10)
+-- Đổi thành true để bật
+local enabled = false
+if not enabled then return end
+
 local function gh(repo) return 'https://github.com/' .. repo end
 
-local plugins = { gh 'akinsho/bufferline.nvim' }
-if vim.g.have_nerd_font then table.insert(plugins, gh 'nvim-tree/nvim-web-devicons') end
-vim.pack.add(plugins)
+-- Icon: dùng mini.icons qua mock_nvim_web_devicons() (xem lua/custom/plugins/ui/icons.lua),
+-- không cần cài nvim-web-devicons thật
+vim.pack.add { gh 'akinsho/bufferline.nvim' }
 
 require('bufferline').setup {
   options = {

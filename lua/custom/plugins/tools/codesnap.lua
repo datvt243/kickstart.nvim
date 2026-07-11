@@ -1,5 +1,6 @@
--- codesnap.nvim: chụp đoạn code đang chọn thành ảnh đẹp (giống CodeSnap)
+-- codesnap.nvim: chụp đoạn code đang chọn thành ảnh đẹp, giống VSCode CodeSnap (terminal only)
 -- https://github.com/mistricky/codesnap.nvim
+-- Keymap nổi bật: <leader>cp copy ảnh vào clipboard, <leader>cP lưu ảnh ra file (visual mode)
 if vim.g.vscode ~= nil then return end
 
 local function gh(repo)

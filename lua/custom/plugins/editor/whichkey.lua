@@ -35,6 +35,10 @@ require('which-key').setup {
       group = '[Q]uick Motions',
     },
     {
+      '<leader>x',
+      group = 'Trouble (diagnostics/quickfix)',
+    },
+    {
       '<leader>b',
       group = '[B]uffers',
     },

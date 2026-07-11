@@ -1,6 +1,6 @@
--- Project management: ahmedkhalf/project.nvim
--- Tự động detect project root (.git, package.json...) và tích hợp Telescope
--- <leader>sp → danh sách project đã ghé thăm
+-- project.nvim: tự động detect project root (.git, package.json...) và tích hợp Telescope (terminal only)
+-- https://github.com/ahmedkhalf/project.nvim
+-- Keymap nổi bật: <leader>sp mở Telescope picker danh sách project — marker ### PROJECT
 if vim.g.vscode ~= nil then return end
 
 local function gh(repo)

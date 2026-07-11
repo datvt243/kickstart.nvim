@@ -39,27 +39,30 @@ init.lua                        — options, keymaps chung, vim.pack hooks
 keymaps-terminal.md              — danh sách keymaps cho Terminal Neovim (BOTH / TER)
 keymaps-vscode.md                — danh sách keymaps cho VSCode (BOTH / VSC)
 lua/
-  custom/plugins/
-    claudecode.lua              — Claude Code integration (terminal)
-    noice.lua                   — noice.nvim floating UI (terminal)
-    project.lua                 — project.nvim auto root + Telescope (terminal)
-    terminal.lua                — toggleterm.nvim bottom terminal (terminal)
-    codesnap.lua                — codesnap.nvim: chụp code thành ảnh (terminal)
-    import-cost.lua             — vim-import-cost: KB từng import JS/TS (terminal)
-    completion.lua              — blink.cmp + LuaSnip
-    dashboard.lua               — dashboard-nvim
-    format.lua                  — conform.nvim
-    lsp.lua                     — nvim-lspconfig + Mason + fidget
-    telescope.lua               — Telescope fuzzy finder
-    treesitter.lua              — nvim-treesitter
-    ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, tokyonight, gitsigns...
-    whichkey.lua                — which-key.nvim: gợi ý keymap khi gõ leader (terminal)
-    vscode.lua                  — VSCode keymaps (VSCode only)
-  kickstart/plugins/            — optional plugins (bật ở Section 10 của init.lua)
+  custom/plugins/                — tự động load đệ quy (kể cả subfolder), xem custom/plugins/init.lua
+    dashboard.lua                — dashboard-nvim (terminal)
+    lsp.lua                      — nvim-lspconfig + Mason + fidget + lazydev (terminal)
+    telescope.lua                — Telescope fuzzy finder (terminal)
+    vscode.lua                   — VSCode keymaps (VSCode only)
+    editor/                      — plugin liên quan hành vi soạn thảo/motion (flash.nvim, mini.surround/move,
+                                    neoscroll, scrollbar, indent guides, which-key, trouble.nvim, todo-comments)
+    coding/                      — plugin hỗ trợ viết code (mini.ai, ts-comments, nvim-autopairs,
+                                    blink.cmp, LuaSnip, lazydev)
+    colorscheme/                 — tokyonight (active) + catppuccin (cài sẵn, tắt — đổi flag `active` để switch)
+    formatting/                  — conform.nvim
+    ui/                          — mini.icons, lualine, noice, bufferline (tắt mặc định)
+    treesitter/                  — nvim-treesitter + nvim-ts-autotag
+    tools/                       — tích hợp công cụ ngoài: claudecode, project.nvim, toggleterm,
+                                    codesnap, vim-import-cost
+  kickstart/plugins/             — optional plugin, bật/tắt bằng cách (un)comment ở Section 10 init.lua
+    gitsigns.lua, neo-tree.lua   — đang bật
+    debug.lua, lint.lua          — đang tắt
 vscode/
-  settings.json                 — VSCode settings (cross-platform: Mac + Windows)
-  keybindings.json              — VSCode keybindings (copy vào User/keybindings.json)
+  settings.json                  — VSCode settings (cross-platform: Mac + Windows)
+  keybindings.json               — VSCode keybindings (copy vào User/keybindings.json)
 ```
+
+> Chi tiết đầy đủ từng file/plugin: xem `CLAUDE.md`.
 
 ## Keymaps nổi bật
 

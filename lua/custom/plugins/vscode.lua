@@ -1,7 +1,8 @@
--- VSCode keymaps (chỉ chạy khi vscode-neovim active)
--- Map các VSCode command vào Neovim keymaps để dùng workflow quen thuộc
--- Bao gồm: LSP, git, terminal, sidebar, bookmarks, harpoon, project manager
--- Extension cần: vscode-neovim, Find It Faster, Fuzzy Search, Bookmarks, Harpoon, Project Manager
+-- VSCode keymaps: map VSCode command vào Neovim keymaps để dùng workflow quen thuộc (VSCode only)
+-- Bao gồm: file/search, LSP/code actions, format, git, bookmarks, harpoon, project manager, settings
+-- Extension cần cài: xem bảng "VSCode — Required extensions" trong CLAUDE.md
+-- Keymap nổi bật: <leader>sf/sg tìm file/grep, gr* LSP actions, <leader>g* git, <leader>m* bookmarks,
+-- <leader>h* harpoon, <leader>p* project manager — xem chi tiết theo từng section ### bên dưới
 if vim.g.vscode == nil then
   return
 end
@@ -40,7 +41,7 @@ local function nx(key, cmd, desc)
 end
 
 -- ### JUMP
--- <leader>j → flash.nvim (defined in ui.lua, works in both terminal + VSCode)
+-- <leader>j → flash.nvim (custom/plugins/editor/flash.lua, chạy được cả terminal + VSCode)
 -- Jumpy extension đã bỏ: conflict với vscode-neovim do hook 'type' command
 
 -- ### FILE & SEARCH

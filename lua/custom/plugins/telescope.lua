@@ -1,8 +1,9 @@
--- Fuzzy finder: Telescope
--- Tìm file, grep toàn project, xem buffer, LSP symbols, git commits...
+-- Telescope: fuzzy finder — tìm file, grep toàn project, xem buffer, LSP symbols... (terminal only)
 -- telescope-fzf-native: tăng tốc bằng native C (cần make)
 -- telescope-ui-select: dùng Telescope làm UI picker cho vim.ui.select (code actions...)
 -- https://github.com/nvim-telescope/telescope.nvim
+-- Keymap nổi bật: <leader>s* (search: file/grep/help/diagnostics...), gr* (LSP: references/definitions...)
+-- xem đầy đủ ở marker ### TELESCOPE KEYMAPS bên dưới
 local function gh(repo) return 'https://github.com/' .. repo end
 
 if vim.g.vscode ~= nil then return end

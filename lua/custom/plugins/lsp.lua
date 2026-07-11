@@ -1,11 +1,14 @@
--- LSP: nvim-lspconfig + Mason
--- nvim-lspconfig: cấu hình LSP client cho từng ngôn ngữ (ts_ls, lua_ls...)
--- Mason: cài đặt và quản lý LSP servers, formatter, linter tự động
+-- LSP: nvim-lspconfig + Mason + fidget + tiny-inline-diagnostic (terminal only)
+-- nvim-lspconfig: cấu hình LSP client cho từng ngôn ngữ (ts_ls, lua_ls, gopls, eslint...)
+-- Mason (+ mason-lspconfig, mason-tool-installer): tự cài LSP server khai báo trong `servers`
 -- fidget: hiển thị tiến trình LSP ở góc màn hình
+-- tiny-inline-diagnostic: hiển thị lỗi/warning inline giống Error Lens (tắt virtual_text mặc định)
+-- lazydev (type Neovim API cho lua_ls): xem lua/custom/plugins/coding/lazydev.lua
 -- https://github.com/neovim/nvim-lspconfig
 -- https://github.com/mason-org/mason.nvim
 -- https://github.com/j-hui/fidget.nvim
---
+-- https://github.com/rachartier/tiny-inline-diagnostic.nvim
+-- Keymap nổi bật: gd/gk/grn/gra/grD, <leader>th toggle inlay hints — marker ### LSP KEYMAPS bên dưới
 local function gh(repo)
   return 'https://github.com/' .. repo
 end
@@ -14,25 +17,11 @@ if vim.g.vscode ~= nil then
   return
 end
 
--- fidget: hiển thị tiến trình LSP ở góc màn hình
 vim.pack.add {gh 'j-hui/fidget.nvim'}
 require('fidget').setup {}
 
--- lazydev: cấu hình lua_ls chuyên biệt cho code Neovim config/plugin
--- Cho lua_ls biết `vim` global, type API Neovim, và resolve require() tới đúng plugin đã cài
--- Chỉ kích hoạt cho file .lua, không ảnh hưởng project Lua thường
-vim.pack.add {gh 'folke/lazydev.nvim'}
-require('lazydev').setup {
-  library = {
-    -- Nạp type luv khi gặp vim.uv
-    {path = '${3rd}/luv/library', words = {'vim%.uv'}}
-  }
-}
-
--- tiny-inline-diagnostic: hiển thị lỗi/warning inline giống Error Lens (VSCode)
 vim.pack.add {gh 'rachartier/tiny-inline-diagnostic.nvim'}
 require('tiny-inline-diagnostic').setup {}
--- Tắt virtual_text mặc định vì tiny-inline-diagnostic đã tự vẽ inline
 vim.diagnostic.config {virtual_text = false}
 
 vim.api.nvim_create_autocmd('LspAttach', {

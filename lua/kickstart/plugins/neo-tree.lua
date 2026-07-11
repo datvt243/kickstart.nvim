@@ -3,14 +3,12 @@
 
 if vim.g.vscode ~= nil then return end
 
+-- Icon: dùng mini.icons qua mock_nvim_web_devicons() (xem lua/custom/plugins/ui/icons.lua),
+-- không cần cài nvim-web-devicons thật
 local plugins = {{
   src = 'https://github.com/nvim-neo-tree/neo-tree.nvim',
   version = vim.version.range '*'
 }, 'https://github.com/nvim-lua/plenary.nvim', 'https://github.com/MunifTanjim/nui.nvim'}
-
-if vim.g.have_nerd_font then
-  table.insert(plugins, 'https://github.com/nvim-tree/nvim-web-devicons') -- not strictly required, but recommended
-end
 
 vim.pack.add(plugins)
 

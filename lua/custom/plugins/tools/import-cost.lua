@@ -1,5 +1,6 @@
--- vim-import-cost: hiển thị kích thước (KB) của mỗi import JS/TS, giống Import Cost (VSCode)
+-- vim-import-cost: hiển thị kích thước (KB) của mỗi import JS/TS, giống Import Cost (VSCode) (terminal only)
 -- https://github.com/yardnsm/vim-import-cost
+-- Keymap nổi bật: <leader>ic hiển thị KB, <leader>iC xóa hiển thị (chỉ buffer JS/TS)
 if vim.g.vscode ~= nil then return end
 
 local function gh(repo)

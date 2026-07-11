@@ -369,15 +369,15 @@ require 'custom.plugins'
 -- ============================================================
 -- SECTION 10: PLUGINS TÙY CHỌN
 -- Bỏ comment để bật; khởi động lại Neovim sau khi thay đổi
+-- (autopairs, indent_line, todo-comments, bufferline... đã chuyển sang các
+--  subfolder dưới custom/plugins/, tự động load — xem CLAUDE.md để biết chỗ
+--  toggle từng plugin: local `enabled`/`active` flag trong chính file đó)
 -- ============================================================
 do
-  require 'kickstart.plugins.autopairs' -- tự đóng ngoặc
-  require 'kickstart.plugins.indent_line' -- indent guides
   -- require 'kickstart.plugins.debug'         -- DAP debugger
   -- require 'kickstart.plugins.lint'          -- linter
   require 'kickstart.plugins.neo-tree' -- file explorer nâng cao
   require 'kickstart.plugins.gitsigns' -- git keymaps đầy đủ
-  -- require 'kickstart.plugins.bufferline'    -- thanh tab hiển thị buffer đang mở
 end
 
 -- vim: ts=2 sts=2 sw=2 et

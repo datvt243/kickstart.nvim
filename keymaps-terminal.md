@@ -156,6 +156,19 @@
 
 ---
 
+## Trouble (diagnostics/quickfix/loclist/LSP refs)
+
+| Phím | Mode | Env | Mô tả |
+|---|---|---|---|
+| `<leader>xx` | n | TER | Toggle diagnostics (toàn workspace) |
+| `<leader>xX` | n | TER | Toggle diagnostics (chỉ buffer hiện tại) |
+| `<leader>xs` | n | TER | Toggle symbols |
+| `<leader>xr` | n | TER | Toggle LSP references/definitions |
+| `<leader>xl` | n | TER | Toggle location list |
+| `<leader>xq` | n | TER | Toggle quickfix list |
+
+---
+
 ## Format
 
 | Phím | Mode | Env | Mô tả |

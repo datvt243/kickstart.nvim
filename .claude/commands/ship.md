@@ -4,19 +4,24 @@ Perform the following steps in order to sync docs, then commit and push code.
 
 Read all keymaps from source files in this order:
 - `init.lua` (marker `### KEYMAPS CHUNG`)
-- `lua/custom/plugins/ui.lua` (markers: `### MINI.AI`, `### MINI.SURROUND`, `### MINI.MOVE`, `### FLASH.NVIM`)
+- `lua/custom/plugins/coding/mini-ai.lua` (marker `### MINI.AI`)
+- `lua/custom/plugins/editor/text-objects.lua` (markers: `### MINI.SURROUND`, `### MINI.MOVE`)
+- `lua/custom/plugins/editor/flash.lua` (marker `### FLASH.NVIM`, plus top-of-file `<leader>j` binding)
+- `lua/custom/plugins/editor/trouble.lua` (marker `### TROUBLE.NVIM`)
 - `lua/custom/plugins/telescope.lua` (marker `### TELESCOPE KEYMAPS`)
 - `lua/custom/plugins/lsp.lua` (marker `### LSP KEYMAPS`)
-- `lua/custom/plugins/completion.lua` (marker `### BLINK.CMP KEYMAPS`)
-- `lua/custom/plugins/format.lua` (marker `### FORMAT KEYMAP`)
-- `lua/custom/plugins/claudecode.lua` (marker `### CLAUDE CODE`)
-- `lua/custom/plugins/terminal.lua` (marker `### TERMINAL KEYMAPS`)
-- `lua/custom/plugins/project.lua` (marker `### PROJECT`)
+- `lua/custom/plugins/coding/blink-cmp.lua` (marker `### BLINK.CMP KEYMAPS`)
+- `lua/custom/plugins/formatting/conform.lua` (marker `### FORMAT KEYMAP`)
+- `lua/custom/plugins/tools/claudecode.lua` (marker `### CLAUDE CODE`)
+- `lua/custom/plugins/tools/terminal.lua` (marker `### TERMINAL KEYMAPS`)
+- `lua/custom/plugins/tools/project.lua` (marker `### PROJECT`)
 - `lua/custom/plugins/vscode.lua` (all `###` markers in this file)
 - `lua/kickstart/plugins/gitsigns.lua` (marker `### GIT COMMANDS`)
 - `lua/kickstart/plugins/neo-tree.lua` (tất cả `vim.keymap.set` — không có marker)
 
-Keymaps found only in terminal-only files (or guarded by `if vim.g.vscode ~= nil then return end`) go into `keymaps-terminal.md` with `Env = TER`. Keymaps found only in `vscode.lua` (or guarded by `if vim.g.vscode == nil then return end`) go into `keymaps-vscode.md` with `Env = VSC`. Keymaps that exist identically in both environments (e.g. shared `init.lua`/`ui.lua` bindings) go into both files with `Env = BOTH`.
+Nếu không tìm thấy 1 file/marker nào ở trên (do cấu trúc thư mục đã đổi), chạy `grep -rn '### ' lua/custom/plugins/ lua/kickstart/plugins/` để tìm marker hiện tại trước khi bỏ qua nó.
+
+Keymaps found only in terminal-only files (or guarded by `if vim.g.vscode ~= nil then return end`) go into `keymaps-terminal.md` with `Env = TER`. Keymaps found only in `vscode.lua` (or guarded by `if vim.g.vscode == nil then return end`) go into `keymaps-vscode.md` with `Env = VSC`. Keymaps that exist identically in both environments (e.g. shared `init.lua` bindings, or `<leader>j` in `flash.lua`) go into both files with `Env = BOTH`.
 
 Compare with the current `keymaps-terminal.md` and `keymaps-vscode.md` and update any keys, descriptions, or sections that are missing or have changed. Preserve the existing table format and legend in each file. Only add/edit/remove what is actually different.
 

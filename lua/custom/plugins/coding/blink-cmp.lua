@@ -1,26 +1,9 @@
--- Autocomplete: blink.cmp + LuaSnip
--- blink.cmp: engine autocomplete hiện đại, nhanh hơn nvim-cmp, dùng Rust
--- LuaSnip: snippet engine; blink.cmp dùng làm nguồn snippet
+-- blink.cmp: engine autocomplete hiện đại, nhanh hơn nvim-cmp, dùng Rust (terminal only)
+-- Dùng LuaSnip (coding/luasnip.lua) làm nguồn snippet
 -- https://github.com/saghen/blink.cmp
--- https://github.com/L3MON4D3/LuaSnip
+if vim.g.vscode ~= nil then return end
 
-local function gh(repo)
-  return 'https://github.com/' .. repo
-end
-
-if vim.g.vscode ~= nil then
-  return
-end
-
-vim.pack.add {{
-  src = gh 'L3MON4D3/LuaSnip',
-  version = vim.version.range '2.*'
-}}
-require('luasnip').setup {}
-
--- Bỏ comment để dùng friendly-snippets (snippet có sẵn cho nhiều ngôn ngữ):
--- vim.pack.add { gh 'rafamadriz/friendly-snippets' }
--- require('luasnip.loaders.from_vscode').lazy_load()
+local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add {{
   src = gh 'saghen/blink.cmp',

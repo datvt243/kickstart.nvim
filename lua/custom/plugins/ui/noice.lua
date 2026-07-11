@@ -1,5 +1,6 @@
--- noice.nvim: thay thế cmdline, messages, notifications bằng floating UI
--- Yêu cầu: nui.nvim (đã cài qua neo-tree)
+-- noice.nvim: thay thế cmdline, messages, notifications bằng floating UI (terminal only)
+-- Yêu cầu: nui.nvim (đã cài qua kickstart/plugins/neo-tree.lua)
+-- https://github.com/folke/noice.nvim
 if vim.g.vscode ~= nil then return end
 
 local function gh(repo)

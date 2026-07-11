@@ -17,36 +17,60 @@ This is a personal Neovim config based on kickstart.nvim, running in **two envir
 ```
 init.lua                        — options, shared keymaps, vim.pack hooks, load plugins
 lua/
-  custom/plugins/               — plugin files (auto-loaded by init.lua)
-    init.lua                    — auto-loader: requires every .lua file in the directory
-    completion.lua              — blink.cmp + LuaSnip (terminal)
+  custom/plugins/               — plugin files (auto-loaded recursively by init.lua)
+    init.lua                    — auto-loader: requires every .lua file in the tree (incl. subfolders)
     dashboard.lua               — dashboard-nvim: welcome screen (terminal)
-    format.lua                  — conform.nvim: formatter (terminal)
     lsp.lua                     — nvim-lspconfig + Mason + fidget + lazydev (terminal)
     telescope.lua               — Telescope fuzzy finder (terminal)
-    treesitter.lua              — nvim-treesitter (terminal)
-    claudecode.lua              — Claude Code integration (terminal)
-    noice.lua                   — noice.nvim: floating cmdline + notifications (terminal)
-    project.lua                 — project.nvim: auto-detect root + Telescope picker (terminal)
-    terminal.lua                — toggleterm.nvim: small terminal at the bottom (terminal)
-    codesnap.lua                — codesnap.nvim: capture code as an image (terminal)
-    import-cost.lua             — vim-import-cost: shows KB per JS/TS import (terminal)
-    scrollbar.lua               — nvim-scrollbar: git change/diagnostics on the scrollbar (terminal)
-    neoscroll.lua               — neoscroll.nvim: smooth scrolling (terminal)
-    ts-comments.lua             — ts-comments.nvim: accurate comment string via treesitter (terminal)
-    ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, tokyonight... (both)
-    whichkey.lua                — which-key.nvim: keymap hints when pressing leader (terminal)
     vscode.lua                  — VSCode keymaps via vscode.action() (VSCode only)
+    editor/                     — editing behavior / motion plugins, always auto-loaded (no opt-in toggle)
+      flash.lua                 — flash.nvim: jump nhanh bằng s/S/<leader>j (both)
+      text-objects.lua          — mini.surround + mini.move + guess-indent (both)
+      neoscroll.lua             — neoscroll.nvim: smooth scrolling (terminal)
+      scrollbar.lua             — nvim-scrollbar: git change/diagnostics on the scrollbar (terminal)
+      indent_line.lua           — [ENABLED] indent guides (terminal)
+      whichkey.lua              — which-key.nvim: keymap hints when pressing leader (terminal)
+      trouble.lua               — trouble.nvim: diagnostics/quickfix/loclist/LSP refs list, <leader>x* (terminal)
+      todo-comments.lua         — todo-comments.nvim: highlight TODO/FIXME/NOTE/HACK/WARN (terminal)
+    coding/                     — language/code-writing helper plugins, always auto-loaded (no opt-in toggle)
+      ts-comments.lua           — ts-comments.nvim: accurate comment string via treesitter (terminal)
+      mini-ai.lua               — mini.ai: text objects mở rộng (both)
+      autopairs.lua             — nvim-autopairs: auto-close brackets (terminal)
+      blink-cmp.lua             — blink.cmp: autocomplete engine, marker `### BLINK.CMP KEYMAPS` (terminal)
+      luasnip.lua               — LuaSnip: snippet engine, nguồn snippet cho blink.cmp (terminal)
+      lazydev.lua               — lazydev.nvim: lua_ls type cho Neovim config/plugin (terminal)
+    colorscheme/                — colorscheme + theme-adjacent UI plugins, always auto-loaded (no opt-in toggle)
+      tokyonight.lua            — [ACTIVE] tokyonight.nvim: colorscheme, full setup options (terminal)
+      catppuccin.lua            — [INACTIVE] catppuccin.nvim: colorscheme, full setup options (terminal)
+    formatting/                 — code-formatting plugins, always auto-loaded (no opt-in toggle)
+      conform.lua               — conform.nvim: formatter, <leader>qf/qF/qc (terminal)
+    ui/                         — small standalone UI plugins, always auto-loaded (no opt-in toggle)
+      icons.lua                 — mini.icons: icon theo filetype, mock_nvim_web_devicons() — LOAD TRƯỚC (xem custom/plugins/init.lua)
+      lualine.lua               — lualine.nvim: statusline, theme = 'auto' theo colorscheme active (terminal)
+      noice.lua                 — noice.nvim: floating cmdline + notifications (terminal)
+      bufferline.lua            — [DISABLED via `local enabled = false` in file] tab bar showing open buffers, themable (terminal)
+    treesitter/                 — syntax parsing, always auto-loaded (no opt-in toggle)
+      treesitter.lua            — nvim-treesitter (terminal)
+      autotag.lua               — nvim-ts-autotag: auto-close/rename cặp thẻ HTML/JSX/TSX (terminal)
+    tools/                      — external tool integrations, always auto-loaded (no opt-in toggle)
+      claudecode.lua            — Claude Code integration (terminal)
+      project.lua               — project.nvim: auto-detect root + Telescope picker (terminal)
+      terminal.lua              — toggleterm.nvim: small terminal at the bottom (terminal)
+      codesnap.lua              — codesnap.nvim: capture code as an image (terminal)
+      import-cost.lua           — vim-import-cost: shows KB per JS/TS import (terminal)
   kickstart/plugins/            — optional plugins (uncomment in Section 10 to enable)
-    autopairs.lua               — [ENABLED] auto-close brackets
-    bufferline.lua              — bufferline.nvim: tab bar showing open buffers
     debug.lua                   — DAP debugger
     gitsigns.lua                — [ENABLED] full git keymaps
-    indent_line.lua             — indent guides
     lint.lua                    — linter
     neo-tree.lua                — [ENABLED] advanced file explorer: \, <leader>e, <leader>ee
   health.lua                    — config health check
 ```
+
+> `custom/plugins/ui/icons.lua` is `require`d explicitly at the top of `custom/plugins/init.lua`, before the recursive loader runs — it calls `mini.icons`'s `mock_nvim_web_devicons()`, and every other plugin that calls `require('nvim-web-devicons')` (Telescope, Neo-tree, lualine, bufferline) needs that mock in place first. Directory-walk order isn't guaranteed, so don't remove this early require.
+>
+> Subfolders under `custom/plugins/` (`editor/`, `coding/`, `colorscheme/`, `formatting/`, `ui/`, `treesitter/`, ...) are loaded by the same recursive auto-loader — files there **cannot** be disabled by commenting a require in Section 10. To disable one, add a local `enabled`/`active` flag inside the file itself (see `bufferline.lua` for the pattern).
+>
+> **Switching colorscheme:** both `colorscheme/tokyonight.lua` and `colorscheme/catppuccin.lua` always run `vim.pack.add` + `.setup()` (so the plugin is always installed and configured), but only the file with `local active = true` calls `vim.cmd.colorscheme`. To switch, flip `active` to `true` in the target file and to `false` in the other, then `:ReloadConfig` or restart.
 
 ## init.lua — Section layout
 
@@ -63,7 +87,7 @@ lua/
 
 ### Environment detection
 ```lua
-local is_vscode = vim.g.vscode ~= nil   -- used in ui.lua (serves both environments)
+local is_vscode = vim.g.vscode ~= nil   -- used in files that behave differently per environment (e.g. editor/text-objects.lua)
 ```
 
 ### Guard for terminal-only files (early return)
@@ -103,8 +127,8 @@ vim.pack.add { gh 'user/repo' }
 | Marker | File | Content |
 |---|---|---|
 | `### KEYMAPS CHUNG` | `init.lua` | j/k, {/}, buffer, save, indent, move lines, splits |
-| `### MINI.AI` | `ui.lua` | text objects: af/if (function), ac/ic (class), treesitter |
-| `### MINI.SURROUND` | `ui.lua` | add/delete/replace surround |
+| `### MINI.AI` | `custom/plugins/coding/mini-ai.lua` | text objects: af/if (function), ac/ic (class), treesitter |
+| `### MINI.SURROUND` | `custom/plugins/editor/text-objects.lua` | add/delete/replace surround |
 
 ## VSCode — Required extensions
 
@@ -140,7 +164,7 @@ Mason will install it automatically on the next Neovim restart.
 
 ## Adding a new formatter
 
-Open `lua/custom/plugins/format.lua`, find `formatters_by_ft`:
+Open `lua/custom/plugins/formatting/conform.lua`, find `formatters_by_ft`:
 ```lua
 formatters_by_ft = {
   python = { 'black' },  -- new
@@ -150,11 +174,12 @@ formatters_by_ft = {
 
 ## Enabling an optional plugin
 
-Uncomment it in Section 10 of `init.lua`:
-```lua
-require 'kickstart.plugins.indent_line'
-```
-Then restart Neovim.
+- **`kickstart/plugins/*.lua`** (opt-in): uncomment its `require` in Section 10 of `init.lua`.
+  ```lua
+  require 'kickstart.plugins.lint'
+  ```
+  Then restart Neovim.
+- **subfolders under `custom/plugins/`** (`editor/`, `coding/`, `colorscheme/`, `formatting/`, `ui/`, `treesitter/`) — always auto-loaded, no Section 10 toggle: if the file has a local `enabled`/`active` flag (e.g. `ui/bufferline.lua`, `colorscheme/*.lua`), flip it. Otherwise the plugin is already active by virtue of being in the directory.
 
 ## Formatting Lua code
 
