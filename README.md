@@ -50,6 +50,7 @@ lua/
     telescope.lua               — Telescope fuzzy finder
     treesitter.lua              — nvim-treesitter
     ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, tokyonight, gitsigns...
+    whichkey.lua                — which-key.nvim: gợi ý keymap khi gõ leader (terminal)
     vscode.lua                  — VSCode keymaps (VSCode only)
   kickstart/plugins/            — optional plugins (bật ở Section 10 của init.lua)
 vscode/

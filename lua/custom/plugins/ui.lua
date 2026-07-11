@@ -96,45 +96,7 @@ vim.keymap.set({ 'n', 'x', 'o' }, '<leader>j', function() require('flash').jump(
 if not is_vscode then
   if vim.g.have_nerd_font then vim.pack.add { gh 'nvim-tree/nvim-web-devicons' } end
 
-  -- Hiển thị gợi ý phím khi bấm leader
-  vim.pack.add { gh 'folke/which-key.nvim' }
-  require('which-key').setup {
-    delay = 0,
-    plugins = {
-      spelling = true,
-      presets = {},
-    },
-    show_help = false,
-    icons = {
-      mappings = vim.g.have_nerd_font,
-    },
-    spec = {
-      {
-        '<leader>s',
-        group = '[S]earch',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<leader>t',
-        group = '[T]oggle',
-      },
-      {
-        '<leader>h',
-        group = 'Git [H]unk',
-        mode = { 'n', 'v' },
-      },
-      {
-        'gr',
-        group = 'LSP Actions',
-        mode = { 'n' },
-      },
-      {
-        '<leader>s',
-        hidden = false,
-        mode = { 'n', 'v' },
-      },
-    },
-  }
+  -- which-key: xem setup ở lua/custom/plugins/whichkey.lua (chỉ gọi setup() ở đó)
 
   -- Colorscheme: tokyonight-night
   -- Đổi theme: thay 'tokyonight-night' → storm / moon / day

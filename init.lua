@@ -81,7 +81,7 @@ do
   }
 
   -- Mở danh sách lỗi/warning từ LSP vào location list để navigate
-  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, {
+  vim.keymap.set('n', '<leader>qq', vim.diagnostic.setloclist, {
     desc = 'Mở danh sách diagnostic'
   })
 

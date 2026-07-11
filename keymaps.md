@@ -18,6 +18,17 @@
 
 ---
 
+## Scroll (neoscroll.nvim)
+
+| Phím | Mode | Env | Mô tả |
+|---|---|---|---|
+| `Ctrl+U` / `Ctrl+D` | n, v | TER | Scroll nửa trang lên/xuống, có animation |
+| `Ctrl+B` / `Ctrl+F` | n, v | TER | Scroll cả trang lên/xuống, có animation |
+| `Ctrl+Y` / `Ctrl+E` | n, v | TER | Scroll 1 dòng lên/xuống, có animation |
+| `zt` / `zz` / `zb` | n, v | TER | Căn dòng hiện tại lên đầu/giữa/cuối màn hình, có animation |
+
+---
+
 ## Buffer
 
 | Phím | Mode | Env | Mô tả |
@@ -169,7 +180,7 @@
 | `gO` | n | TER | Document symbols |
 | `gW` | n | TER | Workspace symbols |
 | `<leader>th` | n | TER | Toggle Inlay Hints |
-| `<leader>q` | n | TER | Mở danh sách diagnostic |
+| `<leader>qq` | n | TER | Mở danh sách diagnostic |
 
 ---
 
@@ -207,7 +218,9 @@
 
 | Phím | Mode | Env | Mô tả |
 |---|---|---|---|
-| `<leader>f` | n, v | TER | Format buffer / selection (conform.nvim) |
+| `<leader>qf` | n, v | TER | Format current file / selection (conform.nvim) |
+| `<leader>qF` | n, v | TER | Format current file with... (chọn formatter) |
+| `<leader>qc` | n | TER | Change language mode (đổi filetype) |
 | `<leader>f` | n, v | VSC | Format document (VSCode formatter) |
 
 ---

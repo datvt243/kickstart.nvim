@@ -31,7 +31,10 @@ lua/
     terminal.lua                — toggleterm.nvim: terminal nhỏ ở bottom (terminal)
     codesnap.lua                — codesnap.nvim: chụp code thành ảnh (terminal)
     import-cost.lua             — vim-import-cost: hiển thị KB từng import JS/TS (terminal)
-    ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, which-key, tokyonight... (cả hai)
+    scrollbar.lua                — nvim-scrollbar: git change/diagnostics trên scrollbar (terminal)
+    neoscroll.lua                — neoscroll.nvim: smooth scrolling (terminal)
+    ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, tokyonight... (cả hai)
+    whichkey.lua                — which-key.nvim: gợi ý keymap khi gõ leader (terminal)
     vscode.lua                  — VSCode keymaps qua vscode.action() (VSCode only)
   kickstart/plugins/            — optional plugins (bỏ comment ở Section 10 để bật)
     autopairs.lua               — [BẬT] tự đóng ngoặc
@@ -104,7 +107,7 @@ Các marker `###` nằm rải rác trong các file plugin:
 | `### TELESCOPE KEYMAPS` | `telescope.lua` | tìm file, grep, buffer |
 | `### LSP KEYMAPS` | `lsp.lua` | gd, gk, grn, gra |
 | `### BLINK.CMP KEYMAPS` | `completion.lua` | autocomplete |
-| `### FORMAT KEYMAP` | `format.lua` | `<leader>f` |
+| `### FORMAT KEYMAP` | `format.lua` | `<leader>qf`/`qF`/`qc` |
 | `### CLAUDE CODE` | `claudecode.lua` | toggle terminal, send selection, accept/deny diff |
 | `### PROJECT` | `project.lua` | `<leader>sp` → danh sách project |
 | `### TERMINAL KEYMAPS` | `terminal.lua` | `<leader>tt` → toggle terminal |

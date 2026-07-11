@@ -47,10 +47,42 @@ require('conform').setup {
 
 -- ### FORMAT KEYMAP
 -- Format buffer (normal) hoặc selection (visual) bằng formatter cấu hình trong formatters_by_ft
-vim.keymap.set({'n', 'v'}, '<leader>f', function()
+vim.keymap.set({'n', 'v'}, '<leader>qf', function()
   require('conform').format {
     async = true
   }
 end, {
-  desc = '[F]ormat buffer'
+  desc = 'Format current file'
+})
+
+-- Format buffer với formatter tự chọn (hiện danh sách formatter khả dụng cho filetype hiện tại)
+vim.keymap.set({'n', 'v'}, '<leader>qF', function()
+  local conform = require 'conform'
+  local formatters = conform.list_formatters_for_buffer(0)
+  if #formatters == 0 then
+    vim.notify('Không có formatter nào cho filetype này', vim.log.levels.WARN)
+    return
+  end
+  vim.ui.select(formatters, { prompt = 'Format current file with...' }, function(choice)
+    if choice then
+      conform.format { formatters = { choice }, async = true }
+    end
+  end)
+end, {
+  desc = 'Format current file with...'
+})
+
+-- Đổi filetype của buffer hiện tại (tương đương "change language mode")
+vim.keymap.set('n', '<leader>qc', function()
+  vim.ui.input({
+    prompt = 'Filetype: ',
+    default = vim.bo.filetype,
+    completion = 'filetype'
+  }, function(input)
+    if input and input ~= '' then
+      vim.bo.filetype = input
+    end
+  end)
+end, {
+  desc = 'Change language mode'
 })
