@@ -343,6 +343,11 @@ if not is_vscode then
           vim.cmd 'TSUpdate'
           return
         end
+
+        if name == 'vim-import-cost' and vim.fn.executable 'npm' == 1 then
+          run_build(name, {'npm', 'install', '--production'}, ev.data.path)
+          return
+        end
       end
     })
   end

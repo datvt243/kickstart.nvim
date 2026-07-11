@@ -18,6 +18,12 @@ end
 vim.pack.add {gh 'j-hui/fidget.nvim'}
 require('fidget').setup {}
 
+-- tiny-inline-diagnostic: hiển thị lỗi/warning inline giống Error Lens (VSCode)
+vim.pack.add {gh 'rachartier/tiny-inline-diagnostic.nvim'}
+require('tiny-inline-diagnostic').setup {}
+-- Tắt virtual_text mặc định vì tiny-inline-diagnostic đã tự vẽ inline
+vim.diagnostic.config {virtual_text = false}
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach', {
     clear = true

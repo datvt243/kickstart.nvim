@@ -79,6 +79,8 @@
 |---|---|---|---|
 | `\` | n | TER | Từ editor: focus + reveal Neo-tree. Từ Neo-tree: trả focus về editor |
 | `<leader>e` | n | TER | Mở / đóng Neo-tree |
+| `<leader>ee` | n | TER | Focus vào cửa sổ Neo-tree (mở nếu đang đóng), không reveal file |
+| `Ctrl+H` | n | TER | Từ Neo-tree: quay lại editor (window nav chuẩn, đã có sẵn) |
 
 ---
 
@@ -207,6 +209,24 @@
 |---|---|---|---|
 | `<leader>f` | n, v | TER | Format buffer / selection (conform.nvim) |
 | `<leader>f` | n, v | VSC | Format document (VSCode formatter) |
+
+---
+
+## Import Cost (Terminal only — file JS/TS/JSX/TSX)
+
+| Phím | Mode | Env | Mô tả |
+|---|---|---|---|
+| `<leader>ic` | n | TER | Hiển thị kích thước (KB) từng import (vim-import-cost) |
+| `<leader>iC` | n | TER | Xóa hiển thị kích thước import |
+
+---
+
+## CodeSnap (Terminal only)
+
+| Phím | Mode | Env | Mô tả |
+|---|---|---|---|
+| `<leader>cp` | v | TER | Chụp ảnh selection, copy vào clipboard (codesnap.nvim) |
+| `<leader>cP` | v | TER | Chụp ảnh selection, lưu ra file (nhập đường dẫn) |
 
 ---
 

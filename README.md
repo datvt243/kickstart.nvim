@@ -41,6 +41,8 @@ lua/
     noice.lua                   — noice.nvim floating UI (terminal)
     project.lua                 — project.nvim auto root + Telescope (terminal)
     terminal.lua                — toggleterm.nvim bottom terminal (terminal)
+    codesnap.lua                — codesnap.nvim: chụp code thành ảnh (terminal)
+    import-cost.lua             — vim-import-cost: KB từng import JS/TS (terminal)
     completion.lua              — blink.cmp + LuaSnip
     dashboard.lua               — dashboard-nvim
     format.lua                  — conform.nvim
@@ -78,6 +80,7 @@ vscode/
 |---|---|
 | `\` | Focus Neo-tree (từ editor) / trở về editor (từ Neo-tree) |
 | `<leader>e` | Mở / đóng Neo-tree |
+| `<leader>ee` | Focus vào Neo-tree (mở nếu đang đóng); `Ctrl+H` để quay lại editor |
 | `s` / `S` | Flash jump / Flash treesitter |
 | `<leader>sf` | Telescope tìm file |
 | `<leader>sg` | Telescope grep |
@@ -87,6 +90,8 @@ vscode/
 | `<leader>tt` | Toggle terminal bottom (toggleterm) |
 | `<leader>cc` | Toggle Claude Code terminal |
 | `<leader>cs` | Gửi selection đến Claude (visual) |
+| `<leader>cp` / `<leader>cP` | CodeSnap: copy / lưu ảnh code (visual) |
+| `<leader>ic` / `<leader>iC` | Hiện / ẩn kích thước import (JS/TS) |
 
 ### VSCode (vscode-neovim)
 

@@ -23,6 +23,11 @@ vim.keymap.set('n', '\\', '<Cmd>Neotree reveal<CR>', {
 vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', {
   desc = 'Mở/đóng file explorer'
 })
+-- Focus vào cửa sổ Neo-tree (mở nếu đang đóng), không reveal file hiện tại
+-- Quay lại editor: dùng Ctrl+H (Neo-tree luôn nằm bên trái)
+vim.keymap.set('n', '<leader>ee', '<Cmd>Neotree focus<CR>', {
+  desc = 'Focus vào Neo-tree'
+})
 
 -- Tự mở neo-tree khi: không có arg (cùng dashboard) hoặc mở thư mục (nvim .)
 vim.api.nvim_create_autocmd('VimEnter', {

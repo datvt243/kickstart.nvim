@@ -29,6 +29,8 @@ lua/
     noice.lua                   — noice.nvim: floating cmdline + notifications (terminal)
     project.lua                 — project.nvim: auto-detect root + Telescope picker (terminal)
     terminal.lua                — toggleterm.nvim: terminal nhỏ ở bottom (terminal)
+    codesnap.lua                — codesnap.nvim: chụp code thành ảnh (terminal)
+    import-cost.lua             — vim-import-cost: hiển thị KB từng import JS/TS (terminal)
     ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, which-key, tokyonight... (cả hai)
     vscode.lua                  — VSCode keymaps qua vscode.action() (VSCode only)
   kickstart/plugins/            — optional plugins (bỏ comment ở Section 10 để bật)
@@ -37,7 +39,7 @@ lua/
     gitsigns.lua                — [BẬT] git keymaps đầy đủ
     indent_line.lua             — indent guides
     lint.lua                    — linter
-    neo-tree.lua                — [BẬT] file explorer nâng cao
+    neo-tree.lua                — [BẬT] file explorer nâng cao: \, <leader>e, <leader>ee
   health.lua                    — kiểm tra sức khoẻ config
 ```
 
@@ -106,6 +108,8 @@ Các marker `###` nằm rải rác trong các file plugin:
 | `### CLAUDE CODE` | `claudecode.lua` | toggle terminal, send selection, accept/deny diff |
 | `### PROJECT` | `project.lua` | `<leader>sp` → danh sách project |
 | `### TERMINAL KEYMAPS` | `terminal.lua` | `<leader>tt` → toggle terminal |
+| `### CODESNAP KEYMAPS` | `codesnap.lua` | `<leader>cp`/`<leader>cP` → chụp ảnh code |
+| `### IMPORT COST KEYMAPS` | `import-cost.lua` | `<leader>ic`/`<leader>iC` → hiện/ẩn KB import |
 | `### JUMP` | `vscode.lua` | flash.nvim dùng chung (xem ui.lua) |
 | `### SYSTEM SHORTCUTS` | `vscode.lua` | C-c/x/v/z → VSCode native; C-g go to line |
 | `### FILE & SEARCH` | `vscode.lua` | C-p, C-f, C-S-f, leader sf/sg/ff/fs |
