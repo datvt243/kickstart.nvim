@@ -6,7 +6,7 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'folke/which-key.nvim' }
 require('which-key').setup {
-  delay = 0,
+  delay = 500, -- tăng tạm từ 0 → 500ms để gõ nhanh gg/ge/gv... không bị popup nhấp nháy giữa chừng
   plugins = {
     spelling = true,
     presets = {},

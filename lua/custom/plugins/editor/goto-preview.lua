@@ -11,7 +11,9 @@ require('goto-preview').setup {
   default_mappings = false,
   -- Esc chỉ đóng preview window khi cursor đang ở trong chính preview đó (buffer-local),
   -- không đụng đến keymap Esc global (nohlsearch, xem init.lua)
-  post_open_hook = function(_, preview_buf)
+  -- LƯU Ý: post_open_hook(buffer, window) — tham số 1 mới là buffer, tham số 2 là window
+  -- handle (xem goto-preview/lib.lua: run_post_open_hook_function(buffer, preview_window))
+  post_open_hook = function(preview_buf, _)
     vim.keymap.set('n', '<Esc>', require('goto-preview').close_all_win, {
       buffer = preview_buf,
       desc = 'Đóng preview window',
