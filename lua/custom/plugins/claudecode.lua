@@ -12,11 +12,14 @@ require('claudecode').setup {}
 
 -- ### CLAUDE CODE
 -- <leader>cc → toggle Claude Code terminal
+-- <leader>cf → focus vào Claude Code terminal
 -- <leader>cs → gửi selection hiện tại đến Claude (visual mode)
 -- <leader>ca → accept diff (khi Claude đề xuất thay đổi)
 -- <leader>cd → deny diff
 -- Bật/tắt terminal Claude Code
 vim.keymap.set('n', '<leader>cc', '<cmd>ClaudeCode<cr>',           { desc = '[C]laude [C]ode toggle' })
+-- Focus vào terminal Claude Code (không toggle, chỉ nhảy vào)
+vim.keymap.set('n', '<leader>cf', '<cmd>ClaudeCodeFocus<cr>',      { desc = '[C]laude [F]ocus' })
 -- Gửi vùng text đang chọn đến Claude để phân tích / hỗ trợ
 vim.keymap.set('v', '<leader>cs', '<cmd>ClaudeCodeSend<cr>',       { desc = '[C]laude [S]end selection' })
 -- Chấp nhận thay đổi Claude đề xuất trong diff view

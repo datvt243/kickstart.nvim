@@ -403,6 +403,7 @@
 | Phím | Mode | Env | Mô tả |
 |---|---|---|---|
 | `<leader>cc` | n | TER | Toggle Claude Code terminal |
+| `<leader>cf` | n | TER | Focus vào Claude Code terminal |
 | `<leader>cs` | v | TER | Gửi selection đến Claude |
 | `<leader>ca` | n | TER | Accept diff Claude đề xuất |
 | `<leader>cd` | n | TER | Deny diff |

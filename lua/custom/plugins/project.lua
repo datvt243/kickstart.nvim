@@ -21,6 +21,16 @@ require('project_nvim').setup {
 -- Sau khi chọn: cd vào project + mở Neo-tree
 vim.keymap.set('n', '<leader>sp', function()
   require('telescope').extensions.projects.projects(require('telescope.themes').get_ivy {
+    -- Hiển thị "parent/folder" thay vì chỉ "folder" — hữu ích khi 2 project trùng tên
+    -- entry_maker = function(entry)
+    --   local folder = vim.fn.fnamemodify(entry, ':t')
+    --   local parent = vim.fn.fnamemodify(entry, ':h:t')
+    --   return {
+    --     value = entry,
+    --     display = parent .. '/' .. folder,
+    --     ordinal = parent .. '/' .. folder,
+    --   }
+    -- end,
     attach_mappings = function(_, map)
       map('i', '<CR>', function(prompt_bufnr)
         local entry = require('telescope.actions.state').get_selected_entry()
