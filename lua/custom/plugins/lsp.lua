@@ -96,6 +96,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 ---@type table<string, vim.lsp.Config>
 local servers = {
   ts_ls = {}, -- TypeScript / JavaScript
+  gopls = {}, -- Go
   eslint = {
     on_attach = function(_, bufnr)
       vim.api.nvim_create_autocmd('BufWritePre', {

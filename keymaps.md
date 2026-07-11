@@ -142,6 +142,8 @@
 | `<leader>sp` | n | TER | Danh sách project (project.nvim) |
 | `<leader>/` | n | TER | Fuzzy search trong buffer hiện tại |
 | `<leader>s/` | n | TER | Grep trong các file đang mở |
+| `gf` | n | TER | Fuzzy search trong file (alias, giống `<leader>/`) |
+| `gF` | n | TER | Fuzzy search toàn workspace (alias, giống `<leader>sg`) |
 
 ---
 

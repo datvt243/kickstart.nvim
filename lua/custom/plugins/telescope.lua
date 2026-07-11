@@ -95,6 +95,19 @@ vim.keymap.set('n', '<leader>/', function()
 end, {
   desc = 'Tìm kiếm mờ trong buffer hiện tại'
 })
+-- Fuzzy search trong buffer hiện tại (g-prefix alias, giống <leader>/)
+vim.keymap.set('n', 'gf', function()
+  builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+    winblend = 10,
+    previewer = false
+  })
+end, {
+  desc = 'Fuzzy search trong file'
+})
+-- Live grep toàn project (g-prefix alias, giống <leader>sg)
+vim.keymap.set('n', 'gF', builtin.live_grep, {
+  desc = 'Fuzzy search toàn workspace'
+})
 -- Live grep chỉ trong các file đang mở (buffer đang có)
 vim.keymap.set('n', '<leader>s/', function()
   builtin.live_grep {

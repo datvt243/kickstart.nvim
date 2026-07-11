@@ -245,6 +245,20 @@ do
     end, {
       desc = 'Cập nhật plugin qua vim.pack'
     })
+
+    -- Reload toàn bộ config sau khi sửa keymap/plugin, không cần thoát ra vào lại
+    -- Clear cache của custom.*/kickstart.* trước vì require() cache module, source lại không tự áp dụng
+    vim.api.nvim_create_user_command('ReloadConfig', function()
+      for name in pairs(package.loaded) do
+        if name:match '^custom' or name:match '^kickstart' then
+          package.loaded[name] = nil
+        end
+      end
+      dofile(vim.env.MYVIMRC)
+      vim.notify('Đã reload config', vim.log.levels.INFO)
+    end, {
+      desc = 'Reload toàn bộ Neovim config'
+    })
   end
 
   -- Thoát terminal mode bằng Esc Esc (mặc định phải dùng C-\ C-n)

@@ -91,6 +91,7 @@ vim.pack.add { gh 'user/repo' }
 
 -- Cập nhật:       :PackUpdate
 -- Xem trạng thái: :lua vim.pack.update(nil, { offline = true })
+-- Reload config:  :ReloadConfig (không cần thoát/vào lại Neovim)
 ```
 
 ## Tìm kiếm nhanh (gõ `/###`)

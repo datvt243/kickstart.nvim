@@ -11,6 +11,7 @@ Config Neovim cá nhân dựa trên [kickstart.nvim](https://github.com/nvim-lua
 - `git`, `make`, `ripgrep`, `fd`
 - [Nerd Font](https://www.nerdfonts.com/) (đặt `vim.g.have_nerd_font = true` trong `init.lua`)
 - Node.js (cho một số LSP server)
+- Go toolchain (cho `gopls`, nếu code Go)
 
 ## Cài đặt
 
@@ -28,6 +29,7 @@ Dùng **`vim.pack`** — plugin manager tích hợp sẵn trong Neovim (không d
 ```bash
 :PackUpdate          # cập nhật plugin
 :lua vim.pack.update(nil, { offline = true })   # xem trạng thái
+:ReloadConfig         # reload toàn bộ config, không cần thoát/vào lại
 ```
 
 ## Cấu trúc
@@ -85,6 +87,7 @@ vscode/
 | `s` / `S` | Flash jump / Flash treesitter |
 | `<leader>sf` | Telescope tìm file |
 | `<leader>sg` | Telescope grep |
+| `gf` / `gF` | Fuzzy search trong file / toàn workspace (alias) |
 | `gd` / `gk` / `grn` | LSP: definition / hover / rename |
 | `<leader>f` | Format file |
 | `<C-s>` | Lưu file |
