@@ -31,6 +31,8 @@ lua/
       indent_line.lua           — [ENABLED] indent guides (terminal)
       whichkey.lua              — which-key.nvim: keymap hints when pressing leader (terminal)
       trouble.lua               — trouble.nvim: diagnostics/quickfix/loclist/LSP refs list, <leader>x* (terminal)
+      goto-preview.lua          — goto-preview.nvim: peek definition/type/impl/decl/refs editable,
+                                    gp/gpt/gpi/gpD/gpr/gP/Esc (terminal)
       todo-comments.lua         — todo-comments.nvim: highlight TODO/FIXME/NOTE/HACK/WARN (terminal)
     coding/                     — language/code-writing helper plugins, always auto-loaded (no opt-in toggle)
       ts-comments.lua           — ts-comments.nvim: accurate comment string via treesitter (terminal)
@@ -54,7 +56,8 @@ lua/
       autotag.lua               — nvim-ts-autotag: auto-close/rename cặp thẻ HTML/JSX/TSX (terminal)
     tools/                      — external tool integrations, always auto-loaded (no opt-in toggle)
       claudecode.lua            — Claude Code integration (terminal)
-      project.lua               — project.nvim: auto-detect root + Telescope picker (terminal)
+      project.lua               — project.nvim: auto-detect root + Telescope picker; tự đóng buffer
+                                    chưa sửa khi đổi project (DirChanged) (terminal)
       terminal.lua              — toggleterm.nvim: small terminal at the bottom (terminal)
       codesnap.lua              — codesnap.nvim: capture code as an image (terminal)
       import-cost.lua           — vim-import-cost: shows KB per JS/TS import (terminal)

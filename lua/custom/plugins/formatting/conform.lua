@@ -24,6 +24,7 @@ require('conform').setup {
       json = true,
       css = true,
       html = true,
+      xml = true,
     }
     if enabled_filetypes[vim.bo[bufnr].filetype] then
       return { timeout_ms = 500 }
@@ -41,6 +42,7 @@ require('conform').setup {
     json = { 'prettierd' },
     css = { 'prettierd' },
     html = { 'prettierd' },
+    xml = { 'xmllint' }, -- có sẵn trên macOS (libxml2), không cần cài thêm
   }
 }
 

@@ -16,6 +16,25 @@ require('project_nvim').setup {
   silent_chdir = true,
 }
 
+-- project.nvim đổi cwd bằng lệnh `cd` (scope mặc định 'global') nên sẽ trigger DirChanged —
+-- dùng event này để tự đóng buffer cũ khi chuyển project, dù chuyển bằng <leader>sp hay
+-- tự động detect root khi mở file. Chỉ đóng buffer CHƯA sửa dở để tránh mất dữ liệu; buffer
+-- đang có thay đổi chưa lưu sẽ được giữ lại. Không còn buffer nào thì mở lại Dashboard.
+vim.api.nvim_create_autocmd('DirChanged', {
+  group = vim.api.nvim_create_augroup('project-close-buffers', { clear = true }),
+  callback = function(event)
+    if event.match ~= 'global' then return end
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted and not vim.bo[buf].modified then
+        vim.api.nvim_buf_delete(buf, {})
+      end
+    end
+    if #vim.fn.getbufinfo { buflisted = 1 } == 0 then
+      vim.cmd 'Dashboard'
+    end
+  end,
+})
+
 -- ### PROJECT
 -- <leader>sp → mở Telescope picker danh sách project
 -- Sau khi chọn: cd vào project + mở Neo-tree

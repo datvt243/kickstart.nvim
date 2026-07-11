@@ -169,6 +169,20 @@
 
 ---
 
+## Goto Preview (peek definition, editable — goto-preview.nvim)
+
+| Phím | Mode | Env | Mô tả |
+|---|---|---|---|
+| `gp` | n | TER | Peek definition trong floating window (edit được, giống VSCode Peek) |
+| `gpt` | n | TER | Peek type definition |
+| `gpi` | n | TER | Peek implementation |
+| `gpD` | n | TER | Peek declaration |
+| `gpr` | n | TER | Peek references |
+| `gP` | n | TER | Đóng tất cả preview window đang mở (từ bất kỳ đâu) |
+| `Esc` | n | TER | Đóng preview (chỉ khi cursor đang ở trong preview window) |
+
+---
+
 ## Format
 
 | Phím | Mode | Env | Mô tả |

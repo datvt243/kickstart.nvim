@@ -8,6 +8,7 @@ Read all keymaps from source files in this order:
 - `lua/custom/plugins/editor/text-objects.lua` (markers: `### MINI.SURROUND`, `### MINI.MOVE`)
 - `lua/custom/plugins/editor/flash.lua` (marker `### FLASH.NVIM`, plus top-of-file `<leader>j` binding)
 - `lua/custom/plugins/editor/trouble.lua` (marker `### TROUBLE.NVIM`)
+- `lua/custom/plugins/editor/goto-preview.lua` (marker `### GOTO PREVIEW KEYMAPS`)
 - `lua/custom/plugins/telescope.lua` (marker `### TELESCOPE KEYMAPS`)
 - `lua/custom/plugins/lsp.lua` (marker `### LSP KEYMAPS`)
 - `lua/custom/plugins/coding/blink-cmp.lua` (marker `### BLINK.CMP KEYMAPS`)
