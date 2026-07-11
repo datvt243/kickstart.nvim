@@ -43,6 +43,14 @@ vim.api.nvim_create_autocmd('VimEnter', {
   end
 })
 
+-- Refresh Neo-tree khi Neovim lấy lại focus (vd: sau khi Claude Code/terminal tạo file bên ngoài)
+-- libuv file watcher chỉ theo dõi thư mục đang expand nên đôi khi bỏ sót thay đổi ngoài
+vim.api.nvim_create_autocmd('FocusGained', {
+  callback = function()
+    pcall(vim.cmd, 'Neotree refresh')
+  end
+})
+
 require('neo-tree').setup {
   filesystem = {
     filtered_items = {

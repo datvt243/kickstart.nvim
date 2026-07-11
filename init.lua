@@ -5,27 +5,21 @@ local is_vscode = vim.g.vscode ~= nil
 -- SECTION 1: FOUNDATION — Cài đặt cơ bản
 -- ============================================================
 do
-  if vim.loader and vim.loader.enable then
-    vim.loader.enable()
-  end
+  if vim.loader and vim.loader.enable then vim.loader.enable() end
 
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ' '
   vim.g.have_nerd_font = true -- đổi thành true nếu dùng Nerd Font
 
   -- True color chỉ cần ở terminal; VSCode tự quản lý màu
-  if not is_vscode then
-    vim.o.termguicolors = true
-  end
+  if not is_vscode then vim.o.termguicolors = true end
 
   -- [[ Options ]]
   vim.o.number = true
   vim.o.relativenumber = true
   vim.o.mouse = 'a'
   vim.o.showmode = false
-  vim.schedule(function()
-    vim.o.clipboard = 'unnamedplus'
-  end)
+  vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
   vim.o.breakindent = true
   vim.o.undofile = true -- lưu lịch sử undo sau khi đóng file
   vim.o.ignorecase = true
@@ -39,7 +33,7 @@ do
   vim.opt.listchars = {
     tab = '» ',
     trail = '·',
-    nbsp = '␣'
+    nbsp = '␣',
   }
   vim.o.inccommand = 'split' -- xem trước kết quả :s/... theo thời gian thực
   vim.o.cursorline = true
@@ -60,12 +54,12 @@ do
     severity_sort = true,
     float = {
       border = 'rounded',
-      source = 'if_many'
+      source = 'if_many',
     },
     underline = {
       severity = {
-        min = vim.diagnostic.severity.WARN
-      }
+        min = vim.diagnostic.severity.WARN,
+      },
     },
     virtual_text = true,
     virtual_lines = false,
@@ -74,15 +68,15 @@ do
         vim.diagnostic.open_float {
           bufnr = bufnr,
           scope = 'cursor',
-          focus = false
+          focus = false,
         }
-      end
-    }
+      end,
+    },
   }
 
   -- Mở danh sách lỗi/warning từ LSP vào location list để navigate
   vim.keymap.set('n', '<leader>qq', vim.diagnostic.setloclist, {
-    desc = 'Mở danh sách diagnostic'
+    desc = 'Mở danh sách diagnostic',
   })
 
   -- ### KEYMAPS CHUNG (terminal + VSCode)
@@ -91,98 +85,114 @@ do
   -- Khi có count (5j, 10k) thì vẫn dùng j/k thật để nhảy đúng số dòng
   vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {
     expr = true,
-    silent = true
+    silent = true,
   })
   -- Tương tự j nhưng đi lên
   vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {
     expr = true,
-    silent = true
+    silent = true,
   })
 
   -- Nhảy paragraph và căn giữa màn hình
   vim.keymap.set('n', '}', '}zz', {
-    desc = 'Paragraph kế (center)'
+    desc = 'Paragraph kế (center)',
   })
   -- Nhảy về paragraph trước và căn giữa màn hình
   vim.keymap.set('n', '{', '{zz', {
-    desc = 'Paragraph trước (center)'
+    desc = 'Paragraph trước (center)',
   })
 
   -- Ngắt dòng tại cursor, không vào insert mode
   vim.keymap.set('n', 'B', 'i<CR><Esc>', {
-    desc = 'Ngắt dòng tại cursor'
+    desc = 'Ngắt dòng tại cursor',
   })
 
   -- ### BUFFER
   -- Chuyển sang buffer trước (theo thứ tự buffer list)
   vim.keymap.set('n', '<S-h>', '<cmd>bprevious<CR>', {
-    desc = 'Buffer trước'
+    desc = 'Buffer trước',
   })
   -- Chuyển sang buffer tiếp theo
   vim.keymap.set('n', '<S-l>', '<cmd>bnext<CR>', {
-    desc = 'Buffer tiếp'
+    desc = 'Buffer tiếp',
   })
-  -- Đóng buffer hiện tại (không thoát Neovim)
-  vim.keymap.set('n', '<leader>bq', '<cmd>bdelete<CR>', {
-    desc = '[B]uffer đóng'
+  -- Đóng buffer hiện tại: về buffer vừa dùng gần nhất, nếu hết buffer thì mở Dashboard
+  vim.keymap.set('n', '<leader>bq', function()
+    local curbuf = vim.api.nvim_get_current_buf()
+    local candidates = vim.fn.getbufinfo { buflisted = 1 }
+    for i = #candidates, 1, -1 do
+      if candidates[i].bufnr == curbuf then
+        table.remove(candidates, i)
+      end
+    end
+    table.sort(candidates, function(a, b) return a.lastused > b.lastused end)
+
+    if candidates[1] then
+      vim.api.nvim_set_current_buf(candidates[1].bufnr)
+    else
+      vim.cmd 'Dashboard'
+    end
+    vim.cmd('bdelete ' .. curbuf)
+  end, {
+    desc = '[B]uffer đóng',
   })
   -- Tạo buffer mới trống (chưa lưu file)
   vim.keymap.set('n', '<leader>bn', '<cmd>enew<CR>', {
-    desc = '[B]uffer mới'
+    desc = '[B]uffer mới',
   })
   -- Yank toàn bộ nội dung file vào clipboard hệ thống
   vim.keymap.set('n', '<leader>by', '<cmd>%y+<CR>', {
-    desc = '[B]uffer yank toàn bộ'
+    desc = '[B]uffer yank toàn bộ',
   })
 
   -- Lưu file từ cả insert lẫn normal mode
   vim.keymap.set('i', '<C-s>', '<cmd>w<CR><Esc>', {
-    desc = 'Lưu file'
+    desc = 'Lưu file',
   })
   -- Lưu file từ normal mode
   vim.keymap.set('n', '<C-s>', '<cmd>w<CR>', {
-    desc = 'Lưu file'
+    desc = 'Lưu file',
   })
 
   -- ### INDENT / MOVE LINES
 
   -- Visual mode: giữ nguyên selection sau khi indent
   vim.keymap.set('v', '<tab>', '>gv', {
-    desc = 'Tăng indent'
+    desc = 'Tăng indent',
   })
   -- Giảm indent và giữ nguyên selection
   vim.keymap.set('v', '<S-tab>', '<gv', {
-    desc = 'Giảm indent'
+    desc = 'Giảm indent',
   })
 
   -- Di chuyển dòng trong visual mode (C-j/k không conflict vì window nav ở normal mode)
   vim.keymap.set('v', '<C-j>', ":m '>+1<CR>gv=gv", {
     silent = true,
-    desc = 'Dời dòng xuống'
+    desc = 'Dời dòng xuống',
   })
   -- Dời selection lên (re-indent tự động sau khi move)
   vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv=gv", {
     silent = true,
-    desc = 'Dời dòng lên'
+    desc = 'Dời dòng lên',
   })
 
   -- Normal mode dùng Alt để không conflict với C-j/k (window nav ở terminal)
   vim.keymap.set('n', '<A-j>', '<cmd>m .+1<CR>==', {
-    desc = 'Dời dòng xuống'
+    desc = 'Dời dòng xuống',
   })
   -- Dời dòng hiện tại lên và re-indent
   vim.keymap.set('n', '<A-k>', '<cmd>m .-2<CR>==', {
-    desc = 'Dời dòng lên'
+    desc = 'Dời dòng lên',
   })
 
   -- ### SPLITS
   -- Mở split dọc (cửa sổ mới bên phải)
   vim.keymap.set('n', '<leader>v', '<cmd>vsplit<CR>', {
-    desc = 'Split dọc'
+    desc = 'Split dọc',
   })
   -- Mở split ngang (cửa sổ mới bên dưới)
   vim.keymap.set('n', '<leader>S', '<cmd>split<CR>', {
-    desc = 'Split ngang'
+    desc = 'Split ngang',
   })
 
   -- ### PASTE OVER TEXT OBJECTS
@@ -190,45 +200,45 @@ do
   -- Ví dụ: <leader>piq → paste vào trong cặp nháy gần nhất
   -- Paste vào trong cặp quote gần nhất (thay nội dung, giữ nguyên quote)
   vim.keymap.set('n', '<leader>piq', 'viqp', {
-    desc = 'Paste inside quote'
+    desc = 'Paste inside quote',
   })
   -- Paste đè toàn bộ cặp quote gần nhất (kể cả dấu nháy)
   vim.keymap.set('n', '<leader>paq', 'vaqp', {
-    desc = 'Paste around quote'
+    desc = 'Paste around quote',
   })
   -- Paste vào trong cặp {} gần nhất (giữ nguyên dấu ngoặc)
   vim.keymap.set('n', '<leader>piB', 'viB"_dP', {
-    desc = 'Paste inside {}'
+    desc = 'Paste inside {}',
   })
   -- Paste đè toàn bộ cặp {} gần nhất (kể cả dấu ngoặc)
   vim.keymap.set('n', '<leader>paB', 'vaB"_dP', {
-    desc = 'Paste around {}'
+    desc = 'Paste around {}',
   })
   -- Paste vào trong cặp () gần nhất
   vim.keymap.set('n', '<leader>pib', 'vib"_dP', {
-    desc = 'Paste inside ()'
+    desc = 'Paste inside ()',
   })
   -- Paste đè toàn bộ cặp () gần nhất
   vim.keymap.set('n', '<leader>pab', 'vab"_dP', {
-    desc = 'Paste around ()'
+    desc = 'Paste around ()',
   })
   -- Paste vào trong HTML/XML tag gần nhất (giữ nguyên tag)
   vim.keymap.set('n', '<leader>pit', 'vit"_dP', {
-    desc = 'Paste inside tag'
+    desc = 'Paste inside tag',
   })
   -- Paste đè toàn bộ HTML/XML tag gần nhất (kể cả opening/closing tag)
   vim.keymap.set('n', '<leader>pat', 'vat"_dP', {
-    desc = 'Paste around tag'
+    desc = 'Paste around tag',
   })
 
   -- Misc
   -- Xóa highlight kết quả tìm kiếm thủ công (khi Esc bị override ở nơi khác)
   vim.keymap.set('n', '<leader>n', '<cmd>nohlsearch<CR>', {
-    desc = 'Tắt highlight tìm kiếm'
+    desc = 'Tắt highlight tìm kiếm',
   })
   -- Xem nội dung tất cả registers (clipboard, yank history, macro...)
   vim.keymap.set('n', '<leader>y', '<cmd>registers<CR>', {
-    desc = 'Xem registers'
+    desc = 'Xem registers',
   })
 
   -- Cập nhật plugin: :PackUpdate (chỉ terminal)
@@ -236,34 +246,30 @@ do
     vim.api.nvim_create_user_command('PackUpdate', function()
       local ok, err = pcall(function()
         vim.pack.update(nil, {
-          offline = false
+          offline = false,
         })
       end)
-      if not ok then
-        vim.notify(('PackUpdate thất bại: %s'):format(err), vim.log.levels.ERROR)
-      end
+      if not ok then vim.notify(('PackUpdate thất bại: %s'):format(err), vim.log.levels.ERROR) end
     end, {
-      desc = 'Cập nhật plugin qua vim.pack'
+      desc = 'Cập nhật plugin qua vim.pack',
     })
 
     -- Reload toàn bộ config sau khi sửa keymap/plugin, không cần thoát ra vào lại
     -- Clear cache của custom.*/kickstart.* trước vì require() cache module, source lại không tự áp dụng
     vim.api.nvim_create_user_command('ReloadConfig', function()
       for name in pairs(package.loaded) do
-        if name:match '^custom' or name:match '^kickstart' then
-          package.loaded[name] = nil
-        end
+        if name:match '^custom' or name:match '^kickstart' then package.loaded[name] = nil end
       end
       dofile(vim.env.MYVIMRC)
       vim.notify('Đã reload config', vim.log.levels.INFO)
     end, {
-      desc = 'Reload toàn bộ Neovim config'
+      desc = 'Reload toàn bộ Neovim config',
     })
   end
 
   -- Thoát terminal mode bằng Esc Esc (mặc định phải dùng C-\ C-n)
   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', {
-    desc = 'Thoát terminal mode'
+    desc = 'Thoát terminal mode',
   })
 
   -- File explorer: VSCode dùng sidebar (Section 9); terminal dùng neo-tree (keymap đặt trong neo-tree.lua)
@@ -273,19 +279,19 @@ do
   if not is_vscode then
     -- Nhảy sang cửa sổ bên trái
     vim.keymap.set('n', '<C-h>', '<C-w><C-h>', {
-      desc = 'Focus cửa sổ trái'
+      desc = 'Focus cửa sổ trái',
     })
     -- Nhảy sang cửa sổ bên phải
     vim.keymap.set('n', '<C-l>', '<C-w><C-l>', {
-      desc = 'Focus cửa sổ phải'
+      desc = 'Focus cửa sổ phải',
     })
     -- Nhảy xuống cửa sổ bên dưới
     vim.keymap.set('n', '<C-j>', '<C-w><C-j>', {
-      desc = 'Focus cửa sổ dưới'
+      desc = 'Focus cửa sổ dưới',
     })
     -- Nhảy lên cửa sổ bên trên
     vim.keymap.set('n', '<C-k>', '<C-w><C-k>', {
-      desc = 'Focus cửa sổ trên'
+      desc = 'Focus cửa sổ trên',
     })
   end
 
@@ -293,11 +299,9 @@ do
   vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight khi yank',
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', {
-      clear = true
+      clear = true,
     }),
-    callback = function()
-      vim.hl.on_yank()
-    end
+    callback = function() vim.hl.on_yank() end,
   })
 end
 
@@ -312,16 +316,16 @@ if not is_vscode then
     -- Cập nhật nhanh:  :PackUpdate
 
     local function run_build(name, cmd, cwd)
-      local result = vim.system(cmd, {
-        cwd = cwd
-      }):wait()
+      local result = vim
+        .system(cmd, {
+          cwd = cwd,
+        })
+        :wait()
       if result.code ~= 0 then
         local stderr = result.stderr or ''
         local stdout = result.stdout or ''
         local output = stderr ~= '' and stderr or stdout
-        if output == '' then
-          output = 'Không có output.'
-        end
+        if output == '' then output = 'Không có output.' end
         vim.notify(('Build thất bại cho %s:\n%s'):format(name, output), vim.log.levels.ERROR)
       end
     end
@@ -331,38 +335,30 @@ if not is_vscode then
       callback = function(ev)
         local name = ev.data.spec.name
         local kind = ev.data.kind
-        if kind ~= 'install' and kind ~= 'update' then
-          return
-        end
-        if not name then
-          return
-        end
+        if kind ~= 'install' and kind ~= 'update' then return end
+        if not name then return end
 
         if name == 'telescope-fzf-native.nvim' and vim.fn.executable 'make' == 1 then
-          run_build(name, {'make'}, ev.data.path)
+          run_build(name, { 'make' }, ev.data.path)
           return
         end
 
         if name == 'LuaSnip' then
-          if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then
-            run_build(name, {'make', 'install_jsregexp'}, ev.data.path)
-          end
+          if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then run_build(name, { 'make', 'install_jsregexp' }, ev.data.path) end
           return
         end
 
         if name == 'nvim-treesitter' then
-          if not ev.data.active then
-            vim.cmd.packadd 'nvim-treesitter'
-          end
+          if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
           vim.cmd 'TSUpdate'
           return
         end
 
         if name == 'vim-import-cost' and vim.fn.executable 'npm' == 1 then
-          run_build(name, {'npm', 'install', '--production'}, ev.data.path)
+          run_build(name, { 'npm', 'install', '--production' }, ev.data.path)
           return
         end
-      end
+      end,
     })
   end
 end
@@ -376,11 +372,12 @@ require 'custom.plugins'
 -- ============================================================
 do
   require 'kickstart.plugins.autopairs' -- tự đóng ngoặc
-  -- require 'kickstart.plugins.indent_line'      -- indent guides
+  require 'kickstart.plugins.indent_line' -- indent guides
   -- require 'kickstart.plugins.debug'         -- DAP debugger
   -- require 'kickstart.plugins.lint'          -- linter
   require 'kickstart.plugins.neo-tree' -- file explorer nâng cao
   require 'kickstart.plugins.gitsigns' -- git keymaps đầy đủ
+  -- require 'kickstart.plugins.bufferline'    -- thanh tab hiển thị buffer đang mở
 end
 
 -- vim: ts=2 sts=2 sw=2 et

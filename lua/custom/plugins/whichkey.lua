@@ -35,6 +35,14 @@ require('which-key').setup {
       group = '[Q]uick Motions',
     },
     {
+      '<leader>b',
+      group = '[B]uffers',
+    },
+    {
+      '<leader>c',
+      group = '[C]laude Code',
+    },
+    {
       'gr',
       group = 'LSP Actions',
       mode = { 'n' },

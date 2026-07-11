@@ -1,185 +1,162 @@
 # CLAUDE.md — Neovim Config (_david)
 
-## Quy tắc làm việc
+## Working rules
 
-- **Chỉ push code khi được yêu cầu rõ ràng.** Commit xong thì dừng, không tự push.
-- **Mỗi lần thay đổi keymap bất kỳ, phải update `keymaps.md`.**
+- **Only push code when explicitly asked.** Stop after committing — never push on your own.
+- **Every time any keymap changes, update `keymaps-terminal.md` and/or `keymaps-vscode.md`.**
 
-## Tổng quan
+## Overview
 
-Đây là config Neovim cá nhân dựa trên kickstart.nvim, chạy được ở **hai môi trường**:
+This is a personal Neovim config based on kickstart.nvim, running in **two environments**:
 
 - **Terminal Neovim** — full plugin stack
-- **VSCode với vscode-neovim** (`asvetliakov.vscode-neovim`) — mini.ai + mini.surround + mini.move + flash.nvim + guess-indent; các lệnh editor gọi qua `vscode.action()`
+- **VSCode with vscode-neovim** (`asvetliakov.vscode-neovim`) — mini.ai + mini.surround + mini.move + flash.nvim + guess-indent; editor commands are called via `vscode.action()`
 
-## Cấu trúc file
+## File structure
 
 ```
-init.lua                        — options, keymaps chung, vim.pack hooks, load plugins
+init.lua                        — options, shared keymaps, vim.pack hooks, load plugins
 lua/
-  custom/plugins/               — plugin files (tự động load bởi init.lua)
-    init.lua                    — auto-loader: require toàn bộ .lua trong thư mục
+  custom/plugins/               — plugin files (auto-loaded by init.lua)
+    init.lua                    — auto-loader: requires every .lua file in the directory
     completion.lua              — blink.cmp + LuaSnip (terminal)
-    dashboard.lua               — dashboard-nvim: màn hình chào (terminal)
+    dashboard.lua               — dashboard-nvim: welcome screen (terminal)
     format.lua                  — conform.nvim: formatter (terminal)
-    lsp.lua                     — nvim-lspconfig + Mason + fidget (terminal)
+    lsp.lua                     — nvim-lspconfig + Mason + fidget + lazydev (terminal)
     telescope.lua               — Telescope fuzzy finder (terminal)
     treesitter.lua              — nvim-treesitter (terminal)
     claudecode.lua              — Claude Code integration (terminal)
     noice.lua                   — noice.nvim: floating cmdline + notifications (terminal)
     project.lua                 — project.nvim: auto-detect root + Telescope picker (terminal)
-    terminal.lua                — toggleterm.nvim: terminal nhỏ ở bottom (terminal)
-    codesnap.lua                — codesnap.nvim: chụp code thành ảnh (terminal)
-    import-cost.lua             — vim-import-cost: hiển thị KB từng import JS/TS (terminal)
-    scrollbar.lua                — nvim-scrollbar: git change/diagnostics trên scrollbar (terminal)
-    neoscroll.lua                — neoscroll.nvim: smooth scrolling (terminal)
-    ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, tokyonight... (cả hai)
-    whichkey.lua                — which-key.nvim: gợi ý keymap khi gõ leader (terminal)
-    vscode.lua                  — VSCode keymaps qua vscode.action() (VSCode only)
-  kickstart/plugins/            — optional plugins (bỏ comment ở Section 10 để bật)
-    autopairs.lua               — [BẬT] tự đóng ngoặc
+    terminal.lua                — toggleterm.nvim: small terminal at the bottom (terminal)
+    codesnap.lua                — codesnap.nvim: capture code as an image (terminal)
+    import-cost.lua             — vim-import-cost: shows KB per JS/TS import (terminal)
+    scrollbar.lua               — nvim-scrollbar: git change/diagnostics on the scrollbar (terminal)
+    neoscroll.lua               — neoscroll.nvim: smooth scrolling (terminal)
+    ts-comments.lua             — ts-comments.nvim: accurate comment string via treesitter (terminal)
+    ui.lua                      — mini.nvim (ai, surround, move), flash.nvim, tokyonight... (both)
+    whichkey.lua                — which-key.nvim: keymap hints when pressing leader (terminal)
+    vscode.lua                  — VSCode keymaps via vscode.action() (VSCode only)
+  kickstart/plugins/            — optional plugins (uncomment in Section 10 to enable)
+    autopairs.lua               — [ENABLED] auto-close brackets
+    bufferline.lua              — bufferline.nvim: tab bar showing open buffers
     debug.lua                   — DAP debugger
-    gitsigns.lua                — [BẬT] git keymaps đầy đủ
+    gitsigns.lua                — [ENABLED] full git keymaps
     indent_line.lua             — indent guides
     lint.lua                    — linter
-    neo-tree.lua                — [BẬT] file explorer nâng cao: \, <leader>e, <leader>ee
-  health.lua                    — kiểm tra sức khoẻ config
+    neo-tree.lua                — [ENABLED] advanced file explorer: \, <leader>e, <leader>ee
+  health.lua                    — config health check
 ```
 
-## init.lua — Cấu trúc sections
+## init.lua — Section layout
 
-| Section | Nội dung | Môi trường |
+| Section | Content | Environment |
 |---|---|---|
-| 1 | Options + keymaps chung | Cả hai |
+| 1 | Options + shared keymaps | Both |
 | 2 | vim.pack build hooks (PackChanged) | Terminal only |
-| — | `require 'custom.plugins'` — load toàn bộ plugin files | — |
+| — | `require 'custom.plugins'` — loads all plugin files | — |
 | 10 | Optional plugins (kickstart/plugins/) | Terminal only |
 
-> Sections 3–9 đã được tách ra thành các file riêng trong `lua/custom/plugins/`.
+> Sections 3–9 have been split out into separate files under `lua/custom/plugins/`.
 
-## Pattern quan trọng
+## Important patterns
 
-### Phát hiện môi trường
+### Environment detection
 ```lua
-local is_vscode = vim.g.vscode ~= nil   -- dùng trong ui.lua (phục vụ cả 2 môi trường)
+local is_vscode = vim.g.vscode ~= nil   -- used in ui.lua (serves both environments)
 ```
 
-### Guard cho file terminal-only (early return)
+### Guard for terminal-only files (early return)
 ```lua
-if vim.g.vscode ~= nil then return end  -- đặt ở đầu file, trước mọi code khác
+if vim.g.vscode ~= nil then return end  -- place at the top of the file, before any other code
 ```
 
-### Guard cho file VSCode-only
+### Guard for VSCode-only files
 ```lua
-if vim.g.vscode == nil then return end  -- ví dụ: vscode.lua
+if vim.g.vscode == nil then return end  -- e.g.: vscode.lua
 ```
 
-### Gọi VSCode command
+### Calling a VSCode command
 ```lua
 local vscode = require 'vscode'
 local function act(cmd) return function() vscode.action(cmd) end end
--- Hoặc dùng helper shorthand trong vscode.lua:
+-- Or use the shorthand helper in vscode.lua:
 local function n(key, cmd, desc) vim.keymap.set('n', key, act(cmd), { desc = desc }) end
 n('gd', 'editor.action.revealDefinition', 'Goto definition')
 ```
 
 ### Plugin manager
 ```lua
--- vim.pack là plugin manager tích hợp sẵn (không dùng lazy.nvim)
+-- vim.pack is the built-in plugin manager (not lazy.nvim)
 local function gh(repo) return 'https://github.com/' .. repo end
 vim.pack.add { gh 'user/repo' }
 
--- Cập nhật:       :PackUpdate
--- Xem trạng thái: :lua vim.pack.update(nil, { offline = true })
--- Reload config:  :ReloadConfig (không cần thoát/vào lại Neovim)
+-- Update:           :PackUpdate
+-- Check status:      :lua vim.pack.update(nil, { offline = true })
+-- Reload config:     :ReloadConfig (no need to quit/reopen Neovim)
 ```
 
-## Tìm kiếm nhanh (gõ `/###`)
+## Quick search (type `/###`)
 
-Các marker `###` nằm rải rác trong các file plugin:
+`###` markers are scattered across plugin files:
 
-| Marker | File | Nội dung |
+| Marker | File | Content |
 |---|---|---|
 | `### KEYMAPS CHUNG` | `init.lua` | j/k, {/}, buffer, save, indent, move lines, splits |
 | `### MINI.AI` | `ui.lua` | text objects: af/if (function), ac/ic (class), treesitter |
-| `### MINI.SURROUND` | `ui.lua` | thêm/xóa/thay surround |
-| `### MINI.MOVE` | `ui.lua` | di chuyển line/selection: gh/gj/gk/gl + Up/Down |
-| `### FLASH.NVIM` | `ui.lua` | jump: `<leader>j` (cả hai), s/S/r/`<leader>.` (terminal) |
-| `### TELESCOPE KEYMAPS` | `telescope.lua` | tìm file, grep, buffer |
-| `### LSP KEYMAPS` | `lsp.lua` | gd, gk, grn, gra |
-| `### BLINK.CMP KEYMAPS` | `completion.lua` | autocomplete |
-| `### FORMAT KEYMAP` | `format.lua` | `<leader>qf`/`qF`/`qc` |
-| `### CLAUDE CODE` | `claudecode.lua` | toggle terminal, send selection, accept/deny diff |
-| `### PROJECT` | `project.lua` | `<leader>sp` → danh sách project |
-| `### TERMINAL KEYMAPS` | `terminal.lua` | `<leader>tt` → toggle terminal |
-| `### CODESNAP KEYMAPS` | `codesnap.lua` | `<leader>cp`/`<leader>cP` → chụp ảnh code |
-| `### IMPORT COST KEYMAPS` | `import-cost.lua` | `<leader>ic`/`<leader>iC` → hiện/ẩn KB import |
-| `### JUMP` | `vscode.lua` | flash.nvim dùng chung (xem ui.lua) |
-| `### SYSTEM SHORTCUTS` | `vscode.lua` | C-c/x/v/z → VSCode native; C-g go to line |
-| `### FILE & SEARCH` | `vscode.lua` | C-p, C-f, C-S-f, leader sf/sg/ff/fs |
-| `### LSP / CODE ACTIONS` | `vscode.lua` | gd, gr, gk, grn, gra |
-| `### FORMAT & DIAGNOSTICS` | `vscode.lua` | leader f, q, th, te |
-| `### RENAME / REFACTOR` | `vscode.lua` | leader r, leader ; (v), leader c (v) |
-| `### BUFFER / EDITOR` | `vscode.lua` | leader b{q,n,y,p} |
-| `### SIDEBAR & UI` | `vscode.lua` | leader e, ee, es |
-| `### PANE / WINDOW FOCUS` | `vscode.lua` | C-h/l/j/k, leader w{h,l,k,j} |
-| `### TERMINAL` | `vscode.lua` | leader tf/tn/tk |
-| `### GIT` | `vscode.lua` | leader g{d,a,c,gps,gpl,k,cb,ob,fh,gl,gh,gm...} |
-| `### BOOKMARKS` | `vscode.lua` | leader m{t,e,n,p,l,L,C,A} |
-| `### HARPOON` | `vscode.lua` | leader h{p,a,e} |
-| `### PROJECT MANAGER` | `vscode.lua` | leader p{l,L,e,r} |
+| `### MINI.SURROUND` | `ui.lua` | add/delete/replace surround |
 
-## VSCode — Extensions cần thiết
+## VSCode — Required extensions
 
-| Extension | ID | Mục đích |
+| Extension | ID | Purpose |
 |---|---|---|
-| vscode-neovim | `asvetliakov.vscode-neovim` | Neovim thật nhúng vào VSCode |
-| Which Key | `vspacecode.whichkey` | `\` → menu gợi ý keymaps |
+| vscode-neovim | `asvetliakov.vscode-neovim` | Real Neovim embedded in VSCode |
+| Which Key | `vspacecode.whichkey` | `\` → keymap hint menu |
 | Find It Faster | `TomiTurtinen.find-it-faster` | leader ff/fF/fs/fS |
 | Fuzzy Search | `jacobdufault.fuzzy-search` | leader / |
 | Bookmarks | `alefragnani.Bookmarks` | leader m* |
 | Harpoon | `tobias-z.vscode-harpoon` | leader h* |
 | Project Manager | `alefragnani.project-manager` | leader p* |
 
-> **Jump:** Dùng `flash.nvim` (Neovim plugin) thay Jumpy — `<leader>j`. Jumpy conflict với vscode-neovim do hook `type` command.
+> **Jump:** Use `flash.nvim` (a Neovim plugin) instead of Jumpy — `<leader>j`. Jumpy conflicts with vscode-neovim due to its `type` command hook.
 
-> **Lưu ý:** Phải disable `vscodevim.vim` nếu đã cài — hai extension conflict với nhau.
-> Chạy: `code --disable-extension vscodevim.vim`
+> **Note:** `vscodevim.vim` must be disabled if installed — the two extensions conflict.
+> Run: `code --disable-extension vscodevim.vim`
 
-> **Which Key:** trigger `\` được đặt trong `keybindings.json` (không phải Lua) để
-> vspacecode.whichkey hoạt động đúng với vscode-neovim.
+> **Which Key:** the `\` trigger is set in `keybindings.json` (not Lua) so that
+> vspacecode.whichkey works correctly with vscode-neovim.
 
-## Thêm LSP server mới
+## Adding a new LSP server
 
-Mở `lua/custom/plugins/lsp.lua`, tìm `local servers = {`, thêm vào:
+Open `lua/custom/plugins/lsp.lua`, find `local servers = {`, and add to it:
 ```lua
 local servers = {
   ts_ls = {},
-  pyright = {},   -- thêm mới
+  pyright = {},   -- new
   -- ...
 }
 ```
-Mason sẽ tự cài khi khởi động lại Neovim.
+Mason will install it automatically on the next Neovim restart.
 
-## Thêm formatter mới
+## Adding a new formatter
 
-Mở `lua/custom/plugins/format.lua`, tìm `formatters_by_ft`:
+Open `lua/custom/plugins/format.lua`, find `formatters_by_ft`:
 ```lua
 formatters_by_ft = {
-  python = { 'black' },  -- thêm mới
+  python = { 'black' },  -- new
   -- ...
 }
 ```
 
-## Bật optional plugin
+## Enabling an optional plugin
 
-Bỏ comment ở Section 10 trong `init.lua`:
+Uncomment it in Section 10 of `init.lua`:
 ```lua
 require 'kickstart.plugins.indent_line'
 ```
-Rồi khởi động lại Neovim.
+Then restart Neovim.
 
-## Format code Lua
+## Formatting Lua code
 
 ```bash
 ~/.local/share/nvim/mason/bin/stylua init.lua lua/**/*.lua

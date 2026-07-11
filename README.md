@@ -36,7 +36,8 @@ Dùng **`vim.pack`** — plugin manager tích hợp sẵn trong Neovim (không d
 
 ```
 init.lua                        — options, keymaps chung, vim.pack hooks
-keymaps.md                      — danh sách toàn bộ keymaps (BOTH / TER / VSC)
+keymaps-terminal.md              — danh sách keymaps cho Terminal Neovim (BOTH / TER)
+keymaps-vscode.md                — danh sách keymaps cho VSCode (BOTH / VSC)
 lua/
   custom/plugins/
     claudecode.lua              — Claude Code integration (terminal)
@@ -62,60 +63,7 @@ vscode/
 
 ## Keymaps nổi bật
 
-> Xem đầy đủ tại [`keymaps.md`](keymaps.md)
-
-### Cả hai môi trường
-
-| Phím | Mô tả |
-|---|---|
-| `<leader>j` | Flash jump |
-| `gh` / `gl` | Di chuyển line/selection sang trái/phải |
-| `gj` / `gk` | Di chuyển line/selection xuống/lên |
-| `sa` + motion + char | Mini.surround: thêm surround |
-| `sd` + char | Mini.surround: xóa surround |
-| `sr` + old + new | Mini.surround: thay surround |
-| `yaf` / `yif` | Yank around/inside function (treesitter) |
-| `yac` / `yic` | Yank around/inside class (treesitter) |
-
-### Terminal
-
-| Phím | Mô tả |
-|---|---|
-| `\` | Focus Neo-tree (từ editor) / trở về editor (từ Neo-tree) |
-| `<leader>e` | Mở / đóng Neo-tree |
-| `<leader>ee` | Focus vào Neo-tree (mở nếu đang đóng); `Ctrl+H` để quay lại editor |
-| `s` / `S` | Flash jump / Flash treesitter |
-| `<leader>sf` | Telescope tìm file |
-| `<leader>sg` | Telescope grep |
-| `gf` / `gF` | Fuzzy search trong file / toàn workspace (alias) |
-| `gd` / `gk` / `grn` | LSP: definition / hover / rename |
-| `<leader>f` | Format file |
-| `<C-s>` | Lưu file |
-| `<leader>tt` | Toggle terminal bottom (toggleterm) |
-| `<leader>cc` | Toggle Claude Code terminal |
-| `<leader>cs` | Gửi selection đến Claude (visual) |
-| `<leader>cp` / `<leader>cP` | CodeSnap: copy / lưu ảnh code (visual) |
-| `<leader>ic` / `<leader>iC` | Hiện / ẩn kích thước import (JS/TS) |
-
-### VSCode (vscode-neovim)
-
-| Phím | Mô tả |
-|---|---|
-| `C-c` / `C-x` / `C-v` | Copy / Cut / Paste (VSCode native) |
-| `C-z` | Undo (VSCode native) |
-| `C-g` | Go to line |
-| `<Up>` / `<Down>` | Di chuyển line/selection lên/xuống (mini.move) |
-| `C-f` / `C-S-f` | Tìm trong file / Tìm trong tất cả file |
-| `gd` / `grn` / `gra` | LSP: definition / rename / code action |
-| `<leader>f` | Format document |
-| `<leader>sl` | Đổi language mode |
-| `<leader>th` / `<leader>te` | Toggle inlay hints / Toggle Error Lens |
-| `<leader>e` / `<leader>ee` / `<leader>es` | Toggle sidebar / Explorer / Search |
-| `<leader>by` / `<leader>bp` | Yank all / Paste đè toàn file |
-| `<leader>c` (visual) | Block comment |
-| `<leader>gps` / `<leader>gpl` | Git push / pull (terminal) |
-| `<leader>gl` / `<leader>gh` / `<leader>gm` | Git log / history / tạo PR |
-| `<leader>ff` | Find It Faster |
+> Xem đầy đủ tại [`keymaps-terminal.md`](keymaps-terminal.md) (Terminal Neovim) hoặc [`keymaps-vscode.md`](keymaps-vscode.md) (VSCode)
 
 ## VSCode — Extensions cần cài
 

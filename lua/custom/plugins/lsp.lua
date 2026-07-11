@@ -18,6 +18,17 @@ end
 vim.pack.add {gh 'j-hui/fidget.nvim'}
 require('fidget').setup {}
 
+-- lazydev: cấu hình lua_ls chuyên biệt cho code Neovim config/plugin
+-- Cho lua_ls biết `vim` global, type API Neovim, và resolve require() tới đúng plugin đã cài
+-- Chỉ kích hoạt cho file .lua, không ảnh hưởng project Lua thường
+vim.pack.add {gh 'folke/lazydev.nvim'}
+require('lazydev').setup {
+  library = {
+    -- Nạp type luv khi gặp vim.uv
+    {path = '${3rd}/luv/library', words = {'vim%.uv'}}
+  }
+}
+
 -- tiny-inline-diagnostic: hiển thị lỗi/warning inline giống Error Lens (VSCode)
 vim.pack.add {gh 'rachartier/tiny-inline-diagnostic.nvim'}
 require('tiny-inline-diagnostic').setup {}
