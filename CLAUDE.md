@@ -4,6 +4,7 @@
 
 - **Only push code when explicitly asked.** Stop after committing — never push on your own.
 - **Every time any keymap changes, update `keymaps-terminal.md` and/or `keymaps-vscode.md`.**
+- **When introducing a new plugin** (proposing to install it, comparing it to another, or just answering "what is plugin X") **include GitHub star count and popularity/reputation** — fetch real numbers instead of guessing, since they change over time.
 
 ## Overview
 
