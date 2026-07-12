@@ -32,7 +32,9 @@ vim.keymap.set('n', '<leader>gv', '<cmd>DiffviewOpen<CR>', { desc = '[G]it diff[
 vim.keymap.set('n', '<leader>gV', '<cmd>DiffviewClose<CR>', { desc = '[G]it diff[V]iew: đóng panel' })
 
 -- Xem lịch sử thay đổi (log + diff) của file hiện tại
-vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory %<CR>', { desc = '[G]it [H]istory: file hiện tại' })
+-- TẠM COMMENT OUT: <leader>gh giải phóng cho group hunk (gitsigns.lua) — cần chọn phím khác cho history
+-- vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory %<CR>', { desc = '[G]it [H]istory: file hiện tại' })
 
 -- Xem lịch sử thay đổi (log + diff) toàn bộ repo
-vim.keymap.set('n', '<leader>gH', '<cmd>DiffviewFileHistory<CR>', { desc = '[G]it [H]istory: toàn repo' })
+-- TẠM COMMENT OUT: xem ghi chú ở <leader>gh phía trên
+-- vim.keymap.set('n', '<leader>gH', '<cmd>DiffviewFileHistory<CR>', { desc = '[G]it [H]istory: toàn repo' })

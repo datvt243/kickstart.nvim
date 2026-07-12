@@ -275,17 +275,17 @@
 | Phím | Mode | Env | Mô tả |
 |---|---|---|---|
 | `]c` / `[c` | n | TER | Nhảy đến hunk tiếp / trước |
-| `<leader>hs` | n, v | TER | Stage hunk |
-| `<leader>hr` | n, v | TER | Reset hunk |
-| `<leader>hS` | n | TER | Stage toàn bộ buffer |
-| `<leader>hR` | n | TER | Reset toàn bộ buffer |
-| `<leader>hp` | n | TER | Preview hunk (popup) |
-| `<leader>hi` | n | TER | Preview hunk inline |
-| `<leader>hb` | n | TER | Blame dòng hiện tại (full) |
-| `<leader>hd` | n | TER | Diff so với index |
-| `<leader>hD` | n | TER | Diff so với commit trước |
-| `<leader>hq` | n | TER | Quickfix list hunks (file hiện tại) |
-| `<leader>hQ` | n | TER | Quickfix list hunks (toàn repo) |
+| `<leader>ghs` | n, v | TER | Stage hunk |
+| `<leader>ghr` | n, v | TER | Reset hunk |
+| `<leader>ghS` | n | TER | Stage toàn bộ buffer |
+| `<leader>ghR` | n | TER | Reset toàn bộ buffer |
+| `<leader>ghp` | n | TER | Preview hunk (popup) |
+| `<leader>ghi` | n | TER | Preview hunk inline |
+| `<leader>ghb` | n | TER | Blame dòng hiện tại (full) |
+| `<leader>ghd` | n | TER | Diff so với index |
+| `<leader>ghD` | n | TER | Diff so với commit trước |
+| `<leader>ghq` | n | TER | Quickfix list hunks (file hiện tại) |
+| `<leader>ghQ` | n | TER | Quickfix list hunks (toàn repo) |
 | `<leader>tb` | n | TER | Toggle blame line |
 | `<leader>tw` | n | TER | Toggle word diff |
 | `ih` | o, x | TER | Text object: chọn hunk |
@@ -298,8 +298,8 @@
 |---|---|---|---|
 | `<leader>gv` | n | TER | Mở panel diffview: liệt kê tất cả file đã đổi, chọn file để xem diff |
 | `<leader>gV` | n | TER | Đóng panel diffview |
-| `<leader>gh` | n | TER | Xem lịch sử thay đổi (log + diff) của file hiện tại |
-| `<leader>gH` | n | TER | Xem lịch sử thay đổi (log + diff) toàn bộ repo |
+| ~~`<leader>gh`~~ | n | TER | **[TẠM TẮT]** Xem lịch sử thay đổi (log + diff) của file hiện tại — nhường chỗ cho group hunk (Gitsigns) |
+| ~~`<leader>gH`~~ | n | TER | **[TẠM TẮT]** Xem lịch sử thay đổi (log + diff) toàn bộ repo |
 | `Esc` | n | TER | Đóng toàn bộ Diffview (từ buffer diff, file panel, hoặc file history panel) |
 
 ---

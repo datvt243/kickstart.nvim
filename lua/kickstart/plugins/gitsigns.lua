@@ -11,8 +11,8 @@ require('gitsigns').setup {
     local ok, wk = pcall(require, 'which-key')
     if ok then
       wk.add {
-        { '<leader>h', buffer = bufnr, group = 'Git [H]unk' },
-        { '<leader>h', buffer = bufnr, group = 'Git [H]unk', mode = 'v' },
+        { '<leader>gh', buffer = bufnr, group = 'Git [H]unk' },
+        { '<leader>gh', buffer = bufnr, group = 'Git [H]unk', mode = 'v' },
         { '<leader>tb', buffer = bufnr, desc = 'Toggle blame line' },
         { '<leader>tw', buffer = bufnr, desc = 'Toggle word diff' },
         { ']c', buffer = bufnr, desc = 'Next git hunk' },
@@ -59,40 +59,40 @@ require('gitsigns').setup {
     -- Actions
     -- visual mode
     -- Stage chỉ vùng được chọn trong visual mode (không phải toàn bộ hunk)
-    map('v', '<leader>hs', function() gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, {
+    map('v', '<leader>ghs', function() gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, {
       desc = 'git [s]tage hunk',
     })
     -- Reset chỉ vùng được chọn trong visual mode về trạng thái index
-    map('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, {
+    map('v', '<leader>ghr', function() gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, {
       desc = 'git [r]eset hunk',
     })
     -- normal mode
     -- Stage hunk tại cursor (thêm vào staging area)
-    map('n', '<leader>hs', gitsigns.stage_hunk, {
+    map('n', '<leader>ghs', gitsigns.stage_hunk, {
       desc = 'git [s]tage hunk',
     })
     -- Reset hunk tại cursor về trạng thái index (discard thay đổi)
-    map('n', '<leader>hr', gitsigns.reset_hunk, {
+    map('n', '<leader>ghr', gitsigns.reset_hunk, {
       desc = 'git [r]eset hunk',
     })
     -- Stage toàn bộ file hiện tại (git add <file>)
-    map('n', '<leader>hS', gitsigns.stage_buffer, {
+    map('n', '<leader>ghS', gitsigns.stage_buffer, {
       desc = 'git [S]tage buffer',
     })
     -- Reset toàn bộ file về trạng thái index (discard tất cả thay đổi chưa stage)
-    map('n', '<leader>hR', gitsigns.reset_buffer, {
+    map('n', '<leader>ghR', gitsigns.reset_buffer, {
       desc = 'git [R]eset buffer',
     })
     -- Xem preview hunk trong popup (diff format)
-    map('n', '<leader>hp', gitsigns.preview_hunk, {
+    map('n', '<leader>ghp', gitsigns.preview_hunk, {
       desc = 'git [p]review hunk',
     })
     -- Xem preview hunk inline trong buffer (thêm dòng hiển thị diff ngay tại chỗ)
-    map('n', '<leader>hi', gitsigns.preview_hunk_inline, {
+    map('n', '<leader>ghi', gitsigns.preview_hunk_inline, {
       desc = 'git preview hunk [i]nline',
     })
     -- Xem git blame đầy đủ cho dòng hiện tại (author, date, commit message)
-    map('n', '<leader>hb', function()
+    map('n', '<leader>ghb', function()
       gitsigns.blame_line {
         full = true,
       }
@@ -100,19 +100,19 @@ require('gitsigns').setup {
       desc = 'git [b]lame line',
     })
     -- Diff file hiện tại so với staging area (index)
-    map('n', '<leader>hd', gitsigns.diffthis, {
+    map('n', '<leader>ghd', gitsigns.diffthis, {
       desc = 'git [d]iff against index',
     })
     -- Diff file hiện tại so với commit trước (HEAD~1)
-    map('n', '<leader>hD', function() gitsigns.diffthis '@' end, {
+    map('n', '<leader>ghD', function() gitsigns.diffthis '@' end, {
       desc = 'git [D]iff against last commit',
     })
     -- Đưa tất cả hunks trong repo vào quickfix list để navigate
-    map('n', '<leader>hQ', function() gitsigns.setqflist 'all' end, {
+    map('n', '<leader>ghQ', function() gitsigns.setqflist 'all' end, {
       desc = 'git hunk [Q]uickfix list (all files in repo)',
     })
     -- Đưa hunks trong file hiện tại vào quickfix list
-    map('n', '<leader>hq', gitsigns.setqflist, {
+    map('n', '<leader>ghq', gitsigns.setqflist, {
       desc = 'git hunk [q]uickfix list (all changes in this file)',
     })
     -- Toggles
