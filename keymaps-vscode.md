@@ -285,7 +285,6 @@
 |---|---|---|---|
 | `<leader>n` | n | BOTH | Tắt highlight tìm kiếm |
 | `Esc` | n | BOTH | Tắt highlight tìm kiếm |
-| `<leader>y` | n | BOTH | Xem tất cả registers |
 | `<leader>c` | v | VSC | Block comment |
 | `<leader>Dr` | n | VSC | Reload VSCode window |
 | `\` (Which Key) | n | VSC | Mở Which Key menu (keybindings.json) |

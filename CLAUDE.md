@@ -53,7 +53,9 @@ lua/
       icons.lua                 — mini.icons: icon theo filetype, mock_nvim_web_devicons() — LOAD TRƯỚC (xem custom/plugins/init.lua)
       lualine.lua               — lualine.nvim: statusline, theme = 'auto' theo colorscheme active (terminal)
       noice.lua                 — noice.nvim: floating cmdline + notifications (terminal)
-      bufferline.lua            — [DISABLED via `local enabled = false` in file] tab bar showing open buffers, themable (terminal)
+      bufferline.lua            — [DISABLED via `local enabled = false` in file] tab bar showing open buffers, themable;
+                                    tabline global (không tách theo split) → xem winbar.lua để hiện tên file theo từng split (terminal)
+      winbar.lua                — winbar built-in: hiện tên file ở đầu MỖI split, ẩn ở neo-tree/terminal/qf/help (terminal)
       render-markdown.lua       — render-markdown.nvim: render markdown ngay trong buffer khi edit .md (terminal)
     treesitter/                 — syntax parsing, always auto-loaded (no opt-in toggle)
       treesitter.lua            — nvim-treesitter (terminal)

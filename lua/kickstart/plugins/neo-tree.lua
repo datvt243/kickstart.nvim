@@ -31,6 +31,12 @@ vim.keymap.set('n', '<leader>ee', '<Cmd>Neotree focus<CR>', {
   desc = 'Focus vào Neo-tree',
 })
 
+-- Bật/tắt Neo-tree sang source git_status: liệt kê file đã đổi/staged/untracked,
+-- giống Source Control panel của VSCode — dùng source có sẵn của neo-tree, không cần plugin khác
+vim.keymap.set('n', '<leader>eg', '<Cmd>Neotree toggle git_status<CR>', {
+  desc = 'Neo-tree: bật/tắt [G]it status',
+})
+
 -- Tự mở neo-tree khi: không có arg (cùng dashboard) hoặc mở thư mục (nvim .)
 vim.api.nvim_create_autocmd('VimEnter', {
   group = vim.api.nvim_create_augroup('neo-tree-auto-open', {

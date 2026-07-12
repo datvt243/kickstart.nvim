@@ -80,6 +80,7 @@
 | `\` | n | TER | Từ editor: focus + reveal Neo-tree. Từ Neo-tree: trả focus về editor |
 | `<leader>e` | n | TER | Mở / đóng Neo-tree |
 | `<leader>ee` | n | TER | Focus vào cửa sổ Neo-tree (mở nếu đang đóng), không reveal file |
+| `<leader>eg` | n | TER | Bật/tắt Neo-tree source git_status (danh sách file đã đổi/staged/untracked) |
 | `Ctrl+H` | n | TER | Từ Neo-tree: quay lại editor (window nav chuẩn, đã có sẵn) |
 
 ---
@@ -310,7 +311,7 @@
 |---|---|---|---|
 | `<leader>cc` | n | TER | Toggle Claude Code terminal |
 | `<leader>cf` | n | TER | Focus vào Claude Code terminal |
-| `<leader>cs` | v | TER | Gửi selection đến Claude |
+| `<leader>cs` | v | TER | Gửi selection đến Claude rồi focus vào terminal để gõ tiếp yêu cầu |
 | `<leader>cs` | n | TER | Add file (từ neo-tree/tree explorer) vào context |
 | `<leader>ca` | n | TER | Accept diff Claude đề xuất |
 | `<leader>cd` | n | TER | Deny diff |
@@ -324,4 +325,3 @@
 |---|---|---|---|
 | `<leader>n` | n | BOTH | Tắt highlight tìm kiếm |
 | `Esc` | n | BOTH | Tắt highlight tìm kiếm |
-| `<leader>y` | n | BOTH | Xem tất cả registers |

@@ -1,6 +1,9 @@
 -- bufferline.nvim: thanh tab hiển thị buffer đang mở ở trên cùng (giống tab bar VSCode)
+-- LƯU Ý: tabline của bufferline là GLOBAL cho toàn bộ Neovim, không tách theo từng split
+-- — nếu mở 2 split thì cũng chỉ có 1 dòng tab, không thể "mỗi split 1 tab riêng".
+-- Nhu cầu "luôn thấy tên file dù focus sang cửa sổ khác/nhiều split" đã chuyển sang
+-- winbar.lua (built-in Neovim, window-local) — xem file đó.
 -- Terminal only — VSCode đã có tab bar native
--- Dùng chung keymap buffer có sẵn: <S-h>/<S-l> chuyển buffer, <leader>bq đóng buffer (xem init.lua)
 -- https://github.com/akinsho/bufferline.nvim
 if vim.g.vscode ~= nil then return end
 
@@ -14,6 +17,21 @@ local function gh(repo) return 'https://github.com/' .. repo end
 -- Icon: dùng mini.icons qua mock_nvim_web_devicons() (xem lua/custom/plugins/ui/icons.lua),
 -- không cần cài nvim-web-devicons thật
 vim.pack.add { gh 'akinsho/bufferline.nvim' }
+
+-- Theo dõi buffer file "thật" gần nhất (bỏ qua Neo-tree, terminal, quickfix...) để
+-- custom_filter bên dưới luôn lọc đúng file đang làm việc, kể cả khi buffer hiện tại
+-- (nvim_get_current_buf) đang là Neo-tree/terminal do focus vừa chuyển sang đó.
+-- Đăng ký autocmd này TRƯỚC khi gọi setup() để nó chạy trước autocmd redraw nội bộ
+-- của bufferline trên cùng sự kiện BufEnter.
+local last_file_buf = vim.api.nvim_get_current_buf()
+vim.api.nvim_create_autocmd('BufEnter', {
+  group = vim.api.nvim_create_augroup('bufferline-track-file', { clear = true }),
+  callback = function(event)
+    if vim.bo[event.buf].buftype == '' and vim.bo[event.buf].buflisted then
+      last_file_buf = event.buf
+    end
+  end,
+})
 
 require('bufferline').setup {
   options = {
@@ -47,6 +65,8 @@ require('bufferline').setup {
     enforce_regular_tabs = false,
     always_show_bufferline = true,
     hover = { enabled = true, delay = 200, reveal = { 'close' } },
+    -- Chỉ hiện 1 tab duy nhất: buffer file đang/vừa edit gần nhất (xem last_file_buf ở trên)
+    custom_filter = function(buf) return buf == last_file_buf end,
     -- Đẩy tab bar sang phải khi Neo-tree đang mở, tránh đè lên sidebar
     offsets = {
       {

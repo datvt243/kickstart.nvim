@@ -25,11 +25,11 @@ require('which-key').setup {
       '<leader>t',
       group = '[T]oggle',
     },
-    {
-      '<leader>h',
-      group = 'Git [H]unk',
-      mode = { 'n', 'v' },
-    },
+    -- {
+    --   '<leader>gh',
+    --   group = 'Git [H]unk',
+    --   mode = { 'n', 'v' },
+    -- },
     {
       '<leader>q',
       group = '[Q]uick Motions',
@@ -50,11 +50,6 @@ require('which-key').setup {
       'gr',
       group = 'LSP Actions',
       mode = { 'n' },
-    },
-    {
-      '<leader>s',
-      hidden = false,
-      mode = { 'n', 'v' },
     },
   },
 }

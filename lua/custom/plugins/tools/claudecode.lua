@@ -7,7 +7,13 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'coder/claudecode.nvim' }
 
-require('claudecode').setup {}
+-- Guard setup{}: :ReloadConfig require lại file này (namespace custom.*) nhưng module
+-- 'claudecode' không bị clear cache nên server cũ vẫn còn sống — gọi setup{} lần nữa
+-- (auto_start mặc định true) sẽ tự start lại và bị chính plugin warn "already running".
+-- Bỏ qua nếu đã init để tránh warning vô hại đó.
+if not (package.loaded.claudecode and package.loaded.claudecode.state and package.loaded.claudecode.state.initialized) then
+  require('claudecode').setup {}
+end
 
 -- ### CLAUDE CODE
 -- Bật/tắt terminal Claude Code
@@ -16,8 +22,11 @@ vim.keymap.set('n', '<leader>cc', '<cmd>ClaudeCode<cr>', { desc = '[C]laude [C]o
 -- Focus vào terminal Claude Code (không toggle, chỉ nhảy vào)
 vim.keymap.set('n', '<leader>cf', '<cmd>ClaudeCodeFocus<cr>', { desc = '[C]laude [F]ocus' })
 
--- Gửi vùng text đang chọn đến Claude để phân tích / hỗ trợ
-vim.keymap.set('v', '<leader>cs', '<cmd>ClaudeCodeSend<cr>', { desc = '[C]laude [S]end selection' })
+-- Gửi vùng text đang chọn đến Claude rồi focus luôn vào terminal để gõ tiếp yêu cầu
+vim.keymap.set('v', '<leader>cs', function()
+  vim.cmd 'ClaudeCodeSend'
+  vim.cmd 'ClaudeCodeFocus'
+end, { desc = '[C]laude [S]end selection + focus' })
 
 -- Thêm file đang chọn trong file explorer (Neo-tree...) vào context của Claude
 -- Chỉ bind trong buffer của các filetype file-explorer/picker, không phải global

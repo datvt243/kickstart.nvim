@@ -196,12 +196,12 @@ do
   -- Misc
   -- Xóa highlight kết quả tìm kiếm thủ công (khi Esc bị override ở nơi khác)
   vim.keymap.set('n', '<leader>n', '<cmd>nohlsearch<CR>', {
-    desc = 'Tắt highlight tìm kiếm',
+    desc = 'which_key_ignore',
   })
   -- Xem nội dung tất cả registers (clipboard, yank history, macro...)
-  vim.keymap.set('n', '<leader>y', '<cmd>registers<CR>', {
-    desc = 'Xem registers',
-  })
+  -- vim.keymap.set('n', '<leader>y', '<cmd>registers<CR>', {
+  --   desc = 'Xem registers',
+  -- })
 
   -- Cập nhật plugin: :PackUpdate (chỉ terminal)
   if not is_vscode then
