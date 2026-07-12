@@ -3,15 +3,11 @@
 -- Extension cần cài: xem bảng "VSCode — Required extensions" trong CLAUDE.md
 -- Keymap nổi bật: <leader>sf/sg tìm file/grep, gr* LSP actions, <leader>g* git, <leader>m* bookmarks,
 -- <leader>h* harpoon, <leader>p* project manager — xem chi tiết theo từng section ### bên dưới
-if vim.g.vscode == nil then
-  return
-end
+if vim.g.vscode == nil then return end
 
 local vscode = require 'vscode'
 local function act(cmd)
-  return function()
-    vscode.action(cmd)
-  end
+  return function() vscode.action(cmd) end
 end
 
 -- Shorthand để map VSCode action theo mode:
@@ -21,22 +17,22 @@ end
 --   nx → normal + visual block (dùng cho operator-pending như gra)
 local function n(key, cmd, desc)
   vim.keymap.set('n', key, act(cmd), {
-    desc = desc
+    desc = desc,
   })
 end
 local function v(key, cmd, desc)
   vim.keymap.set('v', key, act(cmd), {
-    desc = desc
+    desc = desc,
   })
 end
 local function nv(key, cmd, desc)
-  vim.keymap.set({'n', 'v'}, key, act(cmd), {
-    desc = desc
+  vim.keymap.set({ 'n', 'v' }, key, act(cmd), {
+    desc = desc,
   })
 end
 local function nx(key, cmd, desc)
-  vim.keymap.set({'n', 'x'}, key, act(cmd), {
-    desc = desc
+  vim.keymap.set({ 'n', 'x' }, key, act(cmd), {
+    desc = desc,
   })
 end
 

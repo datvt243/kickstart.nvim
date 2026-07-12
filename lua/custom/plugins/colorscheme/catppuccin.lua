@@ -3,8 +3,8 @@
 -- https://github.com/catppuccin/nvim
 if vim.g.vscode ~= nil then return end
 
--- Chỉ 1 trong 2 file (tokyonight.lua / catppuccin.lua) nên để active = true tại 1 thời điểm
-local active = true
+-- Việc chọn colorscheme nào active + gọi vim.cmd.colorscheme nằm ở init.lua
+-- (xem `local active_colorscheme` sau `require 'custom.plugins'`)
 
 local function gh(repo) return 'https://github.com/' .. repo end
 
@@ -50,5 +50,3 @@ require('catppuccin').setup {
     blink_cmp = true,
   },
 }
-
-if active then vim.cmd.colorscheme 'catppuccin' end

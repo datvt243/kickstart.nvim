@@ -35,38 +35,69 @@ Dùng **`vim.pack`** — plugin manager tích hợp sẵn trong Neovim (không d
 ## Cấu trúc
 
 ```
-init.lua                        — options, keymaps chung, vim.pack hooks
-keymaps-terminal.md              — danh sách keymaps cho Terminal Neovim (BOTH / TER)
-keymaps-vscode.md                — danh sách keymaps cho VSCode (BOTH / VSC)
+init.lua                        — shared keymaps, vim.pack hooks, load plugins
 lua/
-  custom/plugins/                — tự động load đệ quy (kể cả subfolder), xem custom/plugins/init.lua
-    dashboard.lua                — dashboard-nvim (terminal)
-    lsp.lua                      — nvim-lspconfig + Mason + fidget + lazydev (terminal)
+  options.lua                    — vim.g/vim.o/vim.opt (leader keys, core options, swapfile, autosave); required by init.lua
+  custom/plugins/               — plugin files (auto-loaded recursively by init.lua)
+    init.lua                    — auto-loader: requires every .lua file in the tree (incl. subfolders)
+    dashboard.lua                — dashboard-nvim: welcome screen (terminal)
+    lsp.lua                     — nvim-lspconfig + Mason + fidget + lazydev (terminal)
     telescope.lua                — Telescope fuzzy finder (terminal)
-    vscode.lua                   — VSCode keymaps (VSCode only)
-    editor/                      — plugin liên quan hành vi soạn thảo/motion (flash.nvim, mini.surround/move,
-                                    neoscroll, scrollbar, indent guides, which-key, trouble.nvim, todo-comments)
-    coding/                      — plugin hỗ trợ viết code (mini.ai, ts-comments, nvim-autopairs,
-                                    blink.cmp, LuaSnip, lazydev)
-    colorscheme/                 — tokyonight (active) + catppuccin (cài sẵn, tắt — đổi flag `active` để switch)
-    formatting/                  — conform.nvim
-    ui/                          — mini.icons, lualine, noice, bufferline (tắt mặc định)
-    treesitter/                  — nvim-treesitter + nvim-ts-autotag
-    tools/                       — tích hợp công cụ ngoài: claudecode, project.nvim, toggleterm,
-                                    codesnap, vim-import-cost
-  kickstart/plugins/             — optional plugin, bật/tắt bằng cách (un)comment ở Section 10 init.lua
-    gitsigns.lua, neo-tree.lua   — đang bật
-    debug.lua, lint.lua          — đang tắt
-vscode/
-  settings.json                  — VSCode settings (cross-platform: Mac + Windows)
-  keybindings.json               — VSCode keybindings (copy vào User/keybindings.json)
+    vscode.lua                  — VSCode keymaps via vscode.action() (VSCode only)
+    editor/                     — editing behavior / motion plugins, always auto-loaded (no opt-in toggle)
+      flash.lua                 — flash.nvim: jump nhanh bằng s/S/<leader>j (both)
+      text-objects.lua          — mini.surround + mini.move + guess-indent (both)
+      neoscroll.lua              — neoscroll.nvim: smooth scrolling (terminal)
+      scrollbar.lua              — nvim-scrollbar: git change/diagnostics on the scrollbar (terminal)
+      indent_line.lua           — [ENABLED] indent guides (terminal)
+      whichkey.lua              — which-key.nvim: keymap hints when pressing leader (terminal)
+      trouble.lua               — trouble.nvim: diagnostics/quickfix/loclist/LSP refs list, <leader>x* (terminal)
+      goto-preview.lua          — goto-preview.nvim: peek definition/type/impl/decl/refs editable,
+                                    gp/gpt/gpi/gpD/gpr/gP/Esc (terminal)
+      todo-comments.lua         — todo-comments.nvim: highlight TODO/FIXME/NOTE/HACK/WARN (terminal)
+    coding/                     — language/code-writing helper plugins, always auto-loaded (no opt-in toggle)
+      ts-comments.lua           — ts-comments.nvim: accurate comment string via treesitter (terminal)
+      mini-ai.lua               — mini.ai: text objects mở rộng (both)
+      autopairs.lua             — nvim-autopairs: auto-close brackets (terminal)
+      blink-cmp.lua             — blink.cmp: autocomplete engine, marker `### BLINK.CMP KEYMAPS` (terminal)
+      luasnip.lua               — LuaSnip: snippet engine, nguồn snippet cho blink.cmp (terminal)
+      lazydev.lua               — lazydev.nvim: lua_ls type cho Neovim config/plugin (terminal)
+    colorscheme/                — colorscheme + theme-adjacent UI plugins, always auto-loaded (no opt-in toggle)
+      tokyonight.lua            — [INACTIVE] tokyonight.nvim: colorscheme, full setup options (terminal)
+      catppuccin.lua            — [ACTIVE] catppuccin.nvim: colorscheme, full setup options (terminal)
+    formatting/                 — code-formatting plugins, always auto-loaded (no opt-in toggle)
+      conform.lua               — conform.nvim: formatter, <leader>qf/qF/qc (terminal)
+    ui/                         — small standalone UI plugins, always auto-loaded (no opt-in toggle)
+      icons.lua                 — mini.icons: icon theo filetype, mock_nvim_web_devicons() — LOAD TRƯỚC (xem custom/plugins/init.lua)
+      lualine.lua               — lualine.nvim: statusline, theme = 'auto' theo colorscheme active (terminal)
+      noice.lua                 — noice.nvim: floating cmdline + notifications (terminal)
+      bufferline.lua            — [DISABLED via `local enabled = false` in file] tab bar showing open buffers, themable (terminal)
+      render-markdown.lua       — render-markdown.nvim: render markdown ngay trong buffer khi edit .md (terminal)
+    treesitter/                 — syntax parsing, always auto-loaded (no opt-in toggle)
+      treesitter.lua            — nvim-treesitter (terminal)
+      autotag.lua               — nvim-ts-autotag: auto-close/rename cặp thẻ HTML/JSX/TSX (terminal)
+    tools/                      — external tool integrations, always auto-loaded (no opt-in toggle)
+      claudecode.lua            — Claude Code integration (terminal)
+      project.lua               — project.nvim: auto-detect root + Telescope picker; tự đóng buffer
+                                    chưa sửa khi đổi project (DirChanged) (terminal)
+      terminal.lua              — toggleterm.nvim: small terminal at the bottom (terminal)
+      codesnap.lua              — codesnap.nvim: capture code as an image (terminal)
+      import-cost.lua           — vim-import-cost: shows KB per JS/TS import (terminal)
+  kickstart/plugins/            — optional plugins (uncomment in Section 10 to enable)
+    debug.lua                   — DAP debugger
+    gitsigns.lua                — [ENABLED] full git keymaps
+    lint.lua                    — linter
+    neo-tree.lua                — [ENABLED] advanced file explorer: \, <leader>e, <leader>ee
+  health.lua                    — config health check
 ```
 
 > Chi tiết đầy đủ từng file/plugin: xem `CLAUDE.md`.
 
 ## Keymaps nổi bật
 
-> Xem đầy đủ tại [`keymaps-terminal.md`](keymaps-terminal.md) (Terminal Neovim) hoặc [`keymaps-vscode.md`](keymaps-vscode.md) (VSCode)
+> Xem đầy đủ tại 
+ - [`keymaps-terminal.md`](keymaps-terminal.md) (Terminal Neovim) 
+ - [`keymaps-vscode.md`](keymaps-vscode.md) (VSCode)
 
 ## VSCode — Extensions cần cài
 

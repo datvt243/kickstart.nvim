@@ -3,9 +3,7 @@
 -- https://github.com/folke/ts-comments.nvim
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo)
-  return 'https://github.com/' .. repo
-end
+local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'folke/ts-comments.nvim' }
 

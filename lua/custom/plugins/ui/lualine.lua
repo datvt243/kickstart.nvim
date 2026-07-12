@@ -19,7 +19,9 @@ require('lualine').setup {
     lualine_a = { 'mode' },
     lualine_b = { 'branch', 'diff', 'diagnostics' },
     lualine_c = { 'filename' },
-    lualine_x = { 'filetype' },
+    -- '%S' là statusline item gốc của Vim, hiển thị phím đang gõ dở nhờ
+    -- vim.o.showcmdloc = 'statusline' (xem lua/options.lua)
+    lualine_x = { function() return '%S' end, 'filetype' },
     lualine_y = {},
     lualine_z = { 'location' }, -- mặc định đã là dạng line:col, không kèm %
   },

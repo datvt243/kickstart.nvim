@@ -1,11 +1,11 @@
 -- tokyonight.nvim: colorscheme (terminal only)
 -- Đổi theme: đổi `style` bên dưới → storm / moon / night / day, rồi đổi tên variant
--- tương ứng ở vim.cmd.colorscheme cuối file (vd: 'tokyonight-storm')
+-- tương ứng ở `active_colorscheme` trong init.lua (vd: 'tokyonight-storm')
 -- https://github.com/folke/tokyonight.nvim
 if vim.g.vscode ~= nil then return end
 
--- Chỉ 1 trong 2 file (tokyonight.lua / catppuccin.lua) nên để active = true tại 1 thời điểm
-local active = false
+-- Việc chọn colorscheme nào active + gọi vim.cmd.colorscheme nằm ở init.lua
+-- (xem `local active_colorscheme` sau `require 'custom.plugins'`)
 
 local function gh(repo) return 'https://github.com/' .. repo end
 
@@ -33,5 +33,3 @@ require('tokyonight').setup {
   on_colors = function(_) end,
   on_highlights = function(_, _) end,
 }
-
-if active then vim.cmd.colorscheme 'tokyonight-night' end

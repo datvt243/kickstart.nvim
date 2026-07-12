@@ -7,43 +7,7 @@ local is_vscode = vim.g.vscode ~= nil
 do
   if vim.loader and vim.loader.enable then vim.loader.enable() end
 
-  vim.g.mapleader = ' '
-  vim.g.maplocalleader = ' '
-  vim.g.have_nerd_font = true -- đổi thành true nếu dùng Nerd Font
-
-  -- True color chỉ cần ở terminal; VSCode tự quản lý màu
-  if not is_vscode then vim.o.termguicolors = true end
-
-  -- [[ Options ]]
-  vim.o.number = true
-  vim.o.relativenumber = true
-  vim.o.mouse = 'a'
-  vim.o.showmode = false
-  vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
-  vim.o.breakindent = true
-  vim.o.undofile = true -- lưu lịch sử undo sau khi đóng file
-  vim.o.ignorecase = true
-  vim.o.smartcase = true
-  vim.o.signcolumn = 'yes'
-  vim.o.updatetime = 250
-  vim.o.timeoutlen = 300
-  vim.o.splitright = true
-  vim.o.splitbelow = true
-  vim.o.list = true
-  vim.opt.listchars = {
-    tab = '» ',
-    trail = '·',
-    nbsp = '␣',
-  }
-  vim.o.inccommand = 'split' -- xem trước kết quả :s/... theo thời gian thực
-  vim.o.cursorline = true
-  vim.o.scrolloff = 10
-  vim.o.confirm = true
-
-  vim.o.autoread = true
-  vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold' }, {
-    command = 'checktime',
-  })
+  require 'options'
 
   -- Xóa highlight tìm kiếm khi bấm Esc ở normal mode
   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -121,9 +85,7 @@ do
     local curbuf = vim.api.nvim_get_current_buf()
     local candidates = vim.fn.getbufinfo { buflisted = 1 }
     for i = #candidates, 1, -1 do
-      if candidates[i].bufnr == curbuf then
-        table.remove(candidates, i)
-      end
+      if candidates[i].bufnr == curbuf then table.remove(candidates, i) end
     end
     table.sort(candidates, function(a, b) return a.lastused > b.lastused end)
 
@@ -187,13 +149,13 @@ do
 
   -- ### SPLITS
   -- Mở split dọc (cửa sổ mới bên phải)
-  vim.keymap.set('n', '<leader>v', '<cmd>vsplit<CR>', {
-    desc = 'Split dọc',
-  })
+  -- vim.keymap.set('n', '<leader>v', '<cmd>vsplit<CR>', {
+  --   desc = 'Split dọc',
+  -- })
   -- Mở split ngang (cửa sổ mới bên dưới)
-  vim.keymap.set('n', '<leader>S', '<cmd>split<CR>', {
-    desc = 'Split ngang',
-  })
+  -- vim.keymap.set('n', '<leader>S', '<cmd>split<CR>', {
+  --   desc = 'Split ngang',
+  -- })
 
   -- ### PASTE OVER TEXT OBJECTS
   -- Thay thế nội dung bên trong/xung quanh text object bằng clipboard
@@ -258,7 +220,7 @@ do
     -- Clear cache của custom.*/kickstart.* trước vì require() cache module, source lại không tự áp dụng
     vim.api.nvim_create_user_command('ReloadConfig', function()
       for name in pairs(package.loaded) do
-        if name:match '^custom' or name:match '^kickstart' then package.loaded[name] = nil end
+        if name:match '^custom' or name:match '^kickstart' or name == 'options' then package.loaded[name] = nil end
       end
       dofile(vim.env.MYVIMRC)
       vim.notify('Đã reload config', vim.log.levels.INFO)
@@ -291,6 +253,27 @@ do
     })
     -- Nhảy lên cửa sổ bên trên
     vim.keymap.set('n', '<C-k>', '<C-w><C-k>', {
+      desc = 'Focus cửa sổ trên',
+    })
+
+    -- Nhảy sang cửa sổ bên trái (alias phím mũi tên; cần tắt Mission Control
+    -- Ctrl+Left/Right trong System Settings để không bị macOS chiếm)
+    vim.keymap.set('n', '<C-Left>', '<C-w><C-h>', {
+      desc = 'Focus cửa sổ trái',
+    })
+
+    -- Nhảy sang cửa sổ bên phải (alias phím mũi tên, xem ghi chú Mission Control ở trên)
+    vim.keymap.set('n', '<C-Right>', '<C-w><C-l>', {
+      desc = 'Focus cửa sổ phải',
+    })
+
+    -- Nhảy xuống cửa sổ bên dưới (alias phím mũi tên)
+    vim.keymap.set('n', '<C-Down>', '<C-w><C-j>', {
+      desc = 'Focus cửa sổ dưới',
+    })
+
+    -- Nhảy lên cửa sổ bên trên (alias phím mũi tên)
+    vim.keymap.set('n', '<C-Up>', '<C-w><C-k>', {
       desc = 'Focus cửa sổ trên',
     })
   end
@@ -332,6 +315,9 @@ if not is_vscode then
 
     -- Chạy build step sau khi plugin được cài/cập nhật
     vim.api.nvim_create_autocmd('PackChanged', {
+      group = vim.api.nvim_create_augroup('custom-pack-build', {
+        clear = true,
+      }),
       callback = function(ev)
         local name = ev.data.spec.name
         local kind = ev.data.kind
@@ -365,6 +351,14 @@ end
 
 -- Load tất cả plugin từ lua/custom/plugins/
 require 'custom.plugins'
+
+-- Chọn colorscheme active — setup{} của từng theme nằm trong
+-- custom/plugins/colorscheme/*.lua, ở đây chỉ quyết định theme nào được áp dụng.
+-- Đổi giá trị bên dưới để chuyển theme (vd: 'tokyonight-night', 'catppuccin').
+if not is_vscode then
+  local active_colorscheme = 'catppuccin'
+  vim.cmd.colorscheme(active_colorscheme)
+end
 
 -- ============================================================
 -- SECTION 10: PLUGINS TÙY CHỌN

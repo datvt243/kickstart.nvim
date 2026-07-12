@@ -3,9 +3,7 @@
 -- Keymap nổi bật: <leader>cp copy ảnh vào clipboard, <leader>cP lưu ảnh ra file (visual mode)
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo)
-  return 'https://github.com/' .. repo
-end
+local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'mistricky/codesnap.nvim' }
 
@@ -20,7 +18,7 @@ local default_snapshot_path = vim.fn.has 'win32' == 1 and '~/Desktop/codesnap/sn
 vim.keymap.set('x', '<leader>cP', function()
   vim.ui.input({
     prompt = 'Lưu snapshot vào: ',
-    default = vim.fn.expand(default_snapshot_path)
+    default = vim.fn.expand(default_snapshot_path),
   }, function(path)
     if path and path ~= '' then
       vim.fn.mkdir(vim.fn.fnamemodify(path, ':h'), 'p')

@@ -66,10 +66,10 @@
 
 | Phím | Mode | Env | Mô tả |
 |---|---|---|---|
-| `<leader>v` | n | TER | Split dọc |
-| `<leader>S` | n | TER | Split ngang |
 | `Ctrl+H` / `Ctrl+L` | n | TER | Focus window trái / phải |
 | `Ctrl+J` / `Ctrl+K` | n | TER | Focus window dưới / trên |
+| `Ctrl+←` / `Ctrl+→` | n | TER | Focus window trái / phải (alias phím mũi tên; cần tắt Mission Control Ctrl+←/→ trong System Settings) |
+| `Ctrl+↓` / `Ctrl+↑` | n | TER | Focus window dưới / trên (alias phím mũi tên) |
 
 ---
 
@@ -289,6 +289,18 @@
 | `<leader>tb` | n | TER | Toggle blame line |
 | `<leader>tw` | n | TER | Toggle word diff |
 | `ih` | o, x | TER | Text object: chọn hunk |
+
+---
+
+## Git — Diffview (panel file đã đổi, giống VSCode Source Control)
+
+| Phím | Mode | Env | Mô tả |
+|---|---|---|---|
+| `<leader>gv` | n | TER | Mở panel diffview: liệt kê tất cả file đã đổi, chọn file để xem diff |
+| `<leader>gV` | n | TER | Đóng panel diffview |
+| `<leader>gh` | n | TER | Xem lịch sử thay đổi (log + diff) của file hiện tại |
+| `<leader>gH` | n | TER | Xem lịch sử thay đổi (log + diff) toàn bộ repo |
+| `Esc` | n | TER | Đóng toàn bộ Diffview (từ buffer diff, file panel, hoặc file history panel) |
 
 ---
 

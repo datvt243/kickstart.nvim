@@ -2,15 +2,11 @@
 -- Hỗ trợ format-on-save và format theo range (visual selection)
 -- https://github.com/stevearc/conform.nvim
 -- Keymap nổi bật: <leader>qf format, <leader>qF chọn formatter, <leader>qc đổi filetype — marker ### FORMAT KEYMAP
-local function gh(repo)
-  return 'https://github.com/' .. repo
-end
+local function gh(repo) return 'https://github.com/' .. repo end
 
-if vim.g.vscode ~= nil then
-  return
-end
+if vim.g.vscode ~= nil then return end
 
-vim.pack.add {gh 'stevearc/conform.nvim'}
+vim.pack.add { gh 'stevearc/conform.nvim' }
 require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
@@ -26,12 +22,10 @@ require('conform').setup {
       html = true,
       xml = true,
     }
-    if enabled_filetypes[vim.bo[bufnr].filetype] then
-      return { timeout_ms = 500 }
-    end
+    if enabled_filetypes[vim.bo[bufnr].filetype] then return { timeout_ms = 500 } end
   end,
   default_format_opts = {
-    lsp_format = 'fallback' -- dùng formatter ngoài, fallback về LSP nếu không có
+    lsp_format = 'fallback', -- dùng formatter ngoài, fallback về LSP nếu không có
   },
   formatters_by_ft = {
     typescript = { 'prettierd' },
@@ -43,21 +37,21 @@ require('conform').setup {
     css = { 'prettierd' },
     html = { 'prettierd' },
     xml = { 'xmllint' }, -- có sẵn trên macOS (libxml2), không cần cài thêm
-  }
+  },
 }
 
 -- ### FORMAT KEYMAP
 -- Format buffer (normal) hoặc selection (visual) bằng formatter cấu hình trong formatters_by_ft
-vim.keymap.set({'n', 'v'}, '<leader>qf', function()
+vim.keymap.set({ 'n', 'v' }, '<leader>qf', function()
   require('conform').format {
-    async = true
+    async = true,
   }
 end, {
-  desc = 'Format current file'
+  desc = 'Format current file',
 })
 
 -- Format buffer với formatter tự chọn (hiện danh sách formatter khả dụng cho filetype hiện tại)
-vim.keymap.set({'n', 'v'}, '<leader>qF', function()
+vim.keymap.set({ 'n', 'v' }, '<leader>qF', function()
   local conform = require 'conform'
   local formatters = conform.list_formatters_for_buffer(0)
   if #formatters == 0 then
@@ -65,12 +59,10 @@ vim.keymap.set({'n', 'v'}, '<leader>qF', function()
     return
   end
   vim.ui.select(formatters, { prompt = 'Format current file with...' }, function(choice)
-    if choice then
-      conform.format { formatters = { choice }, async = true }
-    end
+    if choice then conform.format { formatters = { choice }, async = true } end
   end)
 end, {
-  desc = 'Format current file with...'
+  desc = 'Format current file with...',
 })
 
 -- Đổi filetype của buffer hiện tại (tương đương "change language mode")
@@ -78,12 +70,10 @@ vim.keymap.set('n', '<leader>qc', function()
   vim.ui.input({
     prompt = 'Filetype: ',
     default = vim.bo.filetype,
-    completion = 'filetype'
+    completion = 'filetype',
   }, function(input)
-    if input and input ~= '' then
-      vim.bo.filetype = input
-    end
+    if input and input ~= '' then vim.bo.filetype = input end
   end)
 end, {
-  desc = 'Change language mode'
+  desc = 'Change language mode',
 })

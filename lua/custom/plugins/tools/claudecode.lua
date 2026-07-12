@@ -22,10 +22,11 @@ vim.keymap.set('v', '<leader>cs', '<cmd>ClaudeCodeSend<cr>', { desc = '[C]laude 
 -- Thêm file đang chọn trong file explorer (Neo-tree...) vào context của Claude
 -- Chỉ bind trong buffer của các filetype file-explorer/picker, không phải global
 vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('claudecode-tree-add', {
+    clear = true,
+  }),
   pattern = { 'NvimTree', 'neo-tree', 'oil', 'minifiles', 'netrw', 'snacks_picker_list' },
-  callback = function(event)
-    vim.keymap.set('n', '<leader>cs', '<cmd>ClaudeCodeTreeAdd<cr>', { buffer = event.buf, desc = 'Add file' })
-  end,
+  callback = function(event) vim.keymap.set('n', '<leader>cs', '<cmd>ClaudeCodeTreeAdd<cr>', { buffer = event.buf, desc = 'Add file' }) end,
 })
 
 -- Chọn model Claude

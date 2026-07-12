@@ -3,6 +3,6 @@
 if vim.g.vscode ~= nil then return end
 
 vim.pack.add {
-  'https://github.com/lukas-reineke/indent-blankline.nvim'
+  'https://github.com/lukas-reineke/indent-blankline.nvim',
 }
 require('ibl').setup {}

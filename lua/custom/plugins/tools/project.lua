@@ -3,9 +3,7 @@
 -- Keymap nổi bật: <leader>sp mở Telescope picker danh sách project — marker ### PROJECT
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo)
-  return 'https://github.com/' .. repo
-end
+local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'ahmedkhalf/project.nvim' }
 
@@ -25,13 +23,9 @@ vim.api.nvim_create_autocmd('DirChanged', {
   callback = function(event)
     if event.match ~= 'global' then return end
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted and not vim.bo[buf].modified then
-        vim.api.nvim_buf_delete(buf, {})
-      end
+      if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted and not vim.bo[buf].modified then vim.api.nvim_buf_delete(buf, {}) end
     end
-    if #vim.fn.getbufinfo { buflisted = 1 } == 0 then
-      vim.cmd 'Dashboard'
-    end
+    if #vim.fn.getbufinfo { buflisted = 1 } == 0 then vim.cmd 'Dashboard' end
   end,
 })
 
