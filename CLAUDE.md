@@ -6,6 +6,9 @@
 - **Every time any keymap changes, update `keymaps-terminal.md` and/or `keymaps-vscode.md`.**
 - **Every keymap (new or edited) must have an explanatory comment above it, and keymaps must be separated by a blank line** — no back-to-back `vim.keymap.set` calls without a blank line between them.
 - **When introducing a new plugin** (proposing to install it, comparing it to another, or just answering "what is plugin X") **include GitHub star count and popularity/reputation** — fetch real numbers instead of guessing, since they change over time.
+- **When installing a new plugin, verify it runs cleanly on both axes before considering it done:**
+  1. **VSCode vs Terminal** — either it loads without error in both, or it's guarded to the right environment (`if vim.g.vscode ~= nil then return end` for terminal-only, `if vim.g.vscode == nil then return end` for VSCode-only). Never let a terminal-only plugin crash the VSCode session.
+  2. **Windows vs macOS** — no OS-specific breakage: watch for path separators (`\` vs `/`), hardcoded Unix paths (`~/`, `/tmp`), external tools that only ship on one OS (e.g. `xmllint`, `make`), and spawning `.cmd`/`.bat` on Windows via `vim.system` (route through `cmd.exe /c`). Guard OS-specific code with `vim.fn.has 'win32'`. If a machine of the other OS isn't available, verify by static analysis + simulation and note that end-to-end testing on the other OS is still pending.
 
 ## Overview
 
