@@ -299,6 +299,9 @@ if not is_vscode then
     -- Cập nhật nhanh:  :PackUpdate
 
     local function run_build(name, cmd, cwd)
+      -- Windows: npm là npm.cmd (batch); libuv CreateProcess không chạy trực tiếp .cmd/.bat (chỉ .exe)
+      -- nên spawn 'npm' sẽ ENOENT → route qua cmd.exe /c để chạy được cả .cmd lẫn .exe trên PATH.
+      if vim.fn.has 'win32' == 1 then cmd = vim.list_extend({ 'cmd.exe', '/c' }, cmd) end
       local result = vim
         .system(cmd, {
           cwd = cwd,

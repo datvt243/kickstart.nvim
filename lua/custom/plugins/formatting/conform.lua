@@ -7,6 +7,29 @@ local function gh(repo) return 'https://github.com/' .. repo end
 if vim.g.vscode ~= nil then return end
 
 vim.pack.add { gh 'stevearc/conform.nvim' }
+
+-- xmllint có sẵn trên macOS (libxml2) nhưng KHÔNG có sẵn trên Windows → chọn formatter XML đầu tiên
+-- khả dụng trên máy; không có cái nào thì bỏ hẳn key xml để conform fallback về LSP, tránh giả định chỉ-macOS.
+local function first_available(cmds)
+  for _, c in ipairs(cmds) do
+    if vim.fn.executable(c) == 1 then return c end
+  end
+end
+
+local formatters_by_ft = {
+  typescript = { 'prettierd' },
+  javascript = { 'prettierd' },
+  javascriptreact = { 'prettierd' },
+  typescriptreact = { 'prettierd' },
+  vue = { 'prettierd' },
+  json = { 'prettierd' },
+  css = { 'prettierd' },
+  html = { 'prettierd' },
+}
+
+local xml_formatter = first_available { 'xmllint', 'xmlformat', 'tidy' }
+if xml_formatter then formatters_by_ft.xml = { xml_formatter } end
+
 require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
@@ -27,17 +50,7 @@ require('conform').setup {
   default_format_opts = {
     lsp_format = 'fallback', -- dùng formatter ngoài, fallback về LSP nếu không có
   },
-  formatters_by_ft = {
-    typescript = { 'prettierd' },
-    javascript = { 'prettierd' },
-    javascriptreact = { 'prettierd' },
-    typescriptreact = { 'prettierd' },
-    vue = { 'prettierd' },
-    json = { 'prettierd' },
-    css = { 'prettierd' },
-    html = { 'prettierd' },
-    xml = { 'xmllint' }, -- có sẵn trên macOS (libxml2), không cần cài thêm
-  },
+  formatters_by_ft = formatters_by_ft,
 }
 
 -- ### FORMAT KEYMAP

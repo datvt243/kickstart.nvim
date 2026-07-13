@@ -49,7 +49,8 @@ vim.keymap.set('n', '<leader>sp', function()
         local entry = require('telescope.actions.state').get_selected_entry()
         require('telescope.actions').close(prompt_bufnr)
         if entry then
-          vim.cmd('cd ' .. entry.value)
+          -- fnameescape để path có dấu cách / ký tự đặc biệt (hay gặp trên Windows) không làm hỏng lệnh :cd
+          vim.cmd.cd(vim.fn.fnameescape(entry.value))
           vim.cmd 'Neotree reveal'
         end
       end)
