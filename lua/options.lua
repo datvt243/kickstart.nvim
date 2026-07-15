@@ -87,12 +87,20 @@ vim.o.confirm = true
 -- Tự động đọc lại file khi bị thay đổi từ bên ngoài Neovim (miễn là buffer chưa sửa gì)
 vim.o.autoread = true
 
--- Trigger check file có bị thay đổi từ ngoài hay không ở các thời điểm hay quay lại Neovim
+-- Trigger check file có bị thay đổi từ ngoài hay không ở các thời điểm hay quay lại Neovim.
+-- Bỏ qua buffer terminal (Claude Code, toggleterm...) và defer bằng vim.schedule: checktime
+-- chạy đồng bộ ngay trên FocusGained có thể "nuốt" phím đầu của bộ gõ tiếng Việt (EVKey/Unikey)
+-- khi focus lại terminal — nên không cho nó chen vào đường phím ở buffer terminal.
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold' }, {
   group = vim.api.nvim_create_augroup('options-checktime', {
     clear = true,
   }),
-  command = 'checktime',
+  callback = function()
+    if vim.bo.buftype == 'terminal' then return end
+    vim.schedule(function()
+      if vim.bo.buftype ~= 'terminal' then vim.cmd 'checktime' end
+    end)
+  end,
 })
 
 -- Tắt swap file (.swp) — không bị hỏi dialog "Found a swap file" khi mở lại file

@@ -7,6 +7,9 @@ local function gh(repo) return 'https://github.com/' .. repo end
 vim.pack.add { gh 'sindrets/diffview.nvim' }
 
 require('diffview').setup {
+  -- Highlight thay đổi ở mức từng từ/ký tự trong dòng (không chỉ tô nguyên dòng) — giống diff VSCode
+  enhanced_diff_hl = true,
+
   keymaps = {
     -- Diffview mặc định chỉ có 'q' để đóng từng panel riêng lẻ, không có phím đóng
     -- toàn bộ view. Thêm Esc ở cả 3 chỗ (buffer diff, file panel, file history panel)
@@ -29,12 +32,10 @@ require('diffview').setup {
 vim.keymap.set('n', '<leader>gv', '<cmd>DiffviewOpen<CR>', { desc = '[G]it diff[V]iew: mở panel file đã đổi' })
 
 -- Đóng panel diffview
-vim.keymap.set('n', '<leader>gV', '<cmd>DiffviewClose<CR>', { desc = '[G]it diff[V]iew: đóng panel' })
+-- vim.keymap.set('n', '<leader>gV', '<cmd>DiffviewClose<CR>', { desc = '[G]it diff[V]iew: đóng panel' })
 
--- Xem lịch sử thay đổi (log + diff) của file hiện tại
--- TẠM COMMENT OUT: <leader>gh giải phóng cho group hunk (gitsigns.lua) — cần chọn phím khác cho history
--- vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory %<CR>', { desc = '[G]it [H]istory: file hiện tại' })
+-- Xem lịch sử thay đổi (log + diff) của file hiện tại — giống Timeline của VSCode
+vim.keymap.set('n', '<leader>gl', '<cmd>DiffviewFileHistory %<CR>', { desc = '[G]it [L]og: lịch sử file hiện tại' })
 
 -- Xem lịch sử thay đổi (log + diff) toàn bộ repo
--- TẠM COMMENT OUT: xem ghi chú ở <leader>gh phía trên
--- vim.keymap.set('n', '<leader>gH', '<cmd>DiffviewFileHistory<CR>', { desc = '[G]it [H]istory: toàn repo' })
+vim.keymap.set('n', '<leader>gL', '<cmd>DiffviewFileHistory<CR>', { desc = '[G]it [L]og: lịch sử toàn repo' })

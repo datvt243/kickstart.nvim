@@ -34,12 +34,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     -- ### LSP KEYMAPS
+
+    -- Nhảy đến nơi định nghĩa symbol (thay thế Ctrl+click)
+    map('gd', vim.lsp.buf.definition, 'Goto definition')
+
+
     -- Đổi tên symbol và cập nhật tất cả references trong workspace
     map('grn', vim.lsp.buf.rename, 'Đổi tên symbol')
     -- Hiển thị danh sách code action tại cursor (quick fix, import thiếu, extract...)
     map('gra', vim.lsp.buf.code_action, 'Code action', { 'n', 'x' })
-    -- Nhảy đến nơi định nghĩa symbol (thay thế Ctrl+click)
-    map('gd', vim.lsp.buf.definition, 'Goto definition')
     -- Xem tài liệu / kiểu của symbol dưới cursor trong popup
     map('gk', vim.lsp.buf.hover, 'Hover documentation')
     -- Nhảy đến declaration (thường là prototype/header, khác với definition)

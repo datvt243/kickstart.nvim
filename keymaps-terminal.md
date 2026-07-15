@@ -93,7 +93,6 @@
 | `s` | n, x, o | TER | Flash jump (sneak style) |
 | `S` | n, x | TER | Flash treesitter (chọn node syntax xung quanh cursor) |
 | `r` | o | TER | Flash remote operator (vd: `yr{ab}` yank từ xa) |
-| `<leader>.` | n, x | TER | Flash fuzzy jump |
 
 ---
 
@@ -119,16 +118,12 @@
 | Phím | Mode | Env | Mô tả |
 |---|---|---|---|
 | `<leader>sf` | n | TER | Tìm file trong project |
+| `<C-p>` | n | TER | Tìm file trong project (alias của `<leader>sf`) |
 | `<leader>sg` | n | TER | Live grep toàn project |
-| `<leader>sw` | n, v | TER | Grep từ dưới cursor |
+| `<leader>sw` | n, v | TER | Grep từ tại vị trí con trỏ |
 | `<leader>sd` | n | TER | Tìm diagnostics |
-| `<leader>sh` | n | TER | Tìm trong help tags |
-| `<leader>sk` | n | TER | Tìm keymaps |
-| `<leader>sc` | n | TER | Tìm commands |
-| `<leader>ss` | n | TER | Chọn Telescope picker |
 | `<leader>sr` | n | TER | Resume lần tìm trước |
-| `<leader>s.` | n | TER | File gần đây (oldfiles) |
-| `<leader>sn` | n | TER | Tìm file trong Neovim config |
+| `<leader>so` | n | TER | File gần đây (oldfiles) |
 | `<leader>sp` | n | TER | Danh sách project (project.nvim) |
 | `<leader>/` | n | TER | Fuzzy search trong buffer hiện tại |
 | `<leader>s/` | n | TER | Grep trong các file đang mở |
@@ -150,8 +145,8 @@
 | `gk` | n | TER | Hover documentation |
 | `grn` | n | TER | Rename symbol |
 | `gra` | n, x | TER | Code action |
-| `gO` | n | TER | Document symbols |
-| `gW` | n | TER | Workspace symbols |
+| `gs` | n | TER | Document symbols |
+| `gS` | n | TER | Workspace symbols |
 | `<leader>th` | n | TER | Toggle Inlay Hints |
 | `<leader>qq` | n | TER | Mở danh sách diagnostic |
 
@@ -298,9 +293,8 @@
 | Phím | Mode | Env | Mô tả |
 |---|---|---|---|
 | `<leader>gv` | n | TER | Mở panel diffview: liệt kê tất cả file đã đổi, chọn file để xem diff |
-| `<leader>gV` | n | TER | Đóng panel diffview |
-| ~~`<leader>gh`~~ | n | TER | **[TẠM TẮT]** Xem lịch sử thay đổi (log + diff) của file hiện tại — nhường chỗ cho group hunk (Gitsigns) |
-| ~~`<leader>gH`~~ | n | TER | **[TẠM TẮT]** Xem lịch sử thay đổi (log + diff) toàn bộ repo |
+| `<leader>gl` | n | TER | Xem lịch sử thay đổi (log + diff) của file hiện tại — giống Timeline VSCode |
+| `<leader>gL` | n | TER | Xem lịch sử thay đổi (log + diff) toàn bộ repo |
 | `Esc` | n | TER | Đóng toàn bộ Diffview (từ buffer diff, file panel, hoặc file history panel) |
 
 ---
@@ -311,7 +305,7 @@
 |---|---|---|---|
 | `<leader>cc` | n | TER | Toggle Claude Code terminal |
 | `<leader>cf` | n | TER | Focus vào Claude Code terminal |
-| `<leader>cs` | v | TER | Gửi selection đến Claude rồi focus vào terminal để gõ tiếp yêu cầu |
+| `<leader>cs` | v | TER | Gửi selection đến Claude rồi tự focus vào terminal (focus_after_send) |
 | `<leader>cs` | n | TER | Add file (từ neo-tree/tree explorer) vào context |
 | `<leader>ca` | n | TER | Accept diff Claude đề xuất |
 | `<leader>cd` | n | TER | Deny diff |

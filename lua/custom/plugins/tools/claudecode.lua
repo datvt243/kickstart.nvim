@@ -12,7 +12,16 @@ vim.pack.add { gh 'coder/claudecode.nvim' }
 -- (auto_start mặc định true) sẽ tự start lại và bị chính plugin warn "already running".
 -- Bỏ qua nếu đã init để tránh warning vô hại đó.
 if not (package.loaded.claudecode and package.loaded.claudecode.state and package.loaded.claudecode.state.initialized) then
-  require('claudecode').setup {}
+  -- focus_after_send: sau khi gửi selection thì tự nhảy vào terminal Claude luôn.
+  -- Provider mặc định là native (terminal trong Neovim, focus được) nên option này
+  -- có tác dụng và KHÔNG bị plugin cảnh báo (warning provider chỉ xảy ra với
+  -- provider "none"/"external" chạy Claude ngoài Neovim).
+  -- terminal.auto_insert = true: khi focus vào terminal thì vào luôn insert mode
+  -- (plugin gọi `startinsert`) để gõ tiếp yêu cầu ngay, không phải bấm `i`.
+  require('claudecode').setup {
+    focus_after_send = true,
+    terminal = { auto_insert = true },
+  }
 end
 
 -- ### CLAUDE CODE
@@ -22,11 +31,9 @@ vim.keymap.set('n', '<leader>cc', '<cmd>ClaudeCode<cr>', { desc = '[C]laude [C]o
 -- Focus vào terminal Claude Code (không toggle, chỉ nhảy vào)
 vim.keymap.set('n', '<leader>cf', '<cmd>ClaudeCodeFocus<cr>', { desc = '[C]laude [F]ocus' })
 
--- Gửi vùng text đang chọn đến Claude rồi focus luôn vào terminal để gõ tiếp yêu cầu
-vim.keymap.set('v', '<leader>cs', function()
-  vim.cmd 'ClaudeCodeSend'
-  vim.cmd 'ClaudeCodeFocus'
-end, { desc = '[C]laude [S]end selection + focus' })
+-- Gửi vùng text đang chọn đến Claude; việc focus vào terminal do focus_after_send lo.
+-- Dùng <cmd> để giữ nguyên visual range ('<,'>) và tránh race giữa Send (async) + Focus.
+vim.keymap.set('v', '<leader>cs', '<cmd>ClaudeCodeSend<cr>', { desc = '[C]laude [S]end selection + focus' })
 
 -- Thêm file đang chọn trong file explorer (Neo-tree...) vào context của Claude
 -- Chỉ bind trong buffer của các filetype file-explorer/picker, không phải global
