@@ -18,10 +18,12 @@ if not (package.loaded.claudecode and package.loaded.claudecode.state and packag
   -- provider "none"/"external" chạy Claude ngoài Neovim).
   -- terminal.auto_insert = true: khi focus vào terminal thì vào luôn insert mode
   -- (plugin gọi `startinsert`) để gõ tiếp yêu cầu ngay, không phải bấm `i`.
-  require('claudecode').setup {
+  -- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+  local config = {
     focus_after_send = true,
     terminal = { auto_insert = true },
   }
+  require('claudecode').setup(config)
 end
 
 -- ### CLAUDE CODE

@@ -11,8 +11,9 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'folke/tokyonight.nvim' }
 
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
 ---@diagnostic disable-next-line: missing-fields
-require('tokyonight').setup {
+local config = {
   style = 'night', -- storm | moon | night | day
   light_style = 'day', -- style dùng khi background = light
   transparent = false, -- true để tắt set background, terminal trong suốt xuyên qua
@@ -33,3 +34,5 @@ require('tokyonight').setup {
   on_colors = function(_) end,
   on_highlights = function(_, _) end,
 }
+
+require('tokyonight').setup(config)

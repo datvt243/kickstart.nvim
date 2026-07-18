@@ -8,12 +8,16 @@ local is_vscode = vim.g.vscode ~= nil
 local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'folke/flash.nvim' }
-require('flash').setup {
+
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   modes = {
     search = { enabled = false }, -- không override / và ?
     char = { enabled = false }, -- không override f/t/F/T
   },
 }
+
+require('flash').setup(config)
 -- Flash jump đến bất kỳ vị trí trong file;
 -- hoạt động cả ở VSCode vì dùng Neovim channel
 vim.keymap.set({ 'n', 'x', 'o' }, '<leader>j', function() require('flash').jump() end, { desc = 'Flash jump' })

@@ -6,7 +6,8 @@ if vim.g.vscode ~= nil then return end
 
 vim.pack.add { 'https://github.com/nvimdev/dashboard-nvim' }
 
-require('dashboard').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   theme = 'hyper',
   config = {
     header = {
@@ -56,3 +57,5 @@ require('dashboard').setup {
     footer = {},
   },
 }
+
+require('dashboard').setup(config)

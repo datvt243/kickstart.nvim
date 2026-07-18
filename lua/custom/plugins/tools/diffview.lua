@@ -6,7 +6,8 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'sindrets/diffview.nvim' }
 
-require('diffview').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   -- Highlight thay đổi ở mức từng từ/ký tự trong dòng (không chỉ tô nguyên dòng) — giống diff VSCode
   enhanced_diff_hl = true,
 
@@ -26,6 +27,8 @@ require('diffview').setup {
     },
   },
 }
+
+require('diffview').setup(config)
 
 -- ### DIFFVIEW KEYMAPS
 -- Mở panel diffview: liệt kê tất cả file đã đổi (working tree), chọn file để xem diff

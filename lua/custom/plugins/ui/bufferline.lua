@@ -27,13 +27,12 @@ local last_file_buf = vim.api.nvim_get_current_buf()
 vim.api.nvim_create_autocmd('BufEnter', {
   group = vim.api.nvim_create_augroup('bufferline-track-file', { clear = true }),
   callback = function(event)
-    if vim.bo[event.buf].buftype == '' and vim.bo[event.buf].buflisted then
-      last_file_buf = event.buf
-    end
+    if vim.bo[event.buf].buftype == '' and vim.bo[event.buf].buflisted then last_file_buf = event.buf end
   end,
 })
 
-require('bufferline').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   options = {
     mode = 'buffers',
     themable = true,
@@ -78,3 +77,5 @@ require('bufferline').setup {
     },
   },
 }
+
+require('bufferline').setup(config)

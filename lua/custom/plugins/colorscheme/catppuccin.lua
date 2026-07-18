@@ -10,7 +10,8 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'catppuccin/nvim' }
 
-require('catppuccin').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   flavour = 'mocha', -- latte | frappe | macchiato | mocha
   background = { light = 'latte', dark = 'mocha' }, -- flavour theo 'background' của vim.o
   transparent_background = false,
@@ -50,3 +51,5 @@ require('catppuccin').setup {
     blink_cmp = true,
   },
 }
+
+require('catppuccin').setup(config)

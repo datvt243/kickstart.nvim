@@ -7,7 +7,8 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'rmagatti/goto-preview' }
 
-require('goto-preview').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   default_mappings = false,
   -- Esc chỉ đóng preview window khi cursor đang ở trong chính preview đó (buffer-local),
   -- không đụng đến keymap Esc global (nohlsearch, xem init.lua)
@@ -20,6 +21,8 @@ require('goto-preview').setup {
     })
   end,
 }
+
+require('goto-preview').setup(config)
 
 -- ### GOTO PREVIEW KEYMAPS
 -- gp  → peek definition (giống hệt 'gp' bên VSCode, xem vscode.lua)

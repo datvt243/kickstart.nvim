@@ -9,7 +9,8 @@ vim.pack.add { {
   src = gh 'saghen/blink.cmp',
   version = vim.version.range '1.*',
 } }
-require('blink.cmp').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   keymap = {
     -- ### BLINK.CMP KEYMAPS (preset: 'default')
     -- <C-y>         → chấp nhận completion
@@ -42,3 +43,5 @@ require('blink.cmp').setup {
     enabled = true,
   },
 }
+
+require('blink.cmp').setup(config)

@@ -7,12 +7,15 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'ahmedkhalf/project.nvim' }
 
-require('project_nvim').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   detection_methods = { 'pattern', 'lsp' },
   patterns = { '.git', 'package.json', 'Makefile', '.project' },
   show_hidden = true,
   silent_chdir = true,
 }
+
+require('project_nvim').setup(config)
 
 -- project.nvim đổi cwd bằng lệnh `cd` (scope mặc định 'global') nên sẽ trigger DirChanged —
 -- dùng event này để tự đóng buffer cũ khi chuyển project, dù chuyển bằng <leader>sp hay

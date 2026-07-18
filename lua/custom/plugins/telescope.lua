@@ -17,11 +17,14 @@ local telescope_plugins = {
 if vim.fn.executable 'make' == 1 then table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim') end
 vim.pack.add(telescope_plugins)
 
-require('telescope').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   extensions = {
     ['ui-select'] = { require('telescope.themes').get_dropdown() },
   },
 }
+
+require('telescope').setup(config)
 pcall(require('telescope').load_extension, 'fzf')
 pcall(require('telescope').load_extension, 'ui-select')
 pcall(require('telescope').load_extension, 'projects')

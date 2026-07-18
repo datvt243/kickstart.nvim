@@ -20,7 +20,8 @@ require('mini.surround').setup()
 -- Normal : gh/gj/gk/gl
 -- Visual : gh/gj/gk/gl
 -- (Không alias <Up>/<Down> — mũi tên phải giữ nguyên chức năng di chuyển con trỏ)
-require('mini.move').setup {
+-- ═══ CONFIG (mini.move) — chỉnh giá trị ở đây; setup(move_config) bên dưới dùng lại ═══
+local move_config = {
   mappings = {
     left = 'gh',
     right = 'gl',
@@ -32,3 +33,5 @@ require('mini.move').setup {
     line_up = 'gk',
   },
 }
+
+require('mini.move').setup(move_config)

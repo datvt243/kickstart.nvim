@@ -5,11 +5,14 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'akinsho/toggleterm.nvim' }
 
-require('toggleterm').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   size = 15,
   direction = 'horizontal',
   shade_terminals = true,
 }
+
+require('toggleterm').setup(config)
 
 -- ### TERMINAL KEYMAPS
 -- <leader>tt → toggle terminal (normal + terminal mode)

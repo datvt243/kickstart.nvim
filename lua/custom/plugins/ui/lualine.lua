@@ -7,7 +7,8 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'nvim-lualine/lualine.nvim' }
 
-require('lualine').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   options = {
     theme = 'auto',
     icons_enabled = vim.g.have_nerd_font,
@@ -26,3 +27,5 @@ require('lualine').setup {
     lualine_z = { 'location' }, -- mặc định đã là dạng line:col, không kèm %
   },
 }
+
+require('lualine').setup(config)

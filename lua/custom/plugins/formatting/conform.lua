@@ -30,7 +30,8 @@ local formatters_by_ft = {
 local xml_formatter = first_available { 'xmllint', 'xmlformat', 'tidy' }
 if xml_formatter then formatters_by_ft.xml = { xml_formatter } end
 
-require('conform').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   notify_on_error = false,
   format_on_save = function(bufnr)
     local enabled_filetypes = {
@@ -52,6 +53,8 @@ require('conform').setup {
   },
   formatters_by_ft = formatters_by_ft,
 }
+
+require('conform').setup(config)
 
 -- ### FORMAT KEYMAP
 -- Format buffer (normal) hoặc selection (visual) bằng formatter cấu hình trong formatters_by_ft

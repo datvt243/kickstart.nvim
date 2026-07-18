@@ -61,7 +61,8 @@ vim.api.nvim_create_autocmd('FocusGained', {
   callback = function() pcall(vim.cmd, 'Neotree refresh') end,
 })
 
-require('neo-tree').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   filesystem = {
     filtered_items = {
       visible = true,
@@ -78,3 +79,5 @@ require('neo-tree').setup {
     },
   },
 }
+
+require('neo-tree').setup(config)

@@ -7,7 +7,8 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'folke/noice.nvim' }
 
-require('noice').setup {
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   lsp = {
     override = {
       ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
@@ -20,3 +21,5 @@ require('noice').setup {
     long_message_to_split = true,
   },
 }
+
+require('noice').setup(config)

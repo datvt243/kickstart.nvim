@@ -7,9 +7,13 @@ if vim.g.vscode ~= nil then return end
 local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'folke/lazydev.nvim' }
-require('lazydev').setup {
+
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
   library = {
     -- Nạp type luv khi gặp vim.uv
     { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
   },
 }
+
+require('lazydev').setup(config)

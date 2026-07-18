@@ -1,23 +1,36 @@
 -- Adds git related signs to the gutter, as well as utilities for managing changes
--- NOTE: gitsigns is already included in init.lua but contains only the base
--- config. This will add also the recommended keymaps.
+-- Đây là NƠI DUY NHẤT setup gitsigns (base config + keymaps); init.lua chỉ require file này.
 --
 vim.pack.add { 'https://github.com/lewis6991/gitsigns.nvim' }
 
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
+  -- Hiện git blame inline (author + thời gian + commit) trên dòng hiện tại ngay
+  -- khi mở file. true = bật sẵn, false = tắt. Vẫn bật/tắt runtime bằng <leader>tb.
+  current_line_blame = true,
+
+  -- Tuỳ chỉnh cách hiển thị blame inline (chỉ có tác dụng khi current_line_blame = true)
+  current_line_blame_opts = {
+    delay = 1000, -- ms chờ sau khi dừng cursor mới hiện blame (mặc định gitsigns: 1000)
+    virt_text_pos = 'eol', -- vị trí text ảo: 'eol' (cuối dòng) | 'overlay' | 'right_align'
+  },
+}
+
 require('gitsigns').setup {
+  current_line_blame = config.current_line_blame,
+  current_line_blame_opts = config.current_line_blame_opts,
+
   on_attach = function(bufnr)
     local gitsigns = require 'gitsigns'
 
     local ok, wk = pcall(require, 'which-key')
     if ok then
+      -- Chỉ đăng ký GROUP label cho which-key (không suy ra được từ keymap lẻ).
+      -- Các keymap <leader>tb/<leader>tw/]c/[c/ih không cần khai báo desc ở đây nữa:
+      -- which-key tự đọc desc từ chính vim.keymap.set() bên dưới.
       wk.add {
         { '<leader>gh', buffer = bufnr, group = 'Git [H]unk' },
         { '<leader>gh', buffer = bufnr, group = 'Git [H]unk', mode = 'v' },
-        { '<leader>tb', buffer = bufnr, desc = 'Toggle blame line' },
-        { '<leader>tw', buffer = bufnr, desc = 'Toggle word diff' },
-        { ']c', buffer = bufnr, desc = 'Next git hunk' },
-        { '[c', buffer = bufnr, desc = 'Prev git hunk' },
-        { 'ih', buffer = bufnr, desc = 'Git hunk (text object)', mode = { 'o', 'x' } },
       }
     end
 
@@ -127,7 +140,7 @@ require('gitsigns').setup {
 
     -- Text object
     -- Chọn hunk như text object: dùng với operator (dih xóa hunk, yih yank hunk...)
-    map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
+    map({ 'o', 'x' }, 'ih', gitsigns.select_hunk, { desc = 'Git hunk (text object)' })
   end,
 }
 

@@ -33,6 +33,7 @@ lua/
       flash.lua                 — flash.nvim: jump nhanh bằng s/S/<leader>j (both)
       text-objects.lua          — mini.surround + mini.move + guess-indent (both)
       neoscroll.lua              — neoscroll.nvim: smooth scrolling (terminal)
+      smear-cursor.lua          — smear-cursor.nvim: animate con trỏ hiệu ứng smear/vệt kéo (terminal)
       scrollbar.lua              — nvim-scrollbar: git change/diagnostics on the scrollbar (terminal)
       indent_line.lua           — [ENABLED] indent guides (terminal)
       whichkey.lua              — which-key.nvim: keymap hints when pressing leader (terminal)
@@ -60,6 +61,7 @@ lua/
                                     tabline global (không tách theo split) → xem winbar.lua để hiện tên file theo từng split (terminal)
       winbar.lua                — winbar built-in: hiện tên file ở đầu MỖI split, ẩn ở neo-tree/terminal/qf/help (terminal)
       render-markdown.lua       — render-markdown.nvim: render markdown ngay trong buffer khi edit .md (terminal)
+      colorizer.lua             — nvim-colorizer.lua (catgoose): tô màu theo giá trị màu hex/rgb/hsl/tên/Tailwind (terminal)
     treesitter/                 — syntax parsing, always auto-loaded (no opt-in toggle)
       treesitter.lua            — nvim-treesitter (terminal)
       autotag.lua               — nvim-ts-autotag: auto-close/rename cặp thẻ HTML/JSX/TSX (terminal)
@@ -131,6 +133,22 @@ vim.pack.add { gh 'user/repo' }
 -- Check status:      :lua vim.pack.update(nil, { offline = true })
 -- Reload config:     :ReloadConfig (no need to quit/reopen Neovim)
 ```
+
+### Plugin setup config (convention)
+Every plugin file exposes its `setup()` options as a single `local config = {...}` block near the top (right after `vim.pack.add`), marked with a banner comment, then calls `setup(config)`. Keep this pattern when adding/editing a plugin so all tunable values live in one place at the top of each file.
+```lua
+vim.pack.add { gh 'user/repo' }
+
+-- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
+local config = {
+  some_option = true,
+}
+
+require('plugin').setup(config)
+```
+- **Multiple `setup()` calls in one file** → give each its own descriptive variable (e.g. `move_config` in `editor/text-objects.lua`), not a shared `config`.
+- **Empty `setup {}` / `setup()`** (no options) → leave as-is; wrapping an empty table adds noise with nothing to tune.
+- **`setup()` guarded by an `if`** (e.g. `tools/claudecode.lua`) → declare `local config` inside that block, just before the call, to keep the guard intact.
 
 ## Quick search (type `/###`)
 
