@@ -1,7 +1,6 @@
 -- nvim-treesitter: parse source code thành AST để highlight chính xác hơn regex (terminal only)
 -- Tự động cài parser khi mở file lần đầu (FileType autocmd); cũng dùng cho indent thông minh theo ngôn ngữ
 -- https://github.com/nvim-treesitter/nvim-treesitter
-local function gh(repo) return 'https://github.com/' .. repo end
 
 if vim.g.vscode ~= nil then return end
 

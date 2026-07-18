@@ -9,7 +9,6 @@
 -- https://github.com/j-hui/fidget.nvim
 -- https://github.com/rachartier/tiny-inline-diagnostic.nvim
 -- Keymap nổi bật: gd/gk/grn/gra/grD, <leader>th toggle inlay hints — marker ### LSP KEYMAPS bên dưới
-local function gh(repo) return 'https://github.com/' .. repo end
 
 if vim.g.vscode ~= nil then return end
 
@@ -37,7 +36,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Nhảy đến nơi định nghĩa symbol (thay thế Ctrl+click)
     map('gd', vim.lsp.buf.definition, 'Goto definition')
-
 
     -- Đổi tên symbol và cập nhật tất cả references trong workspace
     map('grn', vim.lsp.buf.rename, 'Đổi tên symbol')
@@ -135,6 +133,11 @@ local servers = {
       Lua = {
         format = {
           enable = false,
+        },
+        diagnostics = {
+          -- Global method dùng chung khai báo ở lua/globals/init.lua — báo cho lua_ls
+          -- biết để không cảnh báo "undefined global". Thêm global mới thì bổ sung vào đây.
+          globals = { 'gh' },
         },
       },
     },

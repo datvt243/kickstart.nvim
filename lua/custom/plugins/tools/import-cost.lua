@@ -3,8 +3,6 @@
 -- Keymap nổi bật: <leader>ic hiển thị KB, <leader>iC xóa hiển thị (chỉ buffer JS/TS)
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'yardnsm/vim-import-cost' }
 
 -- ### IMPORT COST KEYMAPS (chỉ file JS/TS)

@@ -4,7 +4,6 @@
 -- https://github.com/nvim-telescope/telescope.nvim
 -- Keymap nổi bật: <leader>s* (search: file/grep/help/diagnostics...), gr* (LSP: references/definitions...)
 -- xem đầy đủ ở marker ### TELESCOPE KEYMAPS bên dưới
-local function gh(repo) return 'https://github.com/' .. repo end
 
 if vim.g.vscode ~= nil then return end
 

@@ -3,8 +3,6 @@
 -- https://github.com/coder/claudecode.nvim
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'coder/claudecode.nvim' }
 
 -- Guard setup{}: :ReloadConfig require lại file này (namespace custom.*) nhưng module

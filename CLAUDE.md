@@ -23,6 +23,7 @@ This is a personal Neovim config based on kickstart.nvim, running in **two envir
 init.lua                        — shared keymaps, vim.pack hooks, load plugins
 lua/
   options.lua                    — vim.g/vim.o/vim.opt (leader keys, core options, swapfile, autosave); required by init.lua
+  globals/init.lua               — global helper methods dùng chung (vd: `gh`); required by init.lua TRƯỚC khi load plugin
   custom/plugins/               — plugin files (auto-loaded recursively by init.lua)
     init.lua                    — auto-loader: requires every .lua file in the tree (incl. subfolders)
     dashboard.lua                — dashboard-nvim: welcome screen (terminal)
@@ -126,7 +127,10 @@ n('gd', 'editor.action.revealDefinition', 'Goto definition')
 ### Plugin manager
 ```lua
 -- vim.pack is the built-in plugin manager (not lazy.nvim)
-local function gh(repo) return 'https://github.com/' .. repo end
+-- `gh 'user/repo'` → full GitHub URL. `gh` is a GLOBAL defined in lua/globals/init.lua
+-- (loaded before plugins in init.lua), so plugin files call it directly — DON'T redeclare
+-- `local function gh` per file. New shared globals: add to lua/globals/init.lua AND to
+-- Lua.diagnostics.globals in lua/custom/plugins/lsp.lua.
 vim.pack.add { gh 'user/repo' }
 
 -- Update:           :PackUpdate
@@ -216,3 +220,10 @@ formatters_by_ft = {
 ```bash
 ~/.local/share/nvim/mason/bin/stylua init.lua lua/**/*.lua
 ```
+
+## Kiểm tra config (health check)
+
+```bash
+./scripts/health.sh
+```
+Chạy headless (không cần mở Neovim), 3 bước: [1] load config bắt lỗi startup → [2] `luac -p` parse toàn bộ `.lua` → [3] `:checkhealth` đếm ERROR/WARNING. Exit code 0 nếu sạch, khác 0 nếu có ERROR/parse fail → dùng được trong pre-commit / CI. Nên chạy sau khi sửa config hoặc thêm/sửa plugin.

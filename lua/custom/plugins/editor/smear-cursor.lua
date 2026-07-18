@@ -3,8 +3,6 @@
 -- https://github.com/sphamba/smear-cursor.nvim
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'sphamba/smear-cursor.nvim' }
 
 -- ### SMEAR-CURSOR — toàn bộ option kèm giá trị mặc định của plugin.

@@ -3,8 +3,6 @@
 -- Keymap nổi bật: <leader>sp mở Telescope picker danh sách project — marker ### PROJECT
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'ahmedkhalf/project.nvim' }
 
 -- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══

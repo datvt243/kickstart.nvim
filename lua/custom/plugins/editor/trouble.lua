@@ -2,8 +2,6 @@
 -- https://github.com/folke/trouble.nvim
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'folke/trouble.nvim' }
 
 require('trouble').setup {}

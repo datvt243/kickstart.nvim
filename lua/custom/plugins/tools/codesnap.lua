@@ -3,8 +3,6 @@
 -- Keymap nổi bật: <leader>cp copy ảnh vào clipboard, <leader>cP lưu ảnh ra file (visual mode)
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'mistricky/codesnap.nvim' }
 
 -- Windows workarounds — must run BEFORE require('codesnap').setup{}, since both

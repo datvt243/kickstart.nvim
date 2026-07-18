@@ -1,7 +1,6 @@
 -- mini.surround + mini.move: surround, di chuyển dòng/selection (cả terminal lẫn VSCode)
 -- guess-indent: tự detect tabsize/expandtab khi mở file (cả 2 môi trường)
 -- mini.ai → xem lua/custom/plugins/coding/mini-ai.lua
-local function gh(repo) return 'https://github.com/' .. repo end
 
 -- guess-indent: chạy ở cả 2 môi trường
 vim.pack.add { gh 'NMAC427/guess-indent.nvim' }

@@ -3,8 +3,6 @@
 -- https://github.com/saghen/blink.cmp
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { {
   src = gh 'saghen/blink.cmp',
   version = vim.version.range '1.*',

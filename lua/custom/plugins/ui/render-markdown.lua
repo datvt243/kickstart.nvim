@@ -3,7 +3,5 @@
 -- https://github.com/MeanderingProgrammer/render-markdown.nvim
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'MeanderingProgrammer/render-markdown.nvim' }
 require('render-markdown').setup {}

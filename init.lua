@@ -9,6 +9,10 @@ do
 
   require 'options'
 
+  -- Global helper methods dùng chung (vd: gh) — nạp trước khi load plugin để mọi file
+  -- plugin gọi thẳng, không phải khai báo lại. Xem lua/globals/init.lua.
+  require 'globals'
+
   -- Xóa highlight tìm kiếm khi bấm Esc ở normal mode
   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 

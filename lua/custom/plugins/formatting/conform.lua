@@ -2,7 +2,6 @@
 -- Hỗ trợ format-on-save và format theo range (visual selection)
 -- https://github.com/stevearc/conform.nvim
 -- Keymap nổi bật: <leader>qf format, <leader>qF chọn formatter, <leader>qc đổi filetype — marker ### FORMAT KEYMAP
-local function gh(repo) return 'https://github.com/' .. repo end
 
 if vim.g.vscode ~= nil then return end
 

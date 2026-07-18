@@ -3,8 +3,6 @@
 -- https://github.com/nvim-lualine/lualine.nvim
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'nvim-lualine/lualine.nvim' }
 
 -- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══

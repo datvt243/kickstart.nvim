@@ -7,8 +7,6 @@ if vim.g.vscode ~= nil then return end
 -- Việc chọn colorscheme nào active + gọi vim.cmd.colorscheme nằm ở init.lua
 -- (xem `local active_colorscheme` sau `require 'custom.plugins'`)
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'folke/tokyonight.nvim' }
 
 -- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══

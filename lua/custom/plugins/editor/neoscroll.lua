@@ -2,8 +2,6 @@
 -- https://github.com/karb94/neoscroll.nvim
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'karb94/neoscroll.nvim' }
 
 -- ### NEOSCROLL — smooth scroll cho Ctrl-u/d/b/f/y/e và zt/zz/zb (mapping mặc định)

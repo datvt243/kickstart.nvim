@@ -3,8 +3,6 @@
 -- https://github.com/catgoose/nvim-colorizer.lua
 if vim.g.vscode ~= nil then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 vim.pack.add { gh 'catgoose/nvim-colorizer.lua' }
 
 -- ### COLORIZER — tô màu theo giá trị màu tìm thấy trong code.

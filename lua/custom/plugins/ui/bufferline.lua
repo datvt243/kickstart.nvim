@@ -12,8 +12,6 @@ if vim.g.vscode ~= nil then return end
 local enabled = false
 if not enabled then return end
 
-local function gh(repo) return 'https://github.com/' .. repo end
-
 -- Icon: dùng mini.icons qua mock_nvim_web_devicons() (xem lua/custom/plugins/ui/icons.lua),
 -- không cần cài nvim-web-devicons thật
 vim.pack.add { gh 'akinsho/bufferline.nvim' }

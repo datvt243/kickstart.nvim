@@ -5,7 +5,6 @@
 -- s / S     → jump / treesitter (terminal, xem thêm trong block if not is_vscode)
 --
 local is_vscode = vim.g.vscode ~= nil
-local function gh(repo) return 'https://github.com/' .. repo end
 
 vim.pack.add { gh 'folke/flash.nvim' }
 
