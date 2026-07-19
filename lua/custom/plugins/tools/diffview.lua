@@ -6,7 +6,8 @@ vim.pack.add { gh 'sindrets/diffview.nvim' }
 
 -- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
 local config = {
-  -- Highlight thay đổi ở mức từng từ/ký tự trong dòng (không chỉ tô nguyên dòng) — giống diff VSCode
+  -- Highlight thay đổi ở mức từng từ/ký tự trong dòng (không chỉ tô nguyên dòng) 
+  -- — giống diff VSCode
   enhanced_diff_hl = true,
 
   keymaps = {
@@ -30,13 +31,19 @@ require('diffview').setup(config)
 
 -- ### DIFFVIEW KEYMAPS
 -- Mở panel diffview: liệt kê tất cả file đã đổi (working tree), chọn file để xem diff
-vim.keymap.set('n', '<leader>gv', '<cmd>DiffviewOpen<CR>', { desc = '[G]it diff[V]iew: mở panel file đã đổi' })
+vim.keymap.set('n', '<leader>gv', '<cmd>DiffviewOpen<CR>', { 
+  desc = 'Git diff[V]iew: mở panel file đã đổi' 
+})
 
 -- Đóng panel diffview
 -- vim.keymap.set('n', '<leader>gV', '<cmd>DiffviewClose<CR>', { desc = '[G]it diff[V]iew: đóng panel' })
 
 -- Xem lịch sử thay đổi (log + diff) của file hiện tại — giống Timeline của VSCode
-vim.keymap.set('n', '<leader>gl', '<cmd>DiffviewFileHistory %<CR>', { desc = '[G]it [L]og: lịch sử file hiện tại' })
+vim.keymap.set('n', '<leader>gl', '<cmd>DiffviewFileHistory %<CR>', { 
+  desc = 'Git [L]og: lịch sử file hiện tại' 
+})
 
 -- Xem lịch sử thay đổi (log + diff) toàn bộ repo
-vim.keymap.set('n', '<leader>gL', '<cmd>DiffviewFileHistory<CR>', { desc = '[G]it [L]og: lịch sử toàn repo' })
+vim.keymap.set('n', '<leader>gL', '<cmd>DiffviewFileHistory<CR>', { 
+  desc = 'Git [L]og: lịch sử toàn repo' 
+})

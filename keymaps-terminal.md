@@ -78,7 +78,7 @@
 | Phím | Mode | Env | Mô tả |
 |---|---|---|---|
 | `\` | n | TER | Từ editor: focus + reveal Neo-tree. Từ Neo-tree: trả focus về editor |
-| `<leader>e` | n | TER | Mở / đóng Neo-tree |
+| `<leader>et` | n | TER | Mở / đóng Neo-tree |
 | `<leader>ee` | n | TER | Focus vào cửa sổ Neo-tree (mở nếu đang đóng), không reveal file |
 | `<leader>eg` | n | TER | Bật/tắt Neo-tree source git_status (danh sách file đã đổi/staged/untracked) |
 | `Ctrl+H` | n | TER | Từ Neo-tree: quay lại editor (window nav chuẩn, đã có sẵn) |
@@ -261,6 +261,7 @@
 | `<leader>gs` | n | TER | Git status (floating window, đóng bằng `q`/`Esc`) |
 | `<leader>ga` | n | TER | Git add all (`git add -A`) |
 | `<leader>gc` | n | TER | Git commit (nhập message qua prompt) |
+| `<leader>gr` | n | TER | Revert/reset hunk tại cursor về trạng thái index |
 | `<leader>gps` | n | TER | Git push |
 | `<leader>gpl` | n | TER | Git pull |
 
@@ -277,13 +278,10 @@
 | `<leader>ghR` | n | TER | Reset toàn bộ buffer |
 | `<leader>ghp` | n | TER | Preview hunk (popup) |
 | `<leader>ghi` | n | TER | Preview hunk inline |
-| `<leader>ghb` | n | TER | Blame dòng hiện tại (full) |
 | `<leader>ghd` | n | TER | Diff so với index |
 | `<leader>ghD` | n | TER | Diff so với commit trước |
 | `<leader>ghq` | n | TER | Quickfix list hunks (file hiện tại) |
 | `<leader>ghQ` | n | TER | Quickfix list hunks (toàn repo) |
-| `<leader>tb` | n | TER | Toggle blame line |
-| `<leader>tw` | n | TER | Toggle word diff |
 | `ih` | o, x | TER | Text object: chọn hunk |
 
 ---

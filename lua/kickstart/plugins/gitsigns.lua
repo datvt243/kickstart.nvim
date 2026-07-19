@@ -14,11 +14,16 @@ local config = {
     delay = 1000, -- ms chờ sau khi dừng cursor mới hiện blame (mặc định gitsigns: 1000)
     virt_text_pos = 'eol', -- vị trí text ảo: 'eol' (cuối dòng) | 'overlay' | 'right_align'
   },
+
+  -- Highlight từng từ thay đổi trong hunk (word-level diff) thay vì cả dòng.
+  -- true = bật sẵn khi mở file. Vẫn bật/tắt runtime bằng <leader>tw.
+  word_diff = true,
 }
 
 require('gitsigns').setup {
   current_line_blame = config.current_line_blame,
   current_line_blame_opts = config.current_line_blame_opts,
+  word_diff = config.word_diff,
 
   on_attach = function(bufnr)
     local gitsigns = require 'gitsigns'
@@ -29,7 +34,11 @@ require('gitsigns').setup {
       -- Các keymap <leader>tb/<leader>tw/]c/[c/ih không cần khai báo desc ở đây nữa:
       -- which-key tự đọc desc từ chính vim.keymap.set() bên dưới.
       wk.add {
+        -- Normal 
         { '<leader>gh', buffer = bufnr, group = 'Git [H]unk' },
+        { '<leader>gp', buffer = bufnr, group = 'Git Push/Pull' },
+
+        -- Visual
         { '<leader>gh', buffer = bufnr, group = 'Git [H]unk', mode = 'v' },
       }
     end
@@ -44,10 +53,7 @@ require('gitsigns').setup {
     -- Nhảy đến git hunk tiếp theo trong file (bỏ qua nếu đang trong diff view)
     map('n', ']c', function()
       if vim.wo.diff then
-        vim.cmd.normal {
-          ']c',
-          bang = true,
-        }
+        vim.cmd.normal { ']c', bang = true, }
       else
         gitsigns.nav_hunk 'next'
       end
@@ -58,10 +64,7 @@ require('gitsigns').setup {
     -- Nhảy đến git hunk trước đó trong file
     map('n', '[c', function()
       if vim.wo.diff then
-        vim.cmd.normal {
-          '[c',
-          bang = true,
-        }
+        vim.cmd.normal { '[c', bang = true, }
       else
         gitsigns.nav_hunk 'prev'
       end
@@ -69,73 +72,57 @@ require('gitsigns').setup {
       desc = 'Jump to previous git [c]hange',
     })
 
-    -- Actions
+  -- Actions
     -- visual mode
     -- Stage chỉ vùng được chọn trong visual mode (không phải toàn bộ hunk)
     map('v', '<leader>ghs', function() gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, {
-      desc = 'git [s]tage hunk',
+      desc = 'Git [s]tage Hunk',
     })
     -- Reset chỉ vùng được chọn trong visual mode về trạng thái index
     map('v', '<leader>ghr', function() gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, {
-      desc = 'git [r]eset hunk',
+      desc = 'Git [r]eset Hunk',
     })
+
     -- normal mode
     -- Stage hunk tại cursor (thêm vào staging area)
     map('n', '<leader>ghs', gitsigns.stage_hunk, {
-      desc = 'git [s]tage hunk',
+      desc = 'Git [s]tage Hunk',
     })
     -- Reset hunk tại cursor về trạng thái index (discard thay đổi)
     map('n', '<leader>ghr', gitsigns.reset_hunk, {
-      desc = 'git [r]eset hunk',
+      desc = 'git [r]eset Hunk',
     })
     -- Stage toàn bộ file hiện tại (git add <file>)
     map('n', '<leader>ghS', gitsigns.stage_buffer, {
-      desc = 'git [S]tage buffer',
+      desc = 'Git [S]tage buffer',
     })
     -- Reset toàn bộ file về trạng thái index (discard tất cả thay đổi chưa stage)
     map('n', '<leader>ghR', gitsigns.reset_buffer, {
-      desc = 'git [R]eset buffer',
+      desc = 'Git [R]eset buffer',
     })
     -- Xem preview hunk trong popup (diff format)
     map('n', '<leader>ghp', gitsigns.preview_hunk, {
-      desc = 'git [p]review hunk',
+      desc = 'Git [p]review hunk',
     })
     -- Xem preview hunk inline trong buffer (thêm dòng hiển thị diff ngay tại chỗ)
     map('n', '<leader>ghi', gitsigns.preview_hunk_inline, {
-      desc = 'git preview hunk [i]nline',
-    })
-    -- Xem git blame đầy đủ cho dòng hiện tại (author, date, commit message)
-    map('n', '<leader>ghb', function()
-      gitsigns.blame_line {
-        full = true,
-      }
-    end, {
-      desc = 'git [b]lame line',
+      desc = 'Git preview hunk [i]nline',
     })
     -- Diff file hiện tại so với staging area (index)
     map('n', '<leader>ghd', gitsigns.diffthis, {
-      desc = 'git [d]iff against index',
+      desc = 'Git [d]iff against index',
     })
     -- Diff file hiện tại so với commit trước (HEAD~1)
     map('n', '<leader>ghD', function() gitsigns.diffthis '@' end, {
-      desc = 'git [D]iff against last commit',
+      desc = 'Git [D]iff against last commit',
     })
     -- Đưa tất cả hunks trong repo vào quickfix list để navigate
     map('n', '<leader>ghQ', function() gitsigns.setqflist 'all' end, {
-      desc = 'git hunk [Q]uickfix list (all files in repo)',
+      desc = 'Git hunk [Q]uickfix list (all files in repo)',
     })
     -- Đưa hunks trong file hiện tại vào quickfix list
     map('n', '<leader>ghq', gitsigns.setqflist, {
-      desc = 'git hunk [q]uickfix list (all changes in this file)',
-    })
-    -- Toggles
-    -- Bật/tắt hiển thị git blame inline trên dòng hiện tại
-    map('n', '<leader>tb', gitsigns.toggle_current_line_blame, {
-      desc = '[T]oggle git show [b]lame line',
-    })
-    -- Bật/tắt word-level diff highlight (làm nổi bật từng từ thay đổi)
-    map('n', '<leader>tw', gitsigns.toggle_word_diff, {
-      desc = '[T]oggle git intra-line [w]ord diff',
+      desc = 'Git hunk [q]uickfix list (all changes in this file)',
     })
 
     -- Text object
@@ -176,23 +163,36 @@ local function git_run(args, label)
 end
 
 -- Hiển thị git status trong floating window (đóng bằng q hoặc Esc)
-vim.keymap.set('n', '<leader>gs', function() git_float({ 'git', 'status' }, 'Git Status') end, { desc = '[G]it [S]tatus' })
+vim.keymap.set('n', '<leader>gs', function() git_float({ 'git', 'status' }, 'Git Status') end, { desc = 'Git [S]tatus' })
 
 -- Stage tất cả thay đổi trong working tree (git add -A)
-vim.keymap.set('n', '<leader>ga', function() git_run({ 'git', 'add', '-A' }, 'git add -A') end, { desc = '[G]it [A]dd all' })
+vim.keymap.set('n', '<leader>ga', function() git_run({ 'git', 'add', '-A' }, 'git add -A') end, { desc = 'Git [A]dd All' })
 
 -- Nhập commit message qua prompt rồi commit
 vim.keymap.set('n', '<leader>gc', function()
   vim.ui.input({ prompt = 'Commit message: ' }, function(msg)
     if msg and msg ~= '' then git_run({ 'git', 'commit', '-m', msg }, 'git commit') end
   end)
-end, { desc = '[G]it [C]ommit' })
+end, { desc = 'Git [C]ommit' })
 
--- Push branch hiện tại lên remote origin
-vim.keymap.set('n', '<leader>gps', function() git_run({ 'git', 'push' }, 'git push') end, { desc = '[G]it [P]u[s]h' })
+-- Reset hunk tại cursor về trạng thái index (discard thay đổi)
+vim.keymap.set('n', '<leader>gr', function() require('gitsigns').reset_hunk() end, {
+  desc = 'Git [r]evert change Hunk',
+})
 
--- Pull từ remote về branch hiện tại (git pull)
-vim.keymap.set('n', '<leader>gpl', function() git_run({ 'git', 'pull' }, 'git pull') end, { desc = '[G]it [P]u[l]l' })
+-- Push/Pull branch hiện tại lên remote origin
+vim.keymap.set(
+  'n',
+  '<leader>gps',
+  function() git_run({ 'git', 'push' }, 'git push') end,
+  { desc = '[G]it [P]u[s]h' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>gpl',
+  function() git_run({ 'git', 'pull' }, 'git pull') end,
+  { desc = '[G]it [P]u[l]l' }
+)
 
 local ok, wk = pcall(require, 'which-key')
 if ok then wk.add { { '<leader>g', group = '[G]it' } } end

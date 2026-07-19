@@ -24,6 +24,10 @@ local config = {
       '<leader>t',
       group = '[T]oggle',
     },
+    {
+      '<leader>e',
+      group = '[E]xplore',
+    },
     -- {
     --   '<leader>gh',
     --   group = 'Git [H]unk',

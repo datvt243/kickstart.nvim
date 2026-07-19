@@ -22,10 +22,10 @@ vim.keymap.set('n', '\\', '<Cmd>Neotree reveal<CR>', {
   silent = true,
 })
 -- Bật/tắt Neo-tree sidebar (không reveal file đang mở)
-vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', {
-  desc = 'Mở/đóng file explorer',
+vim.keymap.set('n', '<leader>et', '<Cmd>Neotree toggle<CR>', {
+  desc = '[T]oglle [E]xplorer',
 })
--- Focus vào cửa sổ Neo-tree (mở nếu đang đóng), không reveal file hiện tại
+-- Focus vào cửa sổ Neo-tree (mở nếu đang đóng), không reveal file hiện tạe
 -- Quay lại editor: dùng Ctrl+H (Neo-tree luôn nằm bên trái)
 vim.keymap.set('n', '<leader>ee', '<Cmd>Neotree focus<CR>', {
   desc = 'Focus vào Neo-tree',
