@@ -38,8 +38,10 @@ require('codesnap').setup {}
 -- ### CODESNAP KEYMAPS (visual mode)
 -- Copy snapshot của selection vào clipboard
 vim.keymap.set('x', '<leader>cp', '<cmd>CodeSnap<CR>', { desc = 'CodeSnap: copy ảnh vào clipboard' })
--- Lưu snapshot ra file (nhập đường dẫn)
-local default_snapshot_path = vim.fn.has 'win32' == 1 and '~/Desktop/codesnap/snapshot.png' or '~/Desktop/codesnap/snapshot.png'
+-- Lưu snapshot ra file (nhập đường dẫn) — tách riêng đường dẫn mặc định cho từng OS để dễ chỉnh về sau
+local snapshot_path_win = '~/Desktop/codesnap/snapshot.png'
+local snapshot_path_unix = '~/Desktop/codesnap/snapshot.png'
+local default_snapshot_path = vim.fn.has 'win32' == 1 and snapshot_path_win or snapshot_path_unix
 
 vim.keymap.set('x', '<leader>cP', function()
   vim.ui.input({
