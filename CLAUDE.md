@@ -42,6 +42,7 @@ lua/
       goto-preview.lua          — goto-preview.nvim: peek definition/type/impl/decl/refs editable,
                                     gp/gpt/gpi/gpD/gpr/gP/Esc (terminal)
       todo-comments.lua         — todo-comments.nvim: highlight TODO/FIXME/NOTE/HACK/WARN (terminal)
+      ufo.lua                   — nvim-ufo: fold code theo scope (treesitter), zR/zM/zr/zm/zK — marker ### UFO KEYMAPS (terminal)
     coding/                     — language/code-writing helper plugins, always auto-loaded (no opt-in toggle)
       ts-comments.lua           — ts-comments.nvim: accurate comment string via treesitter (terminal)
       mini-ai.lua               — mini.ai: text objects mở rộng (both)

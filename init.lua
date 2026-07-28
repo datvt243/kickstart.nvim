@@ -76,16 +76,39 @@ do
   })
 
   -- ### BUFFER
-  -- Chuyển sang buffer trước (theo thứ tự buffer list)
-  vim.keymap.set('n', '<S-h>', '<cmd>bprevious<CR>', {
+
+  -- Nếu đang focus trong neo-tree, nhảy sang cửa sổ editor gần nhất trước khi thao tác buffer,
+  -- để bnext/enew/đóng buffer không đè nội dung lên cây thư mục. Trả về false nếu đang ở neo-tree
+  -- mà không có cửa sổ editor nào (khi đó bỏ qua thao tác để giữ nguyên cây). VSCode không có
+  -- filetype 'neo-tree' nên hàm luôn trả true → không đổi hành vi.
+  local function ensure_editor_win()
+    if vim.bo.filetype ~= 'neo-tree' then return true end
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+      if vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'neo-tree' then
+        vim.api.nvim_set_current_win(win)
+        return true
+      end
+    end
+    return false
+  end
+
+  -- Chuyển sang buffer trước (theo thứ tự buffer list) — thao tác ở cửa sổ editor nếu đang ở neo-tree
+  vim.keymap.set('n', '<S-h>', function()
+    if ensure_editor_win() then vim.cmd 'bprevious' end
+  end, {
     desc = 'Buffer trước',
   })
-  -- Chuyển sang buffer tiếp theo
-  vim.keymap.set('n', '<S-l>', '<cmd>bnext<CR>', {
+
+  -- Chuyển sang buffer tiếp theo — thao tác ở cửa sổ editor nếu đang ở neo-tree
+  vim.keymap.set('n', '<S-l>', function()
+    if ensure_editor_win() then vim.cmd 'bnext' end
+  end, {
     desc = 'Buffer tiếp',
   })
+
   -- Đóng buffer hiện tại: về buffer vừa dùng gần nhất, nếu hết buffer thì mở Dashboard
   vim.keymap.set('n', '<leader>bq', function()
+    if not ensure_editor_win() then return end
     local curbuf = vim.api.nvim_get_current_buf()
     local candidates = vim.fn.getbufinfo { buflisted = 1 }
     for i = #candidates, 1, -1 do
@@ -102,8 +125,11 @@ do
   end, {
     desc = '[B]uffer đóng',
   })
-  -- Tạo buffer mới trống (chưa lưu file)
-  vim.keymap.set('n', '<leader>bn', '<cmd>enew<CR>', {
+
+  -- Tạo buffer mới trống (chưa lưu file) — mở ở cửa sổ editor nếu đang ở neo-tree
+  vim.keymap.set('n', '<leader>bn', function()
+    if ensure_editor_win() then vim.cmd 'enew' end
+  end, {
     desc = '[B]uffer mới',
   })
   -- Yank toàn bộ nội dung file vào clipboard hệ thống

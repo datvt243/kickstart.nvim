@@ -16,8 +16,23 @@ local telescope_plugins = {
 if vim.fn.executable 'make' == 1 then table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim') end
 vim.pack.add(telescope_plugins)
 
+-- Cửa sổ để mở file được chọn. Mặc định Telescope mở vào cửa sổ đang focus lúc gọi picker —
+-- nếu đó là neo-tree (vd bấm <leader>sf khi đang đứng trong cây thư mục) thì file mở đè lên cây.
+-- Ở đây: cửa sổ gốc là editor bình thường → giữ nguyên; là neo-tree → nhảy sang cửa sổ editor đầu tiên.
+local function pick_editor_window(picker)
+  local ori = picker and picker.original_win_id
+  if ori and vim.api.nvim_win_is_valid(ori) and vim.bo[vim.api.nvim_win_get_buf(ori)].filetype ~= 'neo-tree' then return ori end
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'neo-tree' then return win end
+  end
+  return 0 -- không có cửa sổ editor nào (chỉ mỗi neo-tree) → để Telescope xử lý mặc định
+end
+
 -- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
 local config = {
+  defaults = {
+    get_selection_window = pick_editor_window,
+  },
   extensions = {
     ['ui-select'] = { require('telescope.themes').get_dropdown() },
   },

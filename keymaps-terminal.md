@@ -28,6 +28,18 @@
 
 ---
 
+## Fold (nvim-ufo)
+
+| Phím | Mode | Env | Mô tả |
+|---|---|---|---|
+| `zR` / `zM` | n | TER | Mở / đóng **tất cả** fold trong file |
+| `zr` / `zm` | n | TER | Mở / đóng fold theo **từng cấp** (nhận count, vd `2zr`) |
+| `zK` | n | TER | Xem trước nội dung scope đang fold dưới con trỏ (không có fold thì fallback hover) |
+
+> Các phím fold gốc của Vim vẫn dùng bình thường: `za` bật/tắt, `zo` mở, `zc` đóng fold ngay tại con trỏ.
+
+---
+
 ## Buffer
 
 | Phím | Mode | Env | Mô tả |
