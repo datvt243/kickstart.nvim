@@ -155,7 +155,11 @@ require('mason').setup {}
 
 local ensure_installed = vim.tbl_keys(servers or {})
 vim.list_extend(ensure_installed, {
-  -- Thêm tool khác nếu cần, vd: 'prettier', 'black', 'pyright'
+  -- Formatter dùng trong conform.lua — khai báo ở đây để Mason tự cài (không thì máy mới thiếu
+  -- binary → conform báo "not executable", đúng lỗi gặp trên máy Windows lần đầu setup)
+  'stylua', -- format Lua (dùng qua CLI trong docs + fallback)
+  'prettierd', -- format JS/TS/JSX/TSX/vue/json/css/html
+  -- Thêm tool khác nếu cần, vd: 'black', 'pyright'
 })
 require('mason-tool-installer').setup {
   ensure_installed = ensure_installed,

@@ -24,6 +24,12 @@ TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 fail=0
 
+# Chuyển path kiểu MSYS (/tmp/...) sang path Windows native (C:\...) khi chạy git-bash trên Windows,
+# vì nvim.exe không hiểu path MSYS. macOS/Linux không có cygpath → trả path nguyên vẹn (no-op).
+to_native() {
+  if command -v cygpath >/dev/null 2>&1; then cygpath -w "$1"; else printf '%s' "$1"; fi
+}
+
 ERR_PAT='E[0-9]+:|Error detected|Error executing|stack traceback'
 
 # ── [1/3] Load config headless, bắt lỗi startup ──────────────────────────────
@@ -58,12 +64,35 @@ if command -v luac >/dev/null 2>&1; then
     fail=1
   fi
 else
-  echo "  ⚠ bỏ qua — không có 'luac' trong PATH"
+  # Không có luac (thường gặp trên Windows) → dùng chính nvim để parse-check:
+  # loadfile() compile file thành bytecode nhưng KHÔNG chạy, tương đương `luac -p`. nvim luôn có sẵn.
+  echo "  (không có luac — fallback dùng nvim loadfile)"
+  cat > "$TMP/parsecheck.lua" <<'LUA'
+local bad = 0
+local files = vim.fn.split(vim.fn.glob('lua/**/*.lua'), '\n')
+table.insert(files, 'init.lua')
+for _, f in ipairs(files) do
+  local ok, err = loadfile(f)
+  if not ok then
+    bad = bad + 1
+    io.stderr:write('  x ' .. f .. '\n      ' .. tostring(err) .. '\n')
+  end
+end
+print(#files)
+os.exit(bad == 0 and 0 or 1)
+LUA
+  if parse_out="$(nvim --headless -l "$(to_native "$TMP/parsecheck.lua")" 2>&1)"; then
+    echo "  ✓ OK ($(printf '%s' "$parse_out" | tail -1) files)"
+  else
+    printf '%s\n' "$parse_out" | grep -v '^[0-9]*$'
+    echo "  ✗ FAIL — parse lỗi"
+    fail=1
+  fi
 fi
 
 # ── [3/3] checkhealth ────────────────────────────────────────────────────────
 echo "[3/3] checkhealth..."
-nvim --headless "+checkhealth" "+w! $TMP/health.txt" +qa >/dev/null 2>&1
+nvim --headless "+checkhealth" "+w! $(to_native "$TMP/health.txt")" +qa >/dev/null 2>&1
 if [ -s "$TMP/health.txt" ]; then
   # Bỏ dòng legend ("... should be treated as ...") để không đếm nhầm
   body="$(grep -viE 'should be treated' "$TMP/health.txt")"
