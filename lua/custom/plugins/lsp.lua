@@ -98,6 +98,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local servers = {
   ts_ls = {}, -- TypeScript / JavaScript
   gopls = {}, -- Go
+  harper_ls = { -- Grammar/spell check offline (Rust) — https://writewithharper.com
+    settings = {
+      ['harper-ls'] = {
+        -- Chỉ kiểm tra ở comment/markdown/text để không quấy rầy code
+        linters = {
+          -- Tắt spell + viết hoa đầu câu vì hay báo sai với comment/markdown tiếng Việt
+          SpellCheck = false,
+          SentenceCapitalization = false,
+        },
+      },
+    },
+  },
   eslint = {
     on_attach = function(_, bufnr)
       vim.api.nvim_create_autocmd('BufWritePre', {

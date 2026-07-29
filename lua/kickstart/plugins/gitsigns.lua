@@ -180,6 +180,28 @@ vim.keymap.set('n', '<leader>gr', function() require('gitsigns').reset_hunk() en
   desc = 'Git [r]evert change Hunk',
 })
 
+-- Checkout branch: liệt kê local branches qua vim.ui.select rồi `git checkout <branch>`
+-- (tương đương <leader>gk = git.checkout bên VSCode)
+vim.keymap.set('n', '<leader>gk', function()
+  local result = vim.fn.system { 'git', 'branch', '--format=%(refname:short)' }
+  if vim.v.shell_error ~= 0 then
+    vim.notify(result, vim.log.levels.ERROR)
+    return
+  end
+  local branches = vim.split(result, '\n', { trimempty = true })
+  vim.ui.select(branches, { prompt = 'Checkout branch:' }, function(branch)
+    if branch then git_run({ 'git', 'checkout', branch }, 'git checkout ' .. branch) end
+  end)
+end, { desc = 'Git checkout branch' })
+
+-- Tạo branch mới và checkout luôn (`git checkout -b <branch>`)
+-- (tương đương <leader>gcb = git.branch bên VSCode)
+vim.keymap.set('n', '<leader>gcb', function()
+  vim.ui.input({ prompt = 'New branch name: ' }, function(name)
+    if name and name ~= '' then git_run({ 'git', 'checkout', '-b', name }, 'git checkout -b ' .. name) end
+  end)
+end, { desc = 'Git checkout -b (new branch)' })
+
 -- Push/Pull branch hiện tại lên remote origin
 vim.keymap.set(
   'n',

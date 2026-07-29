@@ -274,6 +274,8 @@
 | `<leader>ga` | n | TER | Git add all (`git add -A`) |
 | `<leader>gc` | n | TER | Git commit (nhập message qua prompt) |
 | `<leader>gr` | n | TER | Revert/reset hunk tại cursor về trạng thái index |
+| `<leader>gk` | n | TER | Git checkout branch (chọn từ danh sách local branches) |
+| `<leader>gcb` | n | TER | Git checkout -b (tạo branch mới, nhập tên qua prompt) |
 | `<leader>gps` | n | TER | Git push |
 | `<leader>gpl` | n | TER | Git pull |
 
