@@ -64,6 +64,11 @@ vim.api.nvim_create_autocmd('FocusGained', {
 -- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
 local config = {
   filesystem = {
+    -- Không tự đổi root theo cwd: project.nvim tự `cd` mỗi khi mở file (theo root LSP/.git/package.json
+    -- của FILE đó), nếu bind_to_cwd=true (default) thì Neo-tree nghe DirChanged và nhảy root theo —
+    -- đây chính là lỗi "mở file thì cây tự chuyển sang path chứa file". Đổi root vẫn làm được bằng tay
+    -- qua \ (reveal) hoặc <leader>sp (chọn project) vì 2 lệnh đó gọi thẳng `Neotree reveal`, không qua cwd.
+    bind_to_cwd = false,
     filtered_items = {
       visible = true,
       hide_dotfiles = false,
