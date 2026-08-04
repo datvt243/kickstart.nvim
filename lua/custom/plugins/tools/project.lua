@@ -51,8 +51,12 @@ vim.keymap.set('n', '<leader>sp', function()
         require('telescope.actions').close(prompt_bufnr)
         if entry then
           -- fnameescape để path có dấu cách / ký tự đặc biệt (hay gặp trên Windows) không làm hỏng lệnh :cd
-          vim.cmd.cd(vim.fn.fnameescape(entry.value))
-          vim.cmd 'Neotree reveal'
+          local path = vim.fn.fnameescape(entry.value)
+          vim.cmd.cd(path)
+          -- Từ khi bind_to_cwd=false (xem kickstart/plugins/neo-tree.lua), lệnh "Neotree reveal" trơn
+          -- không còn tự đổi root nữa: nó fallback về state.path (root CŨ) chứ không đọc cwd vừa :cd,
+          -- nên cây vẫn đứng yên ở project cũ. Truyền thẳng dir= để ép root sang project mới.
+          vim.cmd('Neotree focus dir=' .. path)
         end
       end)
       return true

@@ -67,7 +67,9 @@ local config = {
     -- Không tự đổi root theo cwd: project.nvim tự `cd` mỗi khi mở file (theo root LSP/.git/package.json
     -- của FILE đó), nếu bind_to_cwd=true (default) thì Neo-tree nghe DirChanged và nhảy root theo —
     -- đây chính là lỗi "mở file thì cây tự chuyển sang path chứa file". Đổi root vẫn làm được bằng tay
-    -- qua \ (reveal) hoặc <leader>sp (chọn project) vì 2 lệnh đó gọi thẳng `Neotree reveal`, không qua cwd.
+    -- qua \ (reveal file đang mở). Riêng <leader>sp (chọn project) KHÔNG dùng "Neotree reveal" trơn nữa —
+    -- vì reveal fallback về state.path (root cũ) chứ không đọc cwd vừa :cd khi chưa có file nào cần
+    -- reveal ở project mới → xem project.lua, dùng "Neotree focus dir=<path>" để ép root thủ công.
     bind_to_cwd = false,
     filtered_items = {
       visible = true,
