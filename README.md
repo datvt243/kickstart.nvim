@@ -5,6 +5,17 @@ Config Neovim cá nhân dựa trên [kickstart.nvim](https://github.com/nvim-lua
 - **Terminal Neovim** — full plugin stack (LSP, Telescope, Treesitter, blink.cmp, flash.nvim...)
 - **VSCode + vscode-neovim** — mini.ai + mini.surround + mini.move + flash.nvim + keymaps qua `vscode.action()`
 
+## Mục lục
+
+- [Yêu cầu](#yêu-cầu)
+- [Cài đặt](#cài-đặt)
+- [Plugin manager](#plugin-manager)
+- [Cấu trúc](#cấu-trúc)
+- [Keymaps nổi bật](#keymaps-nổi-bật)
+- [Thêm LSP server](#thêm-lsp-server)
+- [Format Lua](#format-lua)
+- [VSCode — Extensions cần cài](#vscode--extensions-cần-cài)
+
 ## Yêu cầu
 
 - Neovim stable mới nhất
@@ -99,22 +110,6 @@ lua/
  - [`keymaps-terminal.md`](keymaps-terminal.md) (Terminal Neovim) 
  - [`keymaps-vscode.md`](keymaps-vscode.md) (VSCode)
 
-## VSCode — Extensions cần cài
-
-| Extension | ID |
-|---|---|
-| vscode-neovim | `asvetliakov.vscode-neovim` |
-| Which Key | `vspacecode.whichkey` |
-| Find It Faster | `TomiTurtinen.find-it-faster` |
-| Fuzzy Search | `jacobdufault.fuzzy-search` |
-| Bookmarks | `alefragnani.Bookmarks` |
-| Harpoon | `tobias-z.vscode-harpoon` |
-| Project Manager | `alefragnani.project-manager` |
-
-> Disable `vscodevim.vim` nếu đã cài: `code --disable-extension vscodevim.vim`
-
-> **Jump:** Dùng `flash.nvim` (Neovim plugin) thay Jumpy — `<leader>j`. Jumpy bị bỏ vì conflict với vscode-neovim do hook `type` command.
-
 ## Thêm LSP server
 
 Mở `lua/custom/plugins/lsp.lua`, thêm vào `local servers = { ... }`:
@@ -130,3 +125,19 @@ Mason sẽ tự cài khi khởi động lại.
 ```bash
 ~/.local/share/nvim/mason/bin/stylua init.lua lua/**/*.lua
 ```
+
+## VSCode — Extensions cần cài
+
+| Extension | ID |
+|---|---|
+| vscode-neovim | `asvetliakov.vscode-neovim` |
+| Which Key | `vspacecode.whichkey` |
+| Find It Faster | `TomiTurtinen.find-it-faster` |
+| Fuzzy Search | `jacobdufault.fuzzy-search` |
+| Bookmarks | `alefragnani.Bookmarks` |
+| Harpoon | `tobias-z.vscode-harpoon` |
+| Project Manager | `alefragnani.project-manager` |
+
+> Disable `vscodevim.vim` nếu đã cài: `code --disable-extension vscodevim.vim`
+
+> **Jump:** Dùng `flash.nvim` (Neovim plugin) thay Jumpy — `<leader>j`. Jumpy bị bỏ vì conflict với vscode-neovim do hook `type` command.

@@ -214,8 +214,8 @@
 
 | Phím | Mode | Env | Mô tả |
 |---|---|---|---|
-| `<leader>cp` | v | TER | Chụp ảnh selection, copy vào clipboard (codesnap.nvim) |
-| `<leader>cP` | v | TER | Chụp ảnh selection, lưu ra file (nhập đường dẫn) |
+| `<leader>cp` | x | TER | Chụp ảnh selection, copy vào clipboard (codesnap.nvim) |
+| `<leader>cP` | x | TER | Chụp ảnh selection, lưu ra file (nhập đường dẫn) |
 
 ---
 
