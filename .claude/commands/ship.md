@@ -1,6 +1,11 @@
 Perform the following steps in order to sync docs, then commit and push code.
 
+Flags (check `$ARGUMENTS`):
+- `--skip-keymaps` — skip Step 1 entirely (no keymap doc sync) and go straight to Step 2.
+
 ## Step 1 — Update keymaps-terminal.md and keymaps-vscode.md
+
+Skip this step entirely if `--skip-keymaps` was passed — go directly to Step 2.
 
 Read all keymaps from source files in this order:
 - `init.lua` (marker `### KEYMAPS CHUNG`)
