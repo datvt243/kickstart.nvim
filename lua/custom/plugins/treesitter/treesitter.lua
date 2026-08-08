@@ -9,8 +9,27 @@ vim.pack.add { {
   version = 'main',
 } }
 
+-- SAP CAP: parser cds không nằm trong registry chính thức của nvim-treesitter — đăng ký thủ công.
+-- Repo cap-js-community/tree-sitter-cds đã bị archived (ngừng bảo trì, parser chưa hoàn chỉnh 100%,
+-- 18 sao) nhưng chính vì archived nên HEAD bị khoá cứng, không lo repo đổi/gãy về sau. Nếu tương lai
+-- nvim-treesitter đổi API "User TSUpdate" thì chỉ cần xoá block này — cds_lsp (lsp.lua) không phụ
+-- thuộc treesitter nên completion/diagnostics vẫn hoạt động bình thường.
+-- https://github.com/cap-js-community/tree-sitter-cds
+vim.filetype.add { extension = { cds = 'cds' } }
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'TSUpdate',
+  callback = function()
+    require('nvim-treesitter.parsers').cds = {
+      install_info = {
+        url = 'https://github.com/cap-js-community/tree-sitter-cds',
+        queries = 'nvim', -- highlights/locals/injections/folds viết riêng cho Neovim (khác queries/ gốc)
+      },
+    }
+  end,
+})
+
 -- Parser cần cho config này; parser khác tự cài khi mở file (FileType autocmd bên dưới)
-local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+local parsers = { 'bash', 'c', 'cds', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
 
 -- Parser đã resolve được qua runtime (Neovim bundle sẵn, hoặc nvim-treesitter đã cài trước đó) thì
 -- không cần cài lại. get_installed() của nvim-treesitter chỉ quét thư mục riêng của nó, không thấy

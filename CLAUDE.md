@@ -74,6 +74,10 @@ lua/
       terminal.lua              — toggleterm.nvim: small terminal at the bottom (terminal)
       codesnap.lua              — codesnap.nvim: capture code as an image (terminal)
       import-cost.lua           — vim-import-cost: shows KB per JS/TS import (terminal)
+      diffview.lua              — diffview.nvim: panel diff/file history, <leader>gv/gl/gL (terminal)
+      ui5.lua                   — ui5-language-assistant: LSP cho SAPUI5/OpenUI5 XML views (completion
+                                    theo UI5 metadata); cài thủ công qua npm, không qua Mason — xem comment
+                                    đầu file. Dùng kèm ui5-lsp-wrapper.js (bridge IPC → stdio) (terminal)
   kickstart/plugins/            — optional plugins (uncomment in Section 10 to enable)
     debug.lua                   — DAP debugger
     gitsigns.lua                — [ENABLED] full git keymaps
