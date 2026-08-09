@@ -97,6 +97,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 ---@type table<string, vim.lsp.Config>
 local servers = {
   ts_ls = {}, -- TypeScript / JavaScript
+  html = {}, -- HTML tag/attribute completion
+  tailwindcss = {}, -- Tailwind class completion, color preview, hover CSS
   gopls = {}, -- Go
   cds_lsp = {}, -- SAP CAP: CDS (Core Data Services) — Mason cài package "cds-lsp" (npm @sap/cds-lsp, proprietary)
   harper_ls = { -- Grammar/spell check offline (Rust) — https://writewithharper.com
