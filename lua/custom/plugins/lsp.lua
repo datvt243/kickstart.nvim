@@ -96,7 +96,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- Thêm/xóa server theo nhu cầu của project
 ---@type table<string, vim.lsp.Config>
 local servers = {
-  ts_ls = {}, -- TypeScript / JavaScript
+  -- ts_ls + vue_ls chạy "hybrid mode": vue_ls lo phần template/CSS trong .vue,
+  -- còn phần <script>/TS thì forward qua ts_ls nhờ plugin @vue/typescript-plugin
+  -- (nằm sẵn trong package vue-language-server mà Mason cài) — xem lsp/vue_ls.lua
+  -- trong nvim-lspconfig hoặc https://github.com/vuejs/language-tools/wiki/Neovim
+  ts_ls = { -- TypeScript / JavaScript (+ phần <script> trong .vue qua @vue/typescript-plugin)
+    filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx', 'vue' },
+    init_options = {
+      plugins = {
+        {
+          name = '@vue/typescript-plugin',
+          location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+          languages = { 'vue' },
+        },
+      },
+    },
+  },
+  vue_ls = {}, -- Vue SFC: template/directive/component-tag nav (gd đến component .vue) — dùng chung ts_ls ở trên
   html = {}, -- HTML tag/attribute completion
   tailwindcss = {}, -- Tailwind class completion, color preview, hover CSS
   gopls = {}, -- Go
