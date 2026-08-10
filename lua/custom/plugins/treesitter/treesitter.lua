@@ -29,7 +29,7 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 -- Parser cần cho config này; parser khác tự cài khi mở file (FileType autocmd bên dưới)
-local parsers = { 'bash', 'c', 'cds', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+local parsers = { 'bash', 'c', 'cds', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'vue' }
 
 -- Parser đã resolve được qua runtime (Neovim bundle sẵn, hoặc nvim-treesitter đã cài trước đó) thì
 -- không cần cài lại. get_installed() của nvim-treesitter chỉ quét thư mục riêng của nó, không thấy
