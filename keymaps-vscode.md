@@ -206,7 +206,8 @@
 | `<leader>ga` | n | VSC | Git add all |
 | `<leader>gc` | n | VSC | Git commit |
 | `<leader>gps` | n | VSC | Git push |
-| `<leader>gpl` | n | VSC | Git pull |
+| `<leader>gpl` | n | VSC | Git pull (từ branch hiện tại) |
+| `<leader>gpb` | n | VSC | Git pull từ branch tự chọn (điền sẵn `git pull origin `, tự gõ tên branch + Enter) |
 | `<leader>gk` | n | VSC | Git checkout |
 | `<leader>gcb` | n | VSC | Tạo branch mới |
 | `<leader>gu` | n | VSC | Git unstage |
