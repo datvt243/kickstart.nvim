@@ -87,6 +87,16 @@ vim.keymap.set('n', '<leader><leader>', builtin.buffers, {
   desc = 'Tìm buffer đang mở',
 })
 
+-- Alias: mở danh sách buffer đang mở bằng Shift+Tab
+vim.keymap.set('n', '<S-Tab>', builtin.buffers, {
+  desc = 'Tìm buffer đang mở',
+})
+
+-- Alias: mở danh sách buffer đang mở qua <leader>bl (namespace [b]uffer)
+vim.keymap.set('n', '<leader>bl', builtin.buffers, {
+  desc = 'Tìm buffer đang mở',
+})
+
 -- Tìm kiếm trong Neovim help tags
 -- vim.keymap.set('n', '<leader>sh', builtin.help_tags, {
 --   desc = '[S]earch [H]elp',

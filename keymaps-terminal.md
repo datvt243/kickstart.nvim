@@ -47,6 +47,8 @@
 | `Shift+H` | n | BOTH | Qua buffer trước |
 | `Shift+L` | n | BOTH | Qua buffer tiếp |
 | `<leader><leader>` | n | TER | Tìm buffer đang mở (Telescope) |
+| `Shift+Tab` | n | TER | Tìm buffer đang mở (Telescope, alias) |
+| `<leader>bl` | n | TER | Tìm buffer đang mở (Telescope, alias) |
 | `<leader>bq` | n | BOTH | Đóng buffer hiện tại (TER: về buffer dùng gần nhất, hết buffer thì mở Dashboard) |
 | `<leader>bn` | n | BOTH | Mở buffer mới (file trống) |
 | `<leader>by` | n | BOTH | Yank toàn bộ nội dung file vào clipboard |
