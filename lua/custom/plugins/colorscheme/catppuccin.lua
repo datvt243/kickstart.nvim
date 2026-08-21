@@ -35,7 +35,6 @@ local config = {
   },
   color_overrides = {},
   custom_highlights = {},
-  default_integrations = true,
   integrations = {
     treesitter = true,
     native_lsp = { enabled = true },
