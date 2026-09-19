@@ -10,14 +10,13 @@ vim.pack.add { {
 -- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
 local config = {
   keymap = {
-    -- ### BLINK.CMP KEYMAPS (preset: 'default')
-    -- <C-y>         → chấp nhận completion
+    -- ### BLINK.CMP KEYMAPS (preset: 'enter')
+    -- <CR>          → chấp nhận completion (menu đóng thì xuống dòng bình thường)
     -- <C-space>     → mở menu / mở docs
-    -- <C-n> / <C-p> → item tiếp / trước
+    -- <tab>/<S-tab> → item tiếp/trước & di chuyển trong snippet
     -- <C-e>         → đóng menu
     -- <C-k>         → toggle signature help
-    -- <tab>/<S-tab> → di chuyển trong snippet
-    preset = 'default',
+    preset = 'enter',
   },
   appearance = {
     nerd_font_variant = 'mono',

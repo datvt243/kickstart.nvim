@@ -225,12 +225,11 @@
 
 | Phím | Mode | Env | Mô tả |
 |---|---|---|---|
-| `Ctrl+Y` | i | TER | Chấp nhận completion |
+| `Enter` | i | TER | Chấp nhận completion (menu đóng thì xuống dòng bình thường) |
 | `Ctrl+Space` | i | TER | Mở menu / mở docs |
-| `Ctrl+N` / `Ctrl+P` | i | TER | Item tiếp / trước trong menu |
+| `Tab` / `Shift+Tab` | i | TER | Item tiếp/trước trong menu & di chuyển trong snippet (LuaSnip) |
 | `Ctrl+E` | i | TER | Đóng menu |
 | `Ctrl+K` | i | TER | Toggle signature help |
-| `Tab` / `Shift+Tab` | i | TER | Di chuyển trong snippet (LuaSnip) |
 
 ---
 
