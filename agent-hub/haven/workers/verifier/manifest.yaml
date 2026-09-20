@@ -1,0 +1,18 @@
+worker_id: verifier
+version: 0.1.0
+display_role: Verifier
+description: >
+  Reads the implementer's evidence note, checks it against the diagram
+  node's acceptance criteria and the forbidden-states table, returns
+  SEALED or REOPEN.
+quick_actions: [verify_seal]
+seal_actions: [seal, reopen]
+hard_rules:
+  - VerdictOnly        # only SEAL or REOPEN — no "mostly", no "looks good but"
+  - EvidenceOnly        # never trust reasoning in place of real evidence
+  - NeverVerifyOwnWork    # never grade a diff you wrote yourself
+  - RatchetOnly          # PM status only moves forward, never backward
+reads: [evidence/implementer/, haven/diagrams/, doctrine/MEMORY.md, CLAUDE.md]
+# doctrine/MEMORY.md: recipe step 4 needs to check the command in the note.
+# No NORTHSTAR.md — the recipe never uses it, a wasted read on every subagent spawn.
+writes: [evidence/verifier/, evidence/worker-runs.log]   # and PM status on the diagram
