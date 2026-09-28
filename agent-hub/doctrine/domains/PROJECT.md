@@ -65,6 +65,7 @@ See `CLAUDE.md` — `ADHOC_WORK`, `NO_EVIDENCE`, `EDIT_UNVERIFIED`,
 | `ui/icons.lua` not loaded before other UI plugins | `mini.icons`' `mock_nvim_web_devicons()` must be in place before Telescope/Neo-tree/lualine/bufferline call `require('nvim-web-devicons')`; the recursive directory-walk load order under `custom/plugins/` isn't guaranteed | Keep the explicit `require 'custom.plugins.ui.icons'` at the top of `custom/plugins/init.lua`, before the recursive loader runs |
 | Jumpy-style jump plugins conflict with vscode-neovim | Such plugins hook the `type` command, which conflicts with how vscode-neovim intercepts input | Use `flash.nvim`'s `<leader>j` instead — works in both Terminal and VSCode |
 | `vscodevim.vim` installed alongside `vscode-neovim` | The two extensions both try to own Vim emulation in VSCode, conflicting | Disable it: `code --disable-extension vscodevim.vim` |
+| Passing a short `exclude.filetypes` list to `ibl.setup()` (indent-blankline) | ibl merges config with `vim.tbl_deep_extend('keep', input, base)`, which merges arrays by numeric index — `{'dashboard'}` silently overwrites index 1 (`'lspinfo'`) of the default list instead of appending to it | Always pass the FULL default `exclude.filetypes` list (`lspinfo`, `packer`, `checkhealth`, `help`, `man`, `gitcommit`, `TelescopePrompt`, `TelescopeResults`, `''`) plus whatever new filetype you're adding — see `custom/plugins/editor/indent_line.lua` |
 
 ## Decisions, with reasoning
 > A decision recorded without its reason will get "tidied up" away by a
