@@ -49,6 +49,7 @@ Dùng **`vim.pack`** — plugin manager tích hợp sẵn trong Neovim (không d
 init.lua                        — shared keymaps, vim.pack hooks, load plugins
 lua/
   options.lua                    — vim.g/vim.o/vim.opt (leader keys, core options, swapfile, autosave); required by init.lua
+  globals/init.lua               — global helper methods dùng chung (vd: `gh`); required by init.lua trước khi load plugin
   custom/plugins/               — plugin files (auto-loaded recursively by init.lua)
     init.lua                    — auto-loader: requires every .lua file in the tree (incl. subfolders)
     dashboard.lua                — dashboard-nvim: welcome screen (terminal)
@@ -59,6 +60,7 @@ lua/
       flash.lua                 — flash.nvim: jump nhanh bằng s/S/<leader>j (both)
       text-objects.lua          — mini.surround + mini.move + guess-indent (both)
       neoscroll.lua              — neoscroll.nvim: smooth scrolling (terminal)
+      smear-cursor.lua          — smear-cursor.nvim: animate con trỏ hiệu ứng smear/vệt kéo (terminal)
       scrollbar.lua              — nvim-scrollbar: git change/diagnostics on the scrollbar (terminal)
       indent_line.lua           — [ENABLED] indent guides (terminal)
       whichkey.lua              — which-key.nvim: keymap hints when pressing leader (terminal)
@@ -66,6 +68,7 @@ lua/
       goto-preview.lua          — goto-preview.nvim: peek definition/type/impl/decl/refs editable,
                                     gp/gpt/gpi/gpD/gpr/gP/Esc (terminal)
       todo-comments.lua         — todo-comments.nvim: highlight TODO/FIXME/NOTE/HACK/WARN (terminal)
+      ufo.lua                   — nvim-ufo: fold code theo scope (treesitter), zR/zM/zr/zm/zK (terminal)
     coding/                     — language/code-writing helper plugins, always auto-loaded (no opt-in toggle)
       ts-comments.lua           — ts-comments.nvim: accurate comment string via treesitter (terminal)
       mini-ai.lua               — mini.ai: text objects mở rộng (both)
@@ -83,7 +86,9 @@ lua/
       lualine.lua               — lualine.nvim: statusline, theme = 'auto' theo colorscheme active (terminal)
       noice.lua                 — noice.nvim: floating cmdline + notifications (terminal)
       bufferline.lua            — [DISABLED via `local enabled = false` in file] tab bar showing open buffers, themable (terminal)
+      winbar.lua                — winbar built-in: hiện tên file ở đầu mỗi split, ẩn ở neo-tree/terminal/qf/help (terminal)
       render-markdown.lua       — render-markdown.nvim: render markdown ngay trong buffer khi edit .md (terminal)
+      colorizer.lua             — nvim-colorizer.lua (catgoose): tô màu theo giá trị màu hex/rgb/hsl/tên/Tailwind (terminal)
     treesitter/                 — syntax parsing, always auto-loaded (no opt-in toggle)
       treesitter.lua            — nvim-treesitter (terminal)
       autotag.lua               — nvim-ts-autotag: auto-close/rename cặp thẻ HTML/JSX/TSX (terminal)
@@ -94,6 +99,8 @@ lua/
       terminal.lua              — toggleterm.nvim: small terminal at the bottom (terminal)
       codesnap.lua              — codesnap.nvim: capture code as an image (terminal)
       import-cost.lua           — vim-import-cost: shows KB per JS/TS import (terminal)
+      diffview.lua              — diffview.nvim: panel diff/file history, <leader>gv/gl/gL (terminal)
+      ui5.lua                   — ui5-language-assistant: LSP cho SAPUI5/OpenUI5 XML views; cài thủ công qua npm, không qua Mason (terminal)
   kickstart/plugins/            — optional plugins (uncomment in Section 10 to enable)
     debug.lua                   — DAP debugger
     gitsigns.lua                — [ENABLED] full git keymaps
