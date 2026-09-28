@@ -1,0 +1,4 @@
+# agent-hub scratch/secrets — NOT evidence/, that's the audit trail and stays committed
+*.tmp
+*.scratch
+.DS_Store

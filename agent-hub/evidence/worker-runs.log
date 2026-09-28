@@ -1,0 +1,2 @@
+2026-09-20T08:12:54Z role=verifier outcome=SEAL node=bootstrap-agent-hub rerun=partial hub_bytes_before=45301 hub_bytes_after=45363
+2026-09-28T15:47:22Z role=verifier outcome=SEAL node=dashboard-reopen-and-quiet rerun=none hub_bytes_before=45479 hub_bytes_after=45485
