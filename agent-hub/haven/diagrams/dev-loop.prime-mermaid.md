@@ -57,6 +57,7 @@ flowchart TD
 |---|---|---|
 | `bootstrap-agent-hub` | SEALED | see evidence/verifier/2026-09-20/bootstrap-agent-hub-seal.md |
 | `dashboard-reopen-and-quiet` | SEALED | issue #1, see evidence/verifier/2026-09-28/dashboard-reopen-and-quiet-seal.md |
+| `dashboard-exclude-indent-guides` | SEALED | see evidence/verifier/2026-09-28/dashboard-exclude-indent-guides-seal.md |
 
 Any regression must be a **new node** (LAI-13) — never edit an old node's
 PM status directly to "undo" an existing SEAL.
