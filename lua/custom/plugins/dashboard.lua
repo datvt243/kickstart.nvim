@@ -59,3 +59,30 @@ local config = {
 }
 
 require('dashboard').setup(config)
+
+-- Ẩn số dòng (number/relativenumber) và cursorline riêng trên buffer dashboard,
+-- không đụng tới option toàn cục ở lua/options.lua
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('dashboard-hide-number', { clear = true }),
+  pattern = 'dashboard',
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.cursorline = false
+  end,
+})
+
+-- Tự mở lại dashboard khi đóng hết buffer có file (vd: :bd từng buffer,
+-- :%bd) mà chưa thoát Neovim — không tính buffer unlisted như dashboard/terminal
+vim.api.nvim_create_autocmd('BufDelete', {
+  group = vim.api.nvim_create_augroup('dashboard-reopen-on-empty', { clear = true }),
+  callback = function()
+    vim.schedule(function()
+      local listed = vim.tbl_filter(
+        function(buf) return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted end,
+        vim.api.nvim_list_bufs()
+      )
+      if #listed == 0 then vim.cmd 'Dashboard' end
+    end)
+  end,
+})
