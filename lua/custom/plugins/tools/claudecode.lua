@@ -53,3 +53,18 @@ vim.keymap.set('n', '<leader>cm', '<cmd>ClaudeCodeSelectModel<cr>', { desc = '[C
 -- Chấp nhận / từ chối diff Claude đề xuất
 vim.keymap.set('n', '<leader>ca', '<cmd>ClaudeCodeDiffAccept<cr>', { desc = '[C]laude [A]ccept diff' })
 vim.keymap.set('n', '<leader>cd', '<cmd>ClaudeCodeDiffDeny<cr>', { desc = '[C]laude [D]eny diff' })
+
+-- claudecode.nvim cache terminal buffer/job: toggle lại chỉ focus buffer cũ, KHÔNG spawn
+-- job mới theo cwd hiện tại (xem native.lua open_terminal() -> is_valid()) — nên đổi project
+-- (project.nvim <leader>sp hoặc tự detect root) vẫn giữ session CLI cũ, process cũ đứng yên ở
+-- cwd cũ. Kill terminal cũ ngay khi DirChanged để lần mở tiếp theo (<leader>cc) spawn job mới
+-- đúng cwd project hiện tại, tránh lẫn ngữ cảnh giữa 2 project (issue #3).
+vim.api.nvim_create_autocmd('DirChanged', {
+  group = vim.api.nvim_create_augroup('claudecode-close-on-project-switch', { clear = true }),
+  callback = function(event)
+    if event.match ~= 'global' then return end
+    if not (package.loaded.claudecode and package.loaded.claudecode.state and package.loaded.claudecode.state.initialized) then return end
+    local bufnr = require('claudecode.terminal').get_active_terminal_bufnr()
+    if bufnr then vim.api.nvim_buf_delete(bufnr, { force = true }) end
+  end,
+})
