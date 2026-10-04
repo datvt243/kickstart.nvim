@@ -33,6 +33,22 @@ if vim.fn.has 'win32' == 1 then
   end
 end
 
+-- Mọi OS: codesnap/module.lua load_generator() nối thẳng đường dẫn file lib (không có `?`)
+-- vào package.cpath → mọi require module C sau đó (vd `blink_cmp_fuzzy` của blink.cmp) đều
+-- resolve nhầm vào lib của codesnap và lỗi "symbol not found". Fix: chỉ mở rộng cpath trong
+-- lúc load generator rồi khôi phục lại (generator đã nằm trong package.loaded, không cần cpath nữa).
+local ok_codesnap_module, codesnap_module = pcall(require, 'codesnap.module')
+if ok_codesnap_module then
+  local load_generator = codesnap_module.load_generator
+  codesnap_module.load_generator = function(...)
+    local cpath = package.cpath
+    local ok, result = pcall(load_generator, ...)
+    package.cpath = cpath
+    if not ok then error(result, 0) end
+    return result
+  end
+end
+
 require('codesnap').setup {}
 
 -- ### CODESNAP KEYMAPS (visual mode)

@@ -1,9 +1,10 @@
 -- noice.nvim: thay thế cmdline, messages, notifications bằng floating UI (terminal only)
--- Yêu cầu: nui.nvim (đã cài qua kickstart/plugins/neo-tree.lua)
+-- Yêu cầu: nui.nvim (đã cài qua kickstart/plugins/neo-tree.lua), nvim-notify (cài ngay bên dưới)
 -- https://github.com/folke/noice.nvim
 if vim.g.vscode ~= nil then return end
 
-vim.pack.add { gh 'folke/noice.nvim' }
+-- nvim-notify: backend cho view `notify` của noice (thông báo popup góc phải)
+vim.pack.add { gh 'rcarriga/nvim-notify', gh 'folke/noice.nvim' }
 
 -- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
 local config = {
