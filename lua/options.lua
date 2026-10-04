@@ -38,6 +38,10 @@ vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 -- Dòng bị wrap sẽ thụt đầu dòng theo dòng gốc, không dính sát lề trái
 vim.o.breakindent = true
 
+-- Wrap theo từ (tại khoảng trắng/dấu câu trong 'breakat'), không cắt ngang giữa từ
+-- vd: "error" sẽ rớt nguyên chữ xuống dòng thay vì "er" | "ror"
+vim.o.linebreak = true
+
 -- Lưu lịch sử undo ra file, undo được cả sau khi đóng và mở lại file
 vim.o.undofile = true
 
