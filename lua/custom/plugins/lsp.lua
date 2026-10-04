@@ -115,7 +115,9 @@ local servers = {
   vue_ls = {}, -- Vue SFC: template/directive/component-tag nav (gd đến component .vue) — dùng chung ts_ls ở trên
   html = {}, -- HTML tag/attribute completion
   tailwindcss = {}, -- Tailwind class completion, color preview, hover CSS
-  gopls = {}, -- Go
+  -- Go: chỉ bật khi máy có Go toolchain — thiếu `go` thì Mason không cài được gopls
+  -- và :checkhealth báo "'gopls' is not executable"
+  gopls = vim.fn.executable 'go' == 1 and {} or nil,
   cds_lsp = {}, -- SAP CAP: CDS (Core Data Services) — Mason cài package "cds-lsp" (npm @sap/cds-lsp, proprietary)
   harper_ls = { -- Grammar/spell check offline (Rust) — https://writewithharper.com
     settings = {

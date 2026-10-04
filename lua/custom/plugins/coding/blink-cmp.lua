@@ -34,7 +34,9 @@ local config = {
     preset = 'luasnip',
   },
   fuzzy = {
-    implementation = 'lua',
+    -- Dùng bộ lọc fuzzy Rust (blink tự tải bản prebuilt theo tag version 1.*); tải lỗi thì
+    -- tự fallback về bản Lua và báo warning
+    implementation = 'prefer_rust_with_warning',
   },
   signature = {
     enabled = true,
