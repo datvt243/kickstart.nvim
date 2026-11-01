@@ -39,11 +39,25 @@ This command is the ONLY path `staging` → `main`.
    build/lint (and test, if this project has one) commands from
    `agent-hub/doctrine/MEMORY.md`, read the output back verbatim. Any
    failure → stop, report it plainly, do NOT open the PR/tag/deploy.
+   Exception: a lint/typecheck row with a `baseline:` (inherited debt) is
+   report-only here — run it on the release branch and on `origin/main`,
+   report both counts ("lint: N errors, main M, +K new"), continue; each
+   diff already passed that check at `/worker verifier`. Build and test
+   failures still stop.
 5. **Open the release PR.**
    `gh pr create --base main --head release/vX.Y.Z --title "Release vX.Y.Z" --body "<commit list from step 0>"`
    — or `--head staging` directly on the first-ever release.
-6. **Merge with a real merge commit, not squash.**
-   `gh pr merge <PR#> --merge` — keeps `staging`'s individual commit
+6. **Wait for real CI, then merge with a real merge commit, not squash.**
+   First wait for the branch protection's required
+   checks instead of assuming CI is green — step 4's local gate is the
+   first net, this is the second. `--watch` reprints every interval, so
+   silence the wait and read the final state once (polling output is
+   pure token cost):
+   `gh pr checks <PR#> --watch --required --fail-fast --interval 30 >/dev/null 2>&1; gh pr checks <PR#> --required`.
+   Any check fails → stop, don't merge, report the real CI log
+   (`gh run view <run-id> --log-failed`). "no required checks reported"
+   (protection has none configured) → not a failure, continue.
+   Then `gh pr merge <PR#> --merge` — keeps `staging`'s individual commit
    history on `main` for real traceability of what shipped. Add
    `--delete-branch` ONLY if step 2 wasn't skipped — never when the head
    was `staging` directly (that would delete `staging` itself).
@@ -59,8 +73,9 @@ This command is the ONLY path `staging` → `main`.
 9. **Sync the version bump back to `staging`** — skip on the first-ever
    release (`main`/`staging` already identical). Otherwise:
    `gh pr create --base staging --head main --title "chore: sync vX.Y.Z back into staging" --body "..."`,
-   then `gh pr merge <PR#> --merge` (no `--delete-branch` — head is `main`,
-   never delete it).
+   then wait for required checks exactly as in step 6 (`staging` may have
+   them too; red CI → stop, even for a bump-only PR), then `gh pr merge <PR#> --merge` (no `--delete-branch` —
+   head is `main`, never delete it).
 10. **Close the issues this release actually shipped.** `Closes #n` only
     auto-closes on a merge to the repo's *default* branch — if feature/fix
     PRs merge into `staging` (not default), those issues stay open until
@@ -78,7 +93,8 @@ This command is the ONLY path `staging` → `main`.
     instead of leaving the operator on a protected/temporary branch.
 
 ## Hard rules honored
-Build/lint (or test) gate before any merge to `main` (step 4) | real merge
+Build/lint (or test) gate before any merge to `main` (step 4) | required
+CI checks waited on, never merged red (steps 6, 9) | real merge
 commit, never squash, into `main` (step 6) | never `--force`/direct push to
 a protected branch | deploy failure never undoes a completed release (step
 8) | invoking this command IS the seal-gate approval for the whole chain —
@@ -88,7 +104,9 @@ no separate "show diff, wait" pause between steps.
 | Failure | Handling |
 |---|---|
 | Nothing to release (`origin/main..origin/staging` empty) | Say so, stop |
-| Build or lint fails (step 4) | Stop, report the real output, don't open the PR/tag/deploy |
+| Build, test, or a lint/typecheck with no `baseline:` fails (step 4) | Stop, report the real output, don't open the PR/tag/deploy |
+| Lint/typecheck with a `baseline:` has errors (step 4) | Report counts vs `origin/main`, continue |
+| Required CI check fails (step 6/9) | Stop, don't merge, report `gh run view <run-id> --log-failed` output |
 | Bump type ambiguous and not the first-ever release | Ask (AskUserQuestion), don't guess a breaking change |
 | Deploy hook call fails | Report the real response, don't undo the merge/tag — retry deploy separately |
 | PR merge blocked (checks pending, conflicts) | Report the real `gh` output, don't force-merge |

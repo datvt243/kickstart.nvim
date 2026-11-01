@@ -9,7 +9,7 @@ produced and read back — not once you think the edit is correct.
 | Not evidence | Evidence |
 |---|---|
 | "This fix should resolve the bug" | Ran it again, read the real output |
-| "Tests should pass now" | `[1/3] load config... ✓` / `Kết quả tổng: PASS (0 ERROR)` (verbatim from `./scripts/health.sh`) |
+| "Tests should pass now" | `Tests: 42 passed, 42 total` (verbatim) |
 
 ## Why reasoning doesn't count
 Reasoning about code is not the same as running code. Models tend to

@@ -54,6 +54,13 @@ seal gate, no evidence note, no worker identity needed.
    📍 URL: <url opened>
    🚀 Dev server: <started via <pm> run dev | already running | no dev script found | skipped (--run-dev not passed)>
    ```
+7. **Control it.** If Playwright MCP tools (`browser_navigate`,
+   `browser_snapshot`, `browser_click`, `browser_take_screenshot`, ...)
+   are available, use them for every follow-up UI check — they attach to
+   this browser when `PLAYWRIGHT_MCP_CDP_ENDPOINT=http://localhost:9888`
+   is set (Chrome/Edge only; Firefox has no CDP). Without that env they
+   launch a separate browser — say so instead of claiming they hit this
+   one.
 
 ## Failure branches
 | Failure | Handling |

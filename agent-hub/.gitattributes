@@ -1,0 +1,2 @@
+haven/diagrams/*.prime-mermaid.md merge=union
+haven/diagrams/*archive*.md merge=union

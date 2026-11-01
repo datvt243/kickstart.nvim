@@ -36,6 +36,7 @@ Compare with the current `keymaps-terminal.md` and `keymaps-vscode.md` and updat
 After keymaps-terminal.md and keymaps-vscode.md have been updated:
 
 1. Run `git status` and `git diff` to see all changes (including staged and unstaged).
+   **SealedOnly (code changes only)**: if the changes touch code (`init.lua`, `lua/`, `scripts/` — anything outside `*.md`, `agent-hub/`, `.claude/`), find the matching node in `agent-hub/haven/diagrams/` (active file, or `grep` its slug in `dev-loop-archive.md`). Missing or not `SEALED` → stop, point to `/todo` / `/worker verifier`. `SEALED` but no verifier note under `agent-hub/evidence/verifier/` → stop (`NO_EVIDENCE`). Docs-only (keymap docs from Step 1) → no node needed.
 2. Read `git log --oneline -5` to understand the commit message style.
 3. Stage all changed files by specific name — do not use `git add .`.
 4. Write a concise commit message that accurately reflects the changes.
