@@ -11,12 +11,14 @@
 | `domains/PROJECT.md` | The project's own ground truth | Before implementing |
 | `standards/edit-verification.md` | The rule against claiming what hasn't been observed | Before reporting "done" |
 | `standards/recipes.md` | What a recipe is, when to write one | The 2nd time you repeat a process |
+| `standards/initiative-scoping.md` | Measure exhaustively by rule+file before/after a multi-phase count-based initiative | Before carving up any "clean up X across the codebase" effort into phases |
+| `standards/code-comments.md` | What a source comment may say + its style, plus project opt-ins (file header, object params) | Before writing/changing any comment or function signature |
 
 ## The three kinds of knowledge here
 | Kind | Home | Example |
 |---|---|---|
-| About the hub | `SOUL.md` / `MEMORY.md` | The exact healthcheck command |
-| About the domain/project | `domains/<project>.md` | An invariant specific to this config |
+| About the hub | `SOUL.md` / `MEMORY.md` | The exact test command |
+| About the domain/project | `domains/<project>.md` | An invariant specific to this project |
 | About how to work | `standards/*.md` | The mandatory recipe format |
 
 A fact living in the wrong drawer is a fact no one trusts.

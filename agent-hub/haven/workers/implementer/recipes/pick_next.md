@@ -3,31 +3,42 @@
 - Output: `{node, diagram, current_state, acceptance: string[],
   files: string[], blocked_by: string|null}`
 
-> [GUARD] If `/boot` already ran in THIS SAME session (same context),
-> `NORTHSTAR.md` / `doctrine/MEMORY.md` /
+> [GUARD] If `/boot` already ran in THIS SAME session
+> (same context), `NORTHSTAR.md` / `doctrine/MEMORY.md` /
 > `doctrine/domains/PROJECT.md` / `haven/diagrams/` are already in
 > context verbatim from that — steps 1-2 below ONLY reuse that existing
 > content, do NOT `Read` it again (re-reading = duplicating 4 files
-> verbatim in the same context, wasted tokens for nothing). Only `Read`
-> for real when: (a) `/worker implementer` is called without `/boot`
-> having run first this session, or (b) that content is genuinely absent
-> or suspected to have changed since it was last read.
+> verbatim in the same context, wasted tokens for nothing — the same
+> class of bug already caught in `boot/SKILL.md`). Only `Read` for real
+> when: (a) `/worker implementer` is called without `/boot` having run
+> first this session, or (b) that content is genuinely absent or
+> suspected to have changed since it was last read.
 
 ## Steps
 1. Get the content of `NORTHSTAR.md` + `doctrine/MEMORY.md` +
-   `doctrine/domains/PROJECT.md` — reuse from `/boot` if available (see
+   `doctrine/domains/<project>.md` — reuse from `/boot` if available (see
    the GUARD above), otherwise `Read` fresh.
 2. Get the list of EVERY diagram + PM status — reuse from `/boot` if
-   available (see the GUARD above), otherwise `Read` fresh. "EVERY
-   diagram" means every file WITHOUT `archive` in its name — an archive
-   file is cold storage, not re-read here, matching `/boot` step 5's rule
-   exactly.
+   available (see the GUARD above), otherwise `Read` fresh. [clarified
+   2026-09-02] "EVERY diagram" means every file WITHOUT `archive` in its
+   name — an archive file is cold storage, not re-read here, matching
+   `/boot` step 5's rule exactly.
 3. Find the earliest PENDING node on the critical path.
 4. No match → don't invent work; clearly report "no PENDING node", stop.
-5. Quickly self-check the acceptance criteria of the node just picked —
-   NOT a verify pass, only blocks starting to code against a criterion
-   that could never have been verified in the first place. Check for
-   exactly 3 minimal error classes:
+   Creating a new node for an explicit task instead: `grep` the slug in
+   `dev-loop-archive.md` first — sealed pointers get dropped from the
+   active file (`verify_seal` step 11c), so a taken slug may only be
+   visible there; taken → pick a new slug. And `grep`
+   the active diagram for a not-yet-SEALED row of the same task/issue
+   (`#<n>`) first — found → resume THAT row (state + Notes pointer
+   updated in place), never add a "recheck" node beside it (LAI-13's
+   new-node rule covers SEALED nodes only). The template's `<<FILL>>`
+   placeholder row is replaced by the first real node, not kept.
+5. Quickly self-check the acceptance
+   criteria of the node just picked — NOT a verify pass, only blocks
+   starting to code against a criterion that could never have been
+   verified in the first place. Check for exactly 3 minimal error
+   classes:
    - **Ambiguity**: the criterion uses a vague adjective ("fast",
      "stable", "clean"...) without a specific measurement/test command.
    - **Underspecification**: no clear pass/fail condition (doesn't map to
@@ -45,11 +56,11 @@
 6. Locate code anchors via grep — real paths, don't invent them.
 7. Declare blockers: fill in whatever `<<FILL>>` is needed in
    `doctrine/MEMORY.md`.
-8. Measure `hub_bytes_before` — the total bytes across exactly the 5
-   categories `/hub-tokens` calls the "per-session total" (root files,
-   `doctrine/`, the active `haven/diagrams/`, 2 worker bundles). Record
-   this number in the evidence note at step 9 — this is the real input
-   the verifier uses to compute the hub-size diff in `worker-runs.log`.
+8. Measure `hub_bytes_before` — the "per-session
+   total", with the exact command in `evidence/README.md` (Format —
+   worker-runs.log). Record this number in the evidence note at step 9 — this is
+   the real input the verifier uses to compute the hub-size diff in
+   `worker-runs.log`, not something specific to `/todo`.
 9. Evidence: write `evidence/implementer/<date>/<slug>-plan.md`,
    including the line `## Hub bytes before: <N>` from step 8 (and the
    acceptance-criteria-clarified line from step 5 if it was edited).

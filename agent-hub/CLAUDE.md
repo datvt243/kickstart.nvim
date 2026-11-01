@@ -23,6 +23,24 @@ task → worker implementer → find/create a node on the diagram → run the ex
      → read the output back → write an evidence note → worker verifier → SEAL | REOPEN
 ```
 
+**Scoping a multi-phase, measured-by-count initiative** (lint rules, type
+coverage, dependency upgrades, security findings — anything framed as "N
+problems to fix") is a special case of the default loop: before writing
+the first phase description, measure exhaustively (`--format json` or
+equivalent, grouped by rule/category AND file) — never by grep sampling
+or a single un-decomposed total. After the LAST phase, re-run that SAME
+full measurement and diff the before/after counts, instead of trusting
+each phase's own narrower verification command to stand in for the
+initiative's own stated goal. See `doctrine/standards/initiative-scoping.md`.
+
+**Every diff** also: (1) any comment it adds/changes follows
+`doctrine/standards/code-comments.md` (WHY not WHAT, `//` vs `/** */`,
+no `(#N)` refs, plus whatever project opt-ins that file enables);
+(2) if the project has TypeScript, runs the `Typecheck` command from
+`doctrine/MEMORY.md` and cites its output — a clean build/test that
+doesn't type-check is not a typecheck. Missing either in the evidence
+note = `EDIT_UNVERIFIED`.
+
 ## Forbidden states (Cost = KILL — stop immediately, don't continue on your own)
 | State | Means |
 |---|---|
@@ -31,6 +49,11 @@ task → worker implementer → find/create a node on the diagram → run the ex
 | `EDIT_UNVERIFIED` | Claiming a result (test passed, output correct...) without actually running it and reading it back |
 | `CODE_IN_HAVEN` | Code (`.ts`/`.py`/`.sh`...) leaking into `haven/` — that place is memory only |
 | `DIAGRAM_DRIFT` | Code changed but the diagram's PM status wasn't updated to match |
+
+## Project extensions
+Project-only rules and extra forbidden states go here (same table shape),
+never edited into the sections above — `/sys` keeps this section
+verbatim. None → `none`.
 
 ## Seal gate
 Before any **outward-facing** action — `commit` · `push` · `publish` ·

@@ -96,7 +96,7 @@ if [ -f "$DIAG_FILE" ]; then
   POINTER_SEALED=$(grep -cE '— archived, see' "$DIAG_FILE" 2>/dev/null)
   REAL_SEALED=$(( FULL_SEALED - POINTER_SEALED ))
   check_threshold_bytes "dev-loop.prime-mermaid.md" "$DB" 15360 \
-    "$REAL_SEALED full SEALED entries not yet archived, see rows below"
+    "$REAL_SEALED full SEALED entries not yet archived ($POINTER_SEALED pointers; verify_seal step 11 should keep these at 0 full / <=20 pointers — a backlog here predates that rule or means step 11 was skipped), see rows below"
   if [ "$DB" -gt 15360 ]; then
     echo "    Ready-to-move rows (copy each VERBATIM into dev-loop-archive.md's"
     echo "    PM status table, then replace it here with a compact pointer row"
@@ -110,16 +110,20 @@ check_threshold "$HUB/doctrine/domains/PROJECT.md" 15360 \
   "consider moving Traps/Decisions rows older than the current work session to doctrine/domains/PROJECT-archive.md"
 DOCTRINE_THRESHOLD=51200
 check_threshold_bytes "doctrine/ as a whole" "$DOCTRINE_B" "$DOCTRINE_THRESHOLD" \
-  "aggregate signal, no single archive destination. Check which file grew: domains/PROJECT.md over 15KB → archive via PROJECT-archive.md (see above); MEMORY.md/SOUL.md/INDEX.md/standards/*.md over 8KB → anomaly, not an archive candidate (see step 4 below)."
+  "aggregate signal, no single archive destination. Check which file grew: domains/PROJECT.md over 15KB → archive via PROJECT-archive.md (see above); MEMORY.md/SOUL.md/INDEX.md over 8KB or standards/*.md over 12KB → anomaly, not an archive candidate (see step 4 below)."
 check_threshold "$HUB/evidence/worker-runs.log" 15360 \
   "consider moving lines older than the current work session to evidence/worker-runs-archive.log (see evidence/README.md's archiving convention)"
 echo
 echo "  Static reference files (should stay small by design — no accumulating"
 echo "  list to archive; growth here likely means misplaced content, not a"
 echo "  normal archive candidate):"
-for f in "$HUB/doctrine/MEMORY.md" "$HUB/doctrine/SOUL.md" "$HUB/doctrine/INDEX.md" \
-         "$HUB/doctrine/standards/edit-verification.md" "$HUB/doctrine/standards/recipes.md"; do
+for f in "$HUB/doctrine/MEMORY.md" "$HUB/doctrine/SOUL.md" "$HUB/doctrine/INDEX.md"; do
   check_threshold "$f" 8192 \
+    "unexpected growth for a static file — check for a Correction that belongs in the worker's own MEMORY.md, or a Decision that belongs in PROJECT.md, before creating a dedicated archive file for this one"
+done
+# standards/*.md get 12KB: a project-specific standard grows with its feature (2026-10-24)
+for f in "$HUB/doctrine/standards/"*.md; do
+  check_threshold "$f" 12288 \
     "unexpected growth for a static file — check for a Correction that belongs in the worker's own MEMORY.md, or a Decision that belongs in PROJECT.md, before creating a dedicated archive file for this one"
 done
 ```
@@ -134,8 +138,12 @@ done
    separate, explicit action. [amended 2026-09-02] The diagram flag prints
    the exact rows to move (not just "consider moving nodes") — copy-paste
    is the whole remaining effort, so there's no excuse to defer it past the
-   current session the way a vague warning invites.
-4. [added 2026-09-05] If a flag fires on one of the 5 static reference
+   current session the way a vague warning invites. [amended 2026-10-24]
+   That alone did not hold (3 production hubs at 89-175KB) — the real fix
+   is `verify_seal` step 11 collapsing each row at SEAL time. A diagram
+   flag now means a pre-rule backlog (one-time pass) or a verifier that
+   skipped step 11 (check the latest verdict notes).
+4. If a flag fires on one of the 5 static reference
    files (`MEMORY.md`, `SOUL.md`, `INDEX.md`, `standards/*.md`), that's
    NOT an archive signal — those files have no accumulating list and no
    defined archive destination by design. Treat it as an anomaly: read the
@@ -143,8 +151,10 @@ done
    own `MEMORY.md`, a Decision that belongs in `PROJECT.md`, a recipe that
    belongs in `haven/workers/<wid>/recipes/`), and move it to its one
    correct home instead of inventing a new archive file for a file that
-   was never meant to grow.
-5. [added 2026-09-13] `doctrine/ as a whole` gets its own flag on top of
+   was never meant to grow. [amended 2026-10-24] `standards/*.md` use a
+   12KB threshold, not 8KB — a project-specific standard (e.g. a PDF-export
+   spec) legitimately grows with the feature it encodes.
+5. `doctrine/ as a whole` gets its own flag on top of
    the per-file ones above — `doctrine/` (root files + `domains/` +
    `standards/`, archives excluded) is the single biggest chunk of the
    recurring per-session cost and had no aggregate check before, only
@@ -157,7 +167,7 @@ done
    to catch the case where several files each stayed under their own
    threshold but the directory's total still crept up.
 
-## If this hub uses epic sharding [added 2026-09-02]
+## If this hub uses epic sharding
 If `haven/diagrams/index.md` exists (opt-in, see
 `kit/agent-hub-templates.md` §9️⃣.3), `DIAG_ACTIVE_B` above sums bytes
 across **every** `dev-loop-<epic>.prime-mermaid.md`, not just the one(s)
