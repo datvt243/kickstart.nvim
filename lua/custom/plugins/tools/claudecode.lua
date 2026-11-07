@@ -18,9 +18,13 @@ if not (package.loaded.claudecode and package.loaded.claudecode.state and packag
   -- (plugin gọi `startinsert`) để gõ tiếp yêu cầu ngay, không phải bấm `i`.
   -- terminal.split_width_percentage: độ rộng split Claude Code (mặc định plugin là 0.30
   -- = 30% chiều rộng màn hình); tăng lên 0.4 cho split rộng hơn.
+  -- track_selection = false: tắt tự gửi file/selection đang mở cho Claude (mặc định true —
+  -- mỗi BufEnter/CursorMoved plugin broadcast `selection_changed`, nên chọn file ở Neo-tree là
+  -- Claude CLI hiện "⧉ In <file>" ở input). Muốn gửi thì chủ động: <leader>cs (visual / Neo-tree).
   -- ═══ CONFIG — chỉnh giá trị plugin ở đây; setup(config) bên dưới dùng lại ═══
   local config = {
     focus_after_send = true,
+    track_selection = false,
     terminal = { auto_insert = true, split_width_percentage = 0.4 },
   }
   require('claudecode').setup(config)
