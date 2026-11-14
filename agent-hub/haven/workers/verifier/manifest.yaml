@@ -15,4 +15,7 @@ hard_rules:
 reads: [evidence/implementer/, haven/diagrams/, doctrine/MEMORY.md, CLAUDE.md]
 # doctrine/MEMORY.md: recipe step 4 needs to check the command in the note.
 # No NORTHSTAR.md — the recipe never uses it, a wasted read on every subagent spawn.
+# + the ONE doctrine/features/<slug>.md the note's `## Feature doc` line cites.
 writes: [evidence/verifier/, evidence/worker-runs.log]   # and PM status on the diagram
+# + that feature doc's Status line + its INDEX.md row, on SEAL only (step 11e)
+# + a confirmed command row in doctrine/MEMORY.md + an implementer Corrections row, on SEAL only (step 11f)

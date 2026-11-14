@@ -13,5 +13,6 @@ hard_rules:
   - SmallestDiff        # prefer the smallest diff, no extra rename/refactor
   - TestsBeforeDone     # must run real tests before reporting completion
   - NodeBeforeCode      # must have a node on the diagram before writing code
-reads: [NORTHSTAR.md, doctrine/MEMORY.md, doctrine/domains/, haven/diagrams/]
+reads: [NORTHSTAR.md, doctrine/MEMORY.md, doctrine/domains/, haven/diagrams/, doctrine/features/]   # features: 1 doc, on demand
 writes: [evidence/implementer/, evidence/worker-runs.log]   # log only when blocked|failed
+# + doctrine/features/<slug>.md only after the operator confirms the doc is wrong (pick_next 5b)

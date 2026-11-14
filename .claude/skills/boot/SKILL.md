@@ -24,7 +24,7 @@ during this step — read and report only.
 5. Read every file in `agent-hub/haven/diagrams/` EXCEPT any file whose
    name contains `archive` (`dev-loop-archive.md`,
    `dev-loop-archive-2026-08.md`...) — those are cold storage by design
-   (see the diagram file's own token-discipline note + `hub-tokens.md`),
+   (see the diagram file's own token-discipline note + `hub-health.md`),
    reading them here every session defeats the point of archiving. List
    nodes + current PM status from the non-archive file(s) only.
    EXCEPTION — if `haven/diagrams/index.md` exists
@@ -32,8 +32,16 @@ during this step — read and report only.
    ONLY `index.md` + the epic file(s) marked `active: true` in it, not
    every epic. Report node counts from those only; other epics exist but
    are out of scope for this session's status line.
-6. Read `agent-hub/haven/workers/` — confirm there are exactly 2 workers:
-   implementer, verifier.
+6. Read `agent-hub/haven/workers/` — confirm there are exactly 3 workers:
+   analyst, implementer, verifier.
+6b. Check no settings file denies the tools the hub runs on — `Agent`
+   (verifier/analyst spawn) and `Skill`. A tool-pruning plugin can add
+   them to `permissions.deny` silently, after which `NeverVerifyOwnWork`
+   can't be met:
+   `grep -lE '"(Agent|Skill)(\(|")' .claude/settings.json .claude/settings.local.json ~/.claude/settings.json 2>/dev/null`
+   — a hit counts only if the match sits inside `permissions.deny`
+   (read that file's deny array). Denied → report it under Blockers:
+   `<tool> denied in <file>`.
 7. Read at most the 5 most recent evidence notes (newest file by date) in
    `agent-hub/evidence/implementer/` and `agent-hub/evidence/verifier/`. If
    a directory is empty, note "no evidence notes yet". To list them, use
@@ -54,9 +62,9 @@ during this step — read and report only.
 🎯 Northstar: <one sentence from NORTHSTAR.md>
 ✅ Forbidden: <none active | name of the active state, if any>
 📊 Diagrams: <N nodes = X sealed, Y pending, Z in_progress>
-🔧 Workers: implementer, verifier
+🔧 Workers: analyst, implementer, verifier
 📝 Last action: <node — SEAL|REOPEN, date, short quote from the latest evidence note, or "none yet">
-🚧 Blockers: <list of open <<FILL>> in doctrine/MEMORY.md or doctrine/domains/PROJECT.md, or "none">
+🚧 Blockers: <list of open <<FILL>> in doctrine/MEMORY.md or doctrine/domains/PROJECT.md, denied tools from step 6b, or "none">
 ```
 
 ## Rules
@@ -68,10 +76,11 @@ during this step — read and report only.
   `doctrine/domains/PROJECT.md`, `haven/diagrams/dev-loop.prime-mermaid.md`)
   can't be read, stop immediately and report the error instead of guessing
   its content.
-- After the report, be ready to take `/worker implementer "<task>"`,
+- After the report, be ready to take `/worker analyst "<task>"`,
+  `/worker implementer "<task>"`,
   `/worker verifier "<task>"`, `/todo "<task>"` (or `/todo #<issue>`), or
   `/ship`.
-- If step 5 flags the active diagram over ~15KB (or `/hub-tokens` reports
+- If step 5 flags the active diagram over ~15KB (or `/hub-health` reports
   it), that's a real signal to run an archive pass — see the diagram
   file's own token-discipline note (normally `verify_seal` step 11
   archives at SEAL time, so a flag means a pre-rule backlog or a skipped

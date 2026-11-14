@@ -1,4 +1,5 @@
 ---
+name: browser-debugger
 description: "Open a browser (Chrome/Firefox/Edge) with remote-debugging port 9888 so Claude can inspect/control it — optionally starting `npm run dev` first and pointing the browser at it. Usage: /browser-debugger [--browser=chrome|firefox|edge] [--run-dev]. Read-only dev utility, no code changes, no seal gate."
 argument-hint: "[--browser=chrome|firefox|edge] [--run-dev]"
 ---
@@ -6,7 +7,7 @@ argument-hint: "[--browser=chrome|firefox|edge] [--run-dev]"
 # /browser-debugger — open a browser with CDP debugging on port 9888
 
 Local dev-environment utility only — never touches project source code,
-never commits/pushes/deploys. `gate: none`, same class as `/hub-tokens`: no
+never commits/pushes/deploys. `gate: none`, same class as `/hub-health`: no
 seal gate, no evidence note, no worker identity needed.
 
 ## Steps

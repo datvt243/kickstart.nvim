@@ -17,7 +17,9 @@
 | Test (headless healthcheck) | `./scripts/health.sh` | repo root (`/Users/_david/.config/nvim`) |
 | Test one file | N/A — `health.sh` checks the whole config in 3 steps (load, `luac -p` parse, `:checkhealth`); no narrower per-file check exists | — |
 | Build | N/A — pure Lua config, no build step | — |
-| Lint/format | `~/.local/share/nvim/mason/bin/stylua init.lua lua/**/*.lua` | repo root |
+| Lint | `~/.local/share/nvim/mason/bin/stylua --check init.lua lua/**/*.lua` — `baseline: 4 errors on master @ 4d924e0` (4 files not stylua-formatted, exit 1, run 2026-11-08) | repo root |
+| Format (writes files) | `~/.local/share/nvim/mason/bin/stylua init.lua lua/**/*.lua` | repo root |
+| Typecheck | n/a — no TypeScript (pure Lua config) | — |
 | Run locally | `nvim` | repo root |
 
 Windows note (from `scripts/health.sh`'s own header): the script is bash
@@ -33,12 +35,14 @@ equivalent headless command is:
 | Test runner | `scripts/health.sh` (headless Neovim healthcheck: load, parse, `:checkhealth`) |
 
 ## The default way to work
-`/boot` → `/worker implementer "<task>"` → `/worker verifier "<task>"`. Never
-skip step 1 in a cold session, never skip step 3.
+`/boot` → (`feat`, or a fix with no feature doc: `/worker analyst "<task>"`) → `/worker implementer "<task>"`
+→ `/worker verifier "<task>"`. Never skip step 1 in a cold session, never
+skip the verifier.
 
 ## Workers
 | wid | Role | Actions | Seal actions |
 |---|---|---|---|
+| analyst | Business analyst | spec_feature | — |
 | implementer | Implementer | pick_next, implement | — |
 | verifier | Verifier | verify_seal | SEAL, REOPEN |
 

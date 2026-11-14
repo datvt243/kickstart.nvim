@@ -22,6 +22,10 @@ recursively by `init.lua`, subfolders `editor/`, `coding/`, `colorscheme/`,
 Section-10 opt-in toggle), `lua/kickstart/plugins/` (optional, enabled by
 uncommenting in `init.lua` Section 10).
 
+Branch naming: `<number>-<slug>` (`gh issue develop` default, e.g. `4-neo-tree-chon-file`; kept over kit default)
+
+Kit opt-outs (decided 2026-11-09, `/sys` keeps them): `/ship` = own prose flow with `AutoCommitNoGate`, no bundled `ship.sh`/`ship.env`; no `/release` skill (single `master` branch, no `package.json`).
+
 ## Invariants (things that never happen here)
 - Only push when explicitly asked — stop after committing (see
   `agent-hub/CLAUDE.md`'s Seal gate; this project's rule is stricter than

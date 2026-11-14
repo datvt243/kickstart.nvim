@@ -3,6 +3,7 @@
 
 ## Layout
 ```
+evidence/analyst/<date>/<slug>-spec.md
 evidence/implementer/<date>/<slug>-plan.md
 evidence/implementer/<date>/<slug>-diff.md
 evidence/verifier/<date>/<slug>-{seal|reopen}.md
@@ -18,6 +19,9 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
 - `## Hub bytes before` — the byte count measured at
   `pick_next`'s measure step, before the diff starts — the verifier re-reads
   this number when writing `worker-runs.log`, don't skip it
+- `## Feature doc` — `<doctrine/features/... path>` or `none`
+  (`pick_next` step 5b); plus `## Feature doc changed: <before> →
+  <after> — operator: <answer>` if the diff edited it
 - `## Diff` — files | file | why |
 - `## Command` — the exact command(s) from `doctrine/MEMORY.md`, test +
   typecheck (unless `n/a — no TypeScript`)
@@ -30,10 +34,23 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
   not-yet-SEALED rows for the same issue: retired by this node on SEAL,
   or kept open with a reason (`recipes/implement.md` step 7b); `none` if
   there are none
+- `## Review` — `/code-review` (+ `/security-review` for a
+  `security`-labeled issue): each finding → fixed | false positive
+  (why) | moved to `## Noticed, not done`; or `skipped — docs`
+  (`implement` step 6c)
 - `## Noticed, not done` — things noticed outside scope but not fixed
   on your own
 - `## Seal gate` — record the approval if there was an outward-facing
   action, or "none"
+
+## Format — analyst spec note
+- Task (verbatim) · Doc (`doctrine/features/<slug>.md`, new|updated) ·
+  Mode (spec|backfill) · Outcome (`spec_ready`/`needs_input`/`no_feature`)
+- `## Sources read` — files/doctrine actually read
+- `## Questions` — each open question + the operator's answer, or `none`
+- `## Operator confirmation` — backfill only: the operator's verbatim
+  "doc is right" (what makes `confirmed by operator` citeable), or `none`
+- `## Isolation proof` — same idea as the verifier's
 
 ## Format — verifier verdict
 - Worker · Node · New PM status (PENDING/SEALED/REOPEN)
@@ -66,12 +83,14 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
     hub_bytes_before=<N> verifier_rerun=n/a`
   - Verifier log (every time there's a verdict — SEAL or REOPEN):
     `<ISO timestamp> role=verifier outcome=SEAL|REOPEN node=<slug>
-    rerun=none|partial|full hub_bytes_before=<N> hub_bytes_after=<N>`
-  `hub_bytes_*` = `/hub-tokens`' "per-session total" (root files +
-  doctrine/ + the active diagram + 2 worker bundles; no archives, no
-  evidence/). Measure with exactly this, from the repo root — never `du`
+    rerun=none|partial|full spawn=fresh|resumed hub_bytes_before=<N> hub_bytes_after=<N>`
+    (`spawn=` added 2026-11-07 — older lines have none, count them as
+    `fresh`.)
+  `hub_bytes_*` = `/hub-health`' "per-session total" (root files +
+  doctrine/ minus features/ + the active diagram + every worker bundle;
+  no archives, no evidence/). Measure with exactly this, from the repo root — never `du`
   or a whole-tree count:
-  `(cd agent-hub && { find . -maxdepth 1 -type f \( -name '*.md' -o -name '*.y*ml' \); find doctrine haven/diagrams -type f \( -name '*.md' -o -name '*.y*ml' \) ! -iname '*archive*'; find haven/workers -type f \( -name '*.md' -o -name '*.y*ml' \); } | xargs cat | wc -c)`
+  `(cd agent-hub && { find . -maxdepth 1 -type f \( -name '*.md' -o -name '*.y*ml' \); find doctrine haven/diagrams -type f \( -name '*.md' -o -name '*.y*ml' \) ! -iname '*archive*' ! -path 'doctrine/features/*'; find haven/workers -type f \( -name '*.md' -o -name '*.y*ml' \); } | xargs cat | wc -c)`
 - Each line is 1 round-trip (1 implementer pass → at most 1 verifier
   verdict), NOT 1 node's whole lifetime — a node that needs 3 REOPENs
   will have 3 verifier lines sharing the same `node=`, countable by
@@ -81,7 +100,7 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
   the default policy being audit-only, an abnormal jump in hub size
   between two consecutive runs. Not a real token count (there's no API
   that reads that number) — it's an observable proxy, the same
-  philosophy as `/hub-tokens`.
+  philosophy as `/hub-health`.
 - Cold storage — not re-read in full every worker session (unlike
   `doctrine/`, the active `haven/diagrams/`), only opened when someone
   deliberately checks for a pattern. NEVER delete an old line, even one
@@ -92,7 +111,7 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
   move lines older than the current work session to
   `evidence/worker-runs-archive.log` (same directory, plain append,
   create it lazily on first use) — copy each line VERBATIM, never
-  reformat/summarize. Checked by `/hub-tokens`. Same "delete nothing"
+  reformat/summarize. Checked by `/hub-health`. Same "delete nothing"
   rule as the active file — this is a move, not a cleanup.
 
 ## Format — ship note
@@ -100,14 +119,15 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
   Remote
 - `## Commands` — the exact commands run: 3 commands (`git add`,
   `git commit`, `git push`), or 4 more (`git checkout`, `git pull`,
-  `git merge --no-ff`, `git push`) if ship ran with `--merge`; plus the
-  `git checkout -b fix/<node-slug>` if step 2b auto-created a branch, and
-  the `git branch -d`/`git push origin --delete` cleanup if step 9 ran
+  `git merge --no-ff`, `git push`) if ship ran with `--merge` (or `gh pr
+  create`/`gh pr checks`/`gh pr merge` with `SHIP_MERGE_VIA=pr`); plus the
+  `git checkout -b fix/<node-slug>` if `BranchBeforeCommit` auto-created a branch, and
+  the `git branch -d`/`git push origin --delete` cleanup if `CleanupFixBranch` ran
 - `## Output` — the verbatim commit hash + push result (and merge if
   any), never paraphrased into a bare "pushed successfully"
-- `## Seal gate` — clearly record the approval received before running
-  (no approval = this note may not be written) — with `--merge`, this
-  approval covers the merge step too, not 2 separate approvals
+- `## Seal gate` — record that the operator's `/ship` call was the
+  approval (`AutoCommitNoGate`) — with `--merge`, it covers the merge step
+  too
 
 ## The three rules of this directory
 1. **VERBATIM, ALWAYS** — never claim anything without real cited
