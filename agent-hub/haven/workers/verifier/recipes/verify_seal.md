@@ -20,7 +20,7 @@
 The heaviest cost of a verify pass is NOT the act of verifying itself —
 it's reloading the entire bundle + doctrine on every subagent spawn
 (~46k-61k tokens/spawn, measured for real in
-`improvements/report/usage-audit-2026-09-02.md`). Batch verify pays that
+the 2026-09-02 usage audit). Batch verify pays that
 cost **exactly once** for N nodes instead of N times, while changing
 NOTHING about the substance of verifying:
 
@@ -74,7 +74,11 @@ so every hub doesn't reason about it differently.
 0. I'm running as a separate subagent (spawned via the Agent tool after
    the implementer finishes) — blank context, don't see the implement
    pass's reasoning. If batch (multiple notes or `all-pending`): this
-   step runs once for the whole batch.
+   step runs once for the whole batch. REOPEN round resumed via
+   `SendMessage` (`todo` step 4): my context holds only my own earlier
+   verdict(s) on this node, never the implementer's reasoning — still
+   isolated. Re-read the note from disk (it changed), never reuse the
+   earlier read.
 1. SELF-CHECK REFUSAL (a secondary layer, for the case of being called
    incorrectly outside the normal flow) — did I write this diff in this
    session? (Batch: applies per node — if any node was self-written,
@@ -85,6 +89,7 @@ so every hub doesn't reason about it differently.
    `description`/task string passed to the Agent tool for this spawn, or
    an equivalent fresh identifier this context can see for itself) —
    write it into the verdict note's `## Isolation proof` line (step 12a).
+   Resumed REOPEN round: cite the round-N resume message.
    This does NOT technically block a skipped isolation (no hook enforces
    it) — it only leaves a citeable trail: a missing line, or one
    identical to the implementer's own task string, is itself evidence for
@@ -113,6 +118,21 @@ so every hub doesn't reason about it differently.
    Enforcement), even if the node's own criteria don't list it. Also: an open row for the same issue exists on the
    active diagram but the note has no `## Supersedes`/`## Still open`
    line for it → REOPEN (implement step 7b skipped).
+6b. Feature doc: the note has no `## Feature doc` line → REOPEN
+   (`pick_next` 5b skipped). It cites a doc → read that ONE doc: every
+   criterion in its `## Acceptance criteria` (feat) or the cited
+   `Behavior #N` (fix) needs evidence like any node criterion. A
+   `## Feature doc changed` line without the operator's recorded answer
+   → REOPEN.
+6b2. Review: the note has no `## Review` → REOPEN (implement step 6c
+   skipped). `skipped — docs` on a non-`docs` task, a `security`-labeled
+   issue without a `/security-review` entry, or a correctness/security
+   finding with neither a fix nor a stated false-positive reason →
+   REOPEN.
+6c. `## Doctrine proposal` in the note: the cited outputs prove `<old>`
+   fails and `<new>` passes, from the same `Run from` → `confirmed`,
+   otherwise `rejected` (not a REOPEN reason on its own). Record it in
+   the verdict note.
 7. Scan all 5 forbidden states.
 8. Check the SEAL GATE — was approval recorded in the note if the diff
    was outward-facing?
@@ -127,11 +147,21 @@ so every hub doesn't reason about it differently.
    `| node | SEALED | <date> — archived, see dev-loop-archive.md.
    Evidence: <this verdict note path> |`; (c) if the active PM status
    now holds more than 20 such pointer rows, delete the oldest ones
-   (their full row already lives in the archive); (d) for each row the
+   (their full row already lives in the archive) — delete the whole
+   line, leave no blank line; the table stays the file's last block
+   (§9️⃣ PM status note); (d) for each row the
    note lists under `## Supersedes`: append it verbatim to the archive
    under a heading `## Superseded by \`<this node>\` (<date>)`, then
    delete it from the active file — no pointer (this node's row is the
-   trail). Part of SEAL itself,
+   trail); (e) if this node is the `feat` that implements a cited
+   `draft` doc: set its `Status:` line to `verified — verified by <this
+   verdict note path>`, same in its `doctrine/features/INDEX.md` row. A
+   fix SEAL proves one Behavior item, not the whole doc — it leaves a
+   backfilled doc's status as is; (f) a `confirmed` doctrine proposal
+   (step 6c): replace that command in `doctrine/MEMORY.md` and append a
+   Corrections row (`<old>` / `see doctrine/MEMORY.md`, citing this
+   verdict note — never the new value itself) to
+   `haven/workers/implementer/MEMORY.md`. Part of SEAL itself,
    not a separate maintenance pass — the acceptance criteria written on
    the node during implementation stop costing boot tokens the moment
    the node is sealed.
@@ -157,8 +187,10 @@ so every hub doesn't reason about it differently.
    11 if SEALed. Format:
    ```
    <ISO timestamp> role=verifier outcome=SEAL|REOPEN node=<slug>
-   rerun=none|partial|full hub_bytes_before=<N> hub_bytes_after=<N>
+   rerun=none|partial|full spawn=fresh|resumed hub_bytes_before=<N> hub_bytes_after=<N>
    ```
+   `spawn=resumed` only when this round arrived as a `SendMessage`
+   resume (step 0); otherwise `fresh`.
    Runs identically whether the verifier is called via `/todo` or by
    typing `/worker verifier` separately by hand — logging doesn't depend
    on how it's invoked, since it lives directly in this recipe, not in

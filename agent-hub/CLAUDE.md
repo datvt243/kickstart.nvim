@@ -20,8 +20,11 @@ Never skip step 1, even in a "cold" session (reopening the project fresh).
 ## The default loop
 ```
 task → worker implementer → find/create a node on the diagram → run the exact test command
-     → read the output back → write an evidence note → worker verifier → SEAL | REOPEN
+     → read the output back → /code-review (not docs) → write an evidence note → worker verifier → SEAL | REOPEN
 ```
+A `feat` task runs `worker analyst` first (writes `doctrine/features/<slug>.md`);
+a fix whose feature has no doc gets one backfilled first. A fix reads that
+doc and fixes toward it — not toward whatever the current code does.
 
 **Scoping a multi-phase, measured-by-count initiative** (lint rules, type
 coverage, dependency upgrades, security findings — anything framed as "N
@@ -59,6 +62,9 @@ verbatim. None → `none`.
 Before any **outward-facing** action — `commit` · `push` · `publish` ·
 `delete` · an external API call — STOP, show the diff/action about to
 happen, wait for the operator's approval. No approval = no action.
+Exception: the operator typing `/ship` (or `/todo --ship`) IS the approval
+for its commit/push/merge chain (`AutoCommitNoGate`) — never start
+`/ship` on your own.
 
 ## Four lenses (applied in this order)
 1. **Simple** — is the diff already minimal?

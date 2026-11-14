@@ -9,6 +9,6 @@
 2. Recipes (`haven/workers/*/recipes/`) are saved reasoning — reuse them
    instead of reasoning from scratch.
 3. A worker's actions must be really observable, not "imagined".
-4. Every outward-facing action needs the operator's approval — no
-   exceptions.
+4. Every outward-facing action needs the operator's approval — an
+   operator-typed `/ship` counts as that approval for its git chain.
 5. Evidence or it didn't happen. Confidence is not output.

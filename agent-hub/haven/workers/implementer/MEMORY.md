@@ -7,6 +7,8 @@
 ## Always true for me
 - I read `doctrine/MEMORY.md` to get the EXACT healthcheck command every
   session (`./scripts/health.sh`).
+  Never copy a command, path or baseline into this file — it goes stale
+  here; cite `doctrine/MEMORY.md` instead.
 - I run it from the repo root (`/Users/_david/.config/nvim`) unless
   `doctrine/MEMORY.md` says otherwise.
 - When a test fails TWICE for the same reason, I stop and re-read
@@ -19,10 +21,10 @@
 <<FILL>>
 
 ## Recipes I've earned
-| Recipe | Written | Times replayed |
-|---|---|---|
-| pick_next | 2026-09-20 | 0 |
-| implement | 2026-09-20 | 0 |
+| Recipe | Written |
+|---|---|
+| pick_next | 2026-09-20 |
+| implement | 2026-09-20 |
 
 ## Corrections
 | Date | I believed | Actually |

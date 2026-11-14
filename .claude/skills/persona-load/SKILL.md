@@ -18,7 +18,7 @@ A persona is a high-precision pointer into the model's latent space:
 naming a real expert activates a cluster of domain knowledge that would
 otherwise take paragraphs to restate. Loading ALL personas up front gives
 zero lift and wastes tokens (empirically, per the persona-system brief
-this skill implements) — this command is the on-demand hook so a worker
+this skill implements) — this skill is the on-demand hook so a worker
 only pays for the 1 persona (or panel of 2-4) actually relevant to the
 task at hand.
 
@@ -57,7 +57,7 @@ task at hand.
 - `CodeStaysOutOfHaven` — the loader script and persona library live in
   the project's own code tree, never inside `agent-hub/haven/` or
   `agent-hub/doctrine/` (would trip `CODE_IN_HAVEN`, and would silently
-  inflate the recurring per-session token cost `/hub-tokens` tracks).
+  inflate the recurring per-session token cost `/hub-health` tracks).
 - `ReadBackBeforeClaim` — always print the loader's real stdout, never a
   paraphrase of what a persona file "probably says".
 
@@ -77,4 +77,4 @@ library in its own code tree — see `doctrine/domains/PROJECT.md` for this
 project's `<<root>>`/safety-file names if declared there). Building that
 system the first time is a normal code change — run it through
 `/worker implementer "build the on-demand expert-persona system"` like
-any other task, not through this command.
+any other task, not through this skill.

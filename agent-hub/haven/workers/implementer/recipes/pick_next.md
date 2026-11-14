@@ -48,6 +48,29 @@
    Found an error → rewrite the acceptance criteria right on the node
    (clearer wording, a specific test command/measurement added) before
    moving to step 6, don't silently implement against a vague criterion.
+   Same 3 classes apply to a feature doc's criteria (step 5b) — fix them
+   in the doc, note it the same way.
+5b. **Feature doc.** Look the task up in `doctrine/features/INDEX.md`
+   (by area/anchors/issue #) — open ONLY the matching doc, never all.
+   - `feat` task: the analyst's doc for this issue must exist (`/todo`
+     runs the analyst first); missing → `blocked`, "run `/worker analyst`
+     first". Its `## Acceptance criteria` become the node's criteria
+     (pointer + copy), its `## Open questions` must be empty or answered —
+     an unanswered one → `blocked`, never pick an answer yourself.
+   - Bug fix / any other task touching a documented feature: the doc's
+     `## Behavior` is the spec — the fix restores that behavior, and the
+     node gets a criterion "matches `features/<slug>.md` Behavior #N".
+     The correct fix needs behavior that CONTRADICTS the doc → stop,
+     ask the operator which is right; only after an explicit answer may
+     the diff also edit the doc (`## Changelog` row + the note's
+     `## Feature doc changed` line).
+   - No doc for the touched feature: `/todo` already ran the analyst
+     backfill for `fix`/`hotfix` (pass 0), so this only happens by hand or
+     when the analyst found no feature → proceed, note
+     `## Feature doc: none` + suggest `/worker analyst "document <feature>"`
+     under `## Noticed, not done`. Don't write the doc yourself.
+   - A `draft` backfill doc counts as the spec too, but its unanswered
+     open questions are not — a fix depending on one → `blocked`, ask.
    The node's state doesn't change (still PENDING) — this is the
    implementer's own self-check, not a second independent pass/gate, no
    separate evidence (the evidence note in step 9 only needs 1 extra
@@ -62,7 +85,8 @@
    the real input the verifier uses to compute the hub-size diff in
    `worker-runs.log`, not something specific to `/todo`.
 9. Evidence: write `evidence/implementer/<date>/<slug>-plan.md`,
-   including the line `## Hub bytes before: <N>` from step 8 (and the
+   including the line `## Hub bytes before: <N>` from step 8, the line
+   `## Feature doc: <path>|none` from step 5b (and the
    acceptance-criteria-clarified line from step 5 if it was edited).
 
 ## Hard rules honored
@@ -74,6 +98,8 @@
 | No diagram yet | Create `haven/diagrams/<slug>.prime-mermaid.md` matching the `dev-loop` format |
 | The task is vague | Stop and ask, don't guess |
 | Acceptance criteria vague/not measurable (step 5) | Rewrite it right on the node, state it clearly in the evidence — do NOT implement before fixing it |
+| `feat` task with no feature doc, or an unanswered open question in it (step 5b) | `blocked` — the analyst/operator decides, never the implementer |
+| Fix would contradict the feature doc's Behavior (step 5b) | Stop, ask the operator which one is right — don't silently pick the code or the doc |
 
 ## Runtime
 `/worker implementer "<task>"`. No API key, no network call — Claude Code

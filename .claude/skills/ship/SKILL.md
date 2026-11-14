@@ -1,6 +1,6 @@
 ---
 name: ship
-description: "Commit + push a SEALED node — the outward-facing gate at the end of the loop. Usage: /ship \"[note]\" or /ship \"[note]\" --merge[=<branch>] to also merge + push the current branch into a target branch. Commit runs automatically (no gate); push (and merge/cleanup) always shows the exact git commands and waits for approval first; never --force/--no-verify."
+description: "Commit + push a SEALED node — the outward-facing gate at the end of the loop. Usage: /ship \"[note]\" or /ship \"[note]\" --merge[=branch] to also merge + push the current branch into a target branch. Commit runs automatically (no gate); push (and merge/cleanup) always shows the exact git commands and waits for approval first; always ends on the main working branch; never --force/--no-verify."
 argument-hint: "[note] [--merge[=<branch>]]"
 ---
 
@@ -99,12 +99,23 @@ SEALED a node. It never replaces the implementer → verifier loop.
    merged was NOT one step 0 created (operator was already on a
    pre-existing feature branch), skip this step entirely — never delete a
    branch `/ship` didn't create itself.
+11. **Return to working branch** (`ReturnToWorkingBranch`): always, as
+   the last step — once every push above is confirmed by real output
+   (not assumed), check out the project's main working branch (`master`),
+   **without asking** — local-only, the work is already pushed:
+   ```
+   git checkout master
+   ```
+   Already on it (e.g. after `--merge` into it) → skip. Show it last in
+   the step 7 push-gate display. Report the final current branch
+   (`git branch --show-current`, read back). Any push failed (or push not
+   approved) → skip, stay where you are so the operator can fix it.
 
 ## Hard rules honored
 `SealedOnly` | `NoForce` | `ReadBackBeforeClaim` | `MergeOnRequest`
 (only when `--merge` is passed) | `BranchBeforeCommit` | `AutoCommitNoGate`
 | `CleanupFixBranch` (only when `--merge` is passed AND the merged branch
-is one `/ship` auto-created in step 0)
+is one `/ship` auto-created in step 0) | `ReturnToWorkingBranch`
 
 ## Failure branches
 | Failure | Handling |
@@ -116,6 +127,7 @@ is one `/ship` auto-created in step 0)
 | Step 0's `git checkout -b` fails (e.g. branch name already exists, dirty tree) | Report the real error verbatim, stop — never force/stash/discard on the operator's behalf |
 | Step 5's `git commit` fails (e.g. hook rejects it) | Report the real error verbatim, stop — commit auto-runs but a failure is never silently retried or forced |
 | Step 10's branch delete fails (unmerged commits, branch checked out elsewhere) | Report the real error verbatim, leave the branch in place — never `-D` force-delete |
+| Step 11's `git checkout master` fails (dirty tree, etc.) | Report the real error verbatim, stay on the current branch — never force/stash/discard |
 
 ## Runtime
 `/ship "[note]"` or `/ship "[note]" --merge[=<branch>]`. Never creates a
@@ -123,4 +135,4 @@ branch or opens a PR on its own — default behavior is commit + push the
 current branch only; `--merge` adds exactly one merge + push into a target
 branch, still no PR. Commit (steps 3-6) runs automatically without a
 stop-and-ask; push and everything after it (steps 7, 9, 10) still require
-one explicit operator approval per run.
+one explicit operator approval per run. Always ends on `master` (step 11).
