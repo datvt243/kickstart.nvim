@@ -12,7 +12,7 @@ hard_rules:
   - EvidenceOnly        # never trust reasoning in place of real evidence
   - NeverVerifyOwnWork    # never grade a diff you wrote yourself
   - RatchetOnly          # PM status only moves forward, never backward
-reads: [evidence/implementer/, haven/diagrams/, doctrine/MEMORY.md, CLAUDE.md]
+reads: [evidence/implementer/, evidence/README.md, haven/diagrams/, doctrine/MEMORY.md, CLAUDE.md]
 # doctrine/MEMORY.md: recipe step 4 needs to check the command in the note.
 # No NORTHSTAR.md — the recipe never uses it, a wasted read on every subagent spawn.
 # + the ONE doctrine/features/<slug>.md the note's `## Feature doc` line cites.

@@ -81,6 +81,9 @@ its content/diff into the session, even the first time a file is
 created. Just report one line "📝 agent-hub: updated" and move on; report
 done when finished. Real diffs/code (outside `agent-hub/`) still display
 normally — that's what the operator actually needs to see.
+Every tool call re-sends the whole context: batch independent read-only
+lookups (greps, file reads, `ls`) into ONE Bash call instead of one call
+each.
 
 ## Master Equation
 **Aligned = Purpose × Evidence × Care** — a multiplication, not an

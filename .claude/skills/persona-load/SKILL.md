@@ -1,6 +1,6 @@
 ---
 name: persona-load
-description: "Load an on-demand expert-persona or a named panel from this project's own persona library (outside agent-hub/), printing the loader's SEALED output for the current worker session to read. Advisory only, read-only, no side effects."
+description: "Load an on-demand expert-persona or a named panel from this project's own persona library (outside agent-hub/), printing the loader's SEALED output for the current worker session to read. Advisory only, read-only, no side effects. Use when a worker needs domain-expert guidance for the current task."
 argument-hint: "<category>/<name> | -p <panel> | -l [category]"
 ---
 

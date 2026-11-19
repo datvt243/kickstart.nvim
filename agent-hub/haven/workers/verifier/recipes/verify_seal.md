@@ -55,8 +55,11 @@ Only re-run (partially or fully) when:
   command doesn't match doctrine → REOPEN immediately per steps 4-5,
   don't waste effort re-running an already-broken note "to be sure" —
   REOPEN and let the implementer write a correct note.
-- The node is outward-facing or is a `/release` gate — higher risk than
-  an ordinary diff, worth the cost of an independent confirmation.
+- The node itself performs an outward-facing action (the SEAL GATE list
+  in `CLAUDE.md`: push, publish, deploy, external API call...) or is a
+  `/release` gate — higher risk than an ordinary diff, worth the cost of
+  an independent confirmation. Code that reaches production later
+  through `/ship` does NOT count — on a website that's every change.
 - `doctrine/domains/PROJECT.md` explicitly lists this class of change as
   needing independent re-running (a per-project decision, not the kit's
   default).
@@ -96,7 +99,12 @@ so every hub doesn't reason about it differently.
    a later audit that the subagent-spawn rule in `worker/SKILL.md` was
    skipped this round.
 2. [LOOP STARTS HERE FOR EACH NODE if batch] Read the NOTE — only the
-   note, do NOT open the diff itself directly. (`EvidenceOnly`)
+   note, do NOT open the diff itself directly. (`EvidenceOnly`) One Bash
+   call: the note + the node row (`grep -n '<slug>'` on the active
+   diagram) + `doctrine/MEMORY.md` + `evidence/README.md`; the cited
+   feature doc (step 6b) in at most one more. A claim the note backs
+   with a cited search is audited from that citation — never re-run the
+   search.
 3. Read the NODE — get the acceptance criteria from `haven/diagrams/`,
    the forbidden states from `CLAUDE.md`. [GUARD]
    Don't `Read agent-hub/CLAUDE.md` separately for this — same mechanism
@@ -115,7 +123,9 @@ so every hub doesn't reason about it differently.
 6. Go through the acceptance criteria ONE BY ONE — any missing evidence
    = REOPEN, state it clearly under "missing". Always includes the
    "comments per code-comments.md" row (see that standard's
-   Enforcement), even if the node's own criteria don't list it. Also: an open row for the same issue exists on the
+   Enforcement), even if the node's own criteria don't list it. A
+   coverage claim ("only caller", "no other path reads X") without its
+   exact search command + output = missing evidence. Also: an open row for the same issue exists on the
    active diagram but the note has no `## Supersedes`/`## Still open`
    line for it → REOPEN (implement step 7b skipped).
 6b. Feature doc: the note has no `## Feature doc` line → REOPEN
@@ -145,8 +155,11 @@ so every hub doesn't reason about it differently.
    `haven/diagrams/dev-loop-archive.md` (create it from §9️⃣.5 if
    absent); (b) replace the active row with
    `| node | SEALED | <date> — archived, see dev-loop-archive.md.
-   Evidence: <this verdict note path> |`; (c) if the active PM status
-   now holds more than 20 such pointer rows, delete the oldest ones
+   Evidence: <this verdict note path> |`; (c) after (b) — always, also
+   when (b) replaced a PENDING row in place (that adds a pointer too) —
+   `grep -cE '^\| .*— archived, see'` the active file (table rows only);
+   more than 20 → delete the
+   oldest pointer lines until 20 remain
    (their full row already lives in the archive) — delete the whole
    line, leave no blank line; the table stays the file's last block
    (§9️⃣ PM status note); (d) for each row the
@@ -196,6 +209,11 @@ so every hub doesn't reason about it differently.
    on how it's invoked, since it lives directly in this recipe, not in
    `/todo`. NEVER edit/delete an old line in this file, only append (the
    same principle as every other file in `evidence/`).
+13b. After the append: `worker-runs.log` over 15KB (`wc -c`) → move
+   every line dated before today to `evidence/worker-runs-archive.log`
+   (`>>`, verbatim, create it lazily), keep today's lines — the
+   `evidence/README.md` TOKEN DISCIPLINE move, the only removal this
+   file allows.
 
 ## Hard rules honored
 `NeverVerifyOwnWork` | `EvidenceOnly` | `VerdictOnly` | `RatchetOnly`

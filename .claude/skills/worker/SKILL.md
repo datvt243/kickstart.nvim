@@ -1,6 +1,6 @@
 ---
 name: worker
-description: "Become a hub worker (analyst, implementer or verifier) and run its recipe against a task. Usage: /worker analyst \"[feature task]\", /worker implementer \"[task]\" or /worker verifier \"[task or evidence note path]\". implementer runs in the current session; analyst and verifier MUST run as separate subagents with a blank context — the verifier never in the same pass that wrote the diff."
+description: "Become a hub worker (analyst, implementer or verifier) and run its recipe against a task. Usage: /worker analyst \"[feature task]\", /worker implementer \"[task]\" or /worker verifier \"[task or evidence note path]\". implementer runs in the current session; analyst and verifier MUST run as separate subagents with a blank context — the verifier never in the same pass that wrote the diff. Use when running one loop role by hand instead of /todo."
 argument-hint: <analyst|implementer|verifier> "<task>"
 ---
 
@@ -39,8 +39,14 @@ exact boundary (`NeverVerifyOwnWork` unaffected).
      contract) — never self-report `done` or `SEAL`, that's the verifier's
      word only.
    - `verifier`: MUST run as a **separate subagent**, spawned via the
-     Agent tool with a blank context — not a continuation of whatever pass
-     wrote the diff being verified. Follow `recipes/verify_seal.md`. If
+     Agent tool with a blank context and `model: "sonnet"` (it checks
+     cited evidence against criteria, doesn't design — the cheaper model
+     is enough) — not a continuation of whatever pass
+     wrote the diff being verified. The spawn prompt names the absolute
+     hub path, the note path(s) and node slug(s) — never make the
+     subagent `ls` around to find its inputs, and never add re-run
+     instructions ("re-run the checks yourself") — the recipe's "Re-run
+     scope" alone decides. Follow `recipes/verify_seal.md`. If
      this call would run in the same context/pass as the implementer that
      just wrote the diff, refuse and spawn the subagent instead — never
      verify inline "for convenience" (`NeverVerifyOwnWork`, hard rule,
