@@ -1,6 +1,6 @@
 ---
 name: issue-create
-description: "Create a GitHub issue in this repo. Drafts title/body, shows the exact gh command, waits for approval before creating."
+description: "Create a GitHub issue in this repo. Drafts title/body, shows the exact gh command, waits for approval before creating. Use when the user wants a new issue filed."
 argument-hint: "\"<what the issue is about>\" [--label x] [--assignee @me] [--yes]"
 disable-model-invocation: true
 ---

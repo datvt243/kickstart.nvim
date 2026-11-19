@@ -1,6 +1,6 @@
 ---
 name: ship
-description: "Commit + push a SEALED node — the outward-facing gate at the end of the loop. Usage: /ship \"[note]\" or /ship \"[note]\" --merge[=branch] to also merge + push the current branch into a target branch. Commit runs automatically (no gate); push (and merge/cleanup) always shows the exact git commands and waits for approval first; always ends on the main working branch; never --force/--no-verify."
+description: "Commit + push a SEALED node — the outward-facing gate at the end of the loop. Usage: /ship \"[note]\" or /ship \"[note]\" --merge[=branch] to also merge + push the current branch into a target branch. Commit runs automatically (no gate); push (and merge/cleanup) always shows the exact git commands and waits for approval first; always ends on the main working branch; never --force/--no-verify. Use when a node is SEALED and the work should be committed."
 argument-hint: "[note] [--merge[=<branch>]]"
 ---
 

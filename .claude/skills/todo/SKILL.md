@@ -1,6 +1,6 @@
 ---
 name: todo
-description: "Resolve/create a GitHub issue and checkout its dedicated branch, then run analyst (feat, or fix with no feature doc) → implementer → verifier as one command — still two isolated passes internally (verifier as a separate subagent), auto-repeating the implementer pass on REOPEN up to a retry limit. Usage: /todo \"[task]\"|#[issue-number] [--ship]. Stops at SEAL or the retry limit, never auto-commits — unless --ship was passed, in which case it chains a call to /ship after SEAL (which shows its git commands and runs them at once — passing --ship is the approval)."
+description: "Resolve/create a GitHub issue and checkout its dedicated branch, then run analyst (feat, or fix with no feature doc) → implementer → verifier as one command — still two isolated passes internally (verifier as a separate subagent), auto-repeating the implementer pass on REOPEN up to a retry limit. Usage: /todo \"[task]\"|#[issue-number] [--ship]. Stops at SEAL or the retry limit, never auto-commits — unless --ship was passed, in which case it chains a call to /ship after SEAL (which shows its git commands and runs them at once — passing --ship is the approval). Use when running any feat or fix task end-to-end."
 argument-hint: "<task>|#<issue-number> [--ship]"
 disable-model-invocation: true
 ---

@@ -99,8 +99,8 @@ echo "FLAGS:"
 DIAG_FILE="$HUB/haven/diagrams/dev-loop.prime-mermaid.md"
 if [ -f "$DIAG_FILE" ]; then
   DB=$(wc -c < "$DIAG_FILE")
-  FULL_SEALED=$(grep -cE '\| SEALED \|' "$DIAG_FILE" 2>/dev/null)
-  POINTER_SEALED=$(grep -cE '— archived, see' "$DIAG_FILE" 2>/dev/null)
+  FULL_SEALED=$(grep -cE '^\| .*\| SEALED \|' "$DIAG_FILE" 2>/dev/null)
+  POINTER_SEALED=$(grep -cE '^\| .*— archived, see' "$DIAG_FILE" 2>/dev/null)
   REAL_SEALED=$(( FULL_SEALED - POINTER_SEALED ))
   check_threshold_bytes "dev-loop.prime-mermaid.md" "$DB" 15360 \
     "$REAL_SEALED full SEALED entries not yet archived ($POINTER_SEALED pointers; verify_seal step 11 should keep these at 0 full / <=20 pointers — a backlog here predates that rule or means step 11 was skipped), see rows below"
@@ -213,7 +213,7 @@ def add(key, path):
             k = (inp.get("file_path"), inp.get("offset"), inp.get("limit"))
             reads.setdefault(k, []).append(size)
         if name == "Bash" and err:
-            k = " ".join(str(inp.get("command", "")).split())[:120]
+            k = " ".join(str(inp.get("command", "")).split())  # full command: a long shared prefix (S=<scratchpad>…) isn't "the same command"
             fails[k] = fails.get(k, 0) + 1
         if size > 40000:
             big.append((size, key, name, str(inp.get("file_path") or inp.get("command") or inp.get("description") or "")[:90]))
@@ -253,7 +253,7 @@ for fp, (n, ch) in top:
     print(f"    {n:>4}x  {'image' if not ch else f'~{ch // 4} tok':>12}  {fp}")
 print(f"  failing Bash command repeated >=3x in one run: {len(loops)}")
 for cmd, n in sorted(loops.items(), key=lambda x: -x[1])[:5]:
-    print(f"    {n:>4}x  {cmd}")
+    print(f"    {n:>4}x  {cmd[:120]}")
 print(f"  tool results >40k chars (~10k tok): {len(big)}")
 for size, who, name, what in sorted(big, reverse=True)[:5]:
     print(f"    ~{size // 4:>7} tok  {who:15} {name}: {what}")
@@ -319,7 +319,8 @@ PY
    `<path>/improvements/report/<YYYY-MM-DD>-#<NN>-hub-health-<project>.md`
    — `<NN>` and the filename follow that repo's
    `.claude/rules/improvements-naming.md` (read it first; next number
-   = highest `#` among `report/` filenames + 1, 2 digits). Sections:
+   per its rule, including its number floor — `report/` may be empty or
+   missing, create it). Sections:
    `- **Recorded:**`, `- **Context:**` (project, kit version from
    `agent-hub/.kit-version`, window), `- **Status:** unverified`,
    `## Baseline` (output verbatim), `## Findings` (numbered: what,

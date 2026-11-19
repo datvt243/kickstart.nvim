@@ -29,7 +29,9 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
 - `## Acceptance` — a table | Criterion | Evidence | (evidence points to
   a specific line of output — never a bare "tests pass", must cite
   "Tests: 42 passed, 42 total"); always has a "comments per
-  code-comments.md" row
+  code-comments.md" row. A coverage claim ("only caller", "no other
+  path reads X") cites the exact search command + its output, so the
+  verifier audits it without re-searching
 - `## Supersedes` / `## Still open` — other
   not-yet-SEALED rows for the same issue: retired by this node on SEAL,
   or kept open with a reason (`recipes/implement.md` step 7b); `none` if
@@ -111,7 +113,8 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
   move lines older than the current work session to
   `evidence/worker-runs-archive.log` (same directory, plain append,
   create it lazily on first use) — copy each line VERBATIM, never
-  reformat/summarize. Checked by `/hub-health`. Same "delete nothing"
+  reformat/summarize. Done by `verify_seal` step 13b; `/hub-health`
+  flags a miss. Same "delete nothing"
   rule as the active file — this is a move, not a cleanup.
 
 ## Format — ship note
