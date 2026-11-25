@@ -32,7 +32,9 @@
    the active diagram for a not-yet-SEALED row of the same task/issue
    (`#<n>`) first — found → resume THAT row (state + Notes pointer
    updated in place), never add a "recheck" node beside it (LAI-13's
-   new-node rule covers SEALED nodes only). The template's `<<FILL>>`
+   new-node rule covers SEALED nodes only). Resuming → read the note
+   its Notes points to (`## Dead ends`, REOPEN reason) before planning;
+   never retry a dead end without a new reason. The template's `<<FILL>>`
    placeholder row is replaced by the first real node, not kept.
 5. Quickly self-check the acceptance
    criteria of the node just picked — NOT a verify pass, only blocks
@@ -77,6 +79,15 @@
    line if the acceptance criteria were rewritten:
    `## Acceptance criteria clarified: <before> → <after>`).
 6. Locate code anchors via grep — real paths, don't invent them.
+6b. **Prior fixes** (`fix`/`hotfix` only). Look up earlier work on those
+   anchors before deciding the cause:
+   `git log --oneline -n 10 -- <anchors>` and
+   `grep -rlF -- '<anchor>' evidence/implementer | sort | tail -5`
+   (+ `grep` the issue # in `dev-loop-archive.md`). Open at most the 3
+   most recent matching notes — `## Diff` + `## Acceptance` only, never
+   all of `evidence/`. A prior fix on the same lines is a lead, not the
+   cause: the cause the note states must be shown by this node's own
+   test output.
 7. Declare blockers: fill in whatever `<<FILL>>` is needed in
    `doctrine/MEMORY.md`.
 8. Measure `hub_bytes_before` — the "per-session
@@ -87,7 +98,8 @@
 9. Evidence: write `evidence/implementer/<date>/<slug>-plan.md`,
    including the line `## Hub bytes before: <N>` from step 8, the line
    `## Feature doc: <path>|none` from step 5b (and the
-   acceptance-criteria-clarified line from step 5 if it was edited).
+   acceptance-criteria-clarified line from step 5 if it was edited), and
+   `## Prior fixes` from step 6b (`fix`/`hotfix`).
 
 ## Hard rules honored
 `NodeBeforeCode` | `EvidencePerAction` | `NoSilentFailure`

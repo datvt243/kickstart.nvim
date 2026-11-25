@@ -1,6 +1,6 @@
 ---
 name: hub-health
-description: "Health check of agent-hub/: size (read every session vs cold storage, archive flags), real billed tokens per main session / verifier / analyst from Claude Code transcripts, spawn cost, and token waste (re-reads, failing-command loops, oversized tool output). Use when the user asks about hub size, token cost or token waste. Usage: /hub-health [days] [--report agent-hub-init-path]. Read-only on this project; --report writes one report file into agent-hub-init's improvements/report/."
+description: "Health check of agent-hub/: size (read every session vs cold storage, archive flags), real billed tokens per main session / verifier / analyst from Claude Code transcripts, spawn cost, the costliest runs (calls, context size, command), token waste (re-reads, failing-command loops, oversized tool output), stale feature docs and PROJECT.md rows (anchored file changed since its sha), and duplicate Traps. Use when the user asks about hub size, token cost or token waste. Usage: /hub-health [days] [--report agent-hub-init-path]. Read-only on this project; --report writes one report file into agent-hub-init's improvements/report/."
 ---
 
 # /hub-health — agent-hub health and token cost
@@ -126,6 +126,42 @@ check_threshold_bytes "doctrine/ as a whole" "$DOCTRINE_B" "$DOCTRINE_THRESHOLD"
 check_threshold "$HUB/evidence/worker-runs.log" 15360 \
   "consider moving lines older than the current work session to evidence/worker-runs-archive.log (see evidence/README.md's archiving convention)"
 echo
+echo "FEATURE DOC FRESHNESS (anchors changed after 'Last verified' in commits that didn't touch the doc):"
+for f in "$HUB"/doctrine/features/*.md; do
+  [ -f "$f" ] && [ "$(basename "$f")" != INDEX.md ] || continue
+  sha=$(sed -n 's/^- Last verified: *\([0-9a-f]\{7,40\}\).*/\1/p' "$f" | head -1)
+  [ -n "$sha" ] || continue
+  # shortcut: anchors split on spaces, a path with a space breaks; quote-aware parse if one ever appears
+  anchors=$(grep -m1 '^- Anchors:' "$f" | grep -o '`[^`]*`' | tr -d '`' | sed 's/:[0-9].*$//')
+  rel="${f#"$ROOT"/}"
+  if ! git -C "$ROOT" cat-file -e "$sha^{commit}" 2>/dev/null; then
+    echo "  ⚠ $rel: Last verified $sha is not in this repo's history — re-check the doc (/worker analyst \"document <feature>\")"
+    continue
+  fi
+  [ -n "$anchors" ] || continue
+  drift=$(comm -23 <(git -C "$ROOT" log --format=%h "$sha..HEAD" -- $anchors | sort) \
+                   <(git -C "$ROOT" log --format=%h "$sha..HEAD" -- "$rel" | sort) | tr '\n' ' ')
+  if [ -n "$drift" ]; then
+    echo "  ⚠ $rel: anchors changed since $sha in ${drift}— Behavior may be stale, re-check it (/worker analyst \"document <feature>\")"
+  else
+    echo "  ✓ $rel"
+  fi
+done
+echo
+echo "PROJECT.md ANCHOR FRESHNESS (\`file@sha\` rows whose file changed after the sha, in commits that didn't touch PROJECT.md):"
+PJ="$HUB/doctrine/domains/PROJECT.md"; PJ_REL="${PJ#"$ROOT"/}"
+# shortcut: a path with a space or backtick won't match; quote-aware parse if one ever appears
+PJ_ANCHORS=$(grep -o '`[^` @]*@[0-9a-f]\{7,40\}`' "$PJ" 2>/dev/null | tr -d '`' | sort -u)
+[ -n "$PJ_ANCHORS" ] || echo "  (no anchored rows)"
+for a in $PJ_ANCHORS; do
+  p="${a%@*}"; sha="${a##*@}"
+  if ! git -C "$ROOT" cat-file -e "$sha^{commit}" 2>/dev/null; then echo "  ⚠ $a: sha not in this repo's history — re-check the row"; continue; fi
+  if [ ! -e "$ROOT/$p" ]; then echo "  ⚠ $a: file no longer exists — re-check the row"; continue; fi
+  drift=$(comm -23 <(git -C "$ROOT" log --format=%h "$sha..HEAD" -- "$p" | sort) \
+                   <(git -C "$ROOT" log --format=%h "$sha..HEAD" -- "$PJ_REL" | sort) | tr '\n' ' ')
+  if [ -n "$drift" ]; then echo "  ⚠ $a: file changed in ${drift}— the row may be stale"; else echo "  ✓ $a"; fi
+done
+echo
 echo "VERIFIER SPAWNS (worker-runs.log; no spawn= field = fresh, pre-2026-11-07):"
 cat "$HUB/evidence/worker-runs-archive.log" "$HUB/evidence/worker-runs.log" 2>/dev/null | awk '
   /role=verifier/ { v++; if (/outcome=REOPEN/) r++; if (/spawn=resumed/) s++; if (/rerun=(partial|full)/) x++ }
@@ -189,6 +225,8 @@ def scan(path):
                     size = len(c) if isinstance(c, str) else sum(len(x.get("text", "")) for x in c or [] if isinstance(x, dict))
                     results[b.get("tool_use_id")] = (size, bool(b.get("is_error")))
     t = {"fresh": 0, "cache_write": 0, "cache_read": 0, "out": 0}
+    ctx = [u.get("input_tokens", 0) + u.get("cache_creation_input_tokens", 0) + u.get("cache_read_input_tokens", 0) for u in seen.values()]
+    t["ctx0"], t["ctxmax"] = (ctx[0], max(ctx)) if ctx else (0, 0)
     for u in seen.values():
         t["fresh"] += u.get("input_tokens", 0)
         t["cache_write"] += u.get("cache_creation_input_tokens", 0)
@@ -200,12 +238,28 @@ def role(meta):
     d = (meta.get("description", "") + " " + meta.get("agentType", "")).lower()
     return "verifier" if "verif" in d else "analyst" if "analy" in d else "other subagent"
 
-groups, dup, loops, big = {}, {}, {}, []
+def first_cmd(path):
+    for line in open(path, errors="ignore"):
+        if "<command-name>" in line and "<command-name>/clear<" not in line:
+            try:
+                c = json.loads(line)["message"]["content"]
+            except (ValueError, KeyError, TypeError):
+                continue
+            c = c if isinstance(c, str) else " ".join(b.get("text", "") for b in c if isinstance(b, dict))
+            if "<command-name>" in c:
+                name = c.split("<command-name>")[1].split("<")[0]
+                args = c.split("<command-args>")[1].split("<")[0] if "<command-args>" in c else ""
+                return f"{name} {args}".strip()[:50]
+    return ""
+
+groups, dup, loops, big, runs = {}, {}, {}, [], []
 def add(key, path):
     t, n, uses, results = scan(path)
     g = groups.setdefault(key, {"runs": 0, "calls": 0, "fresh": 0, "cache_write": 0, "cache_read": 0, "out": 0})
     g["runs"] += 1; g["calls"] += n
-    for k in t: g[k] += t[k]
+    for k in g:
+        if k in t: g[k] += t[k]
+    runs.append((t, n, key, path))
     reads, fails = {}, {}
     for uid, (name, inp) in uses.items():
         size, err = results.get(uid, (0, False))
@@ -245,6 +299,14 @@ for k in ("main session", "verifier", "analyst", "other subagent"):
     if g:
         tin = g["fresh"] + g["cache_write"] + g["cache_read"]
         print(f"  {k:16}{g['runs']:>5}{g['calls']:>7}{g['fresh']:>10}{g['cache_write']:>13}{g['cache_read']:>12}{g['out']:>9}{tin // g['runs']:>10}{g['cache_write'] // g['runs']:>11}")
+print()
+# weight ~ API price ratio (cache read 0.1x, write 1.25x, output 5x) — a ranking, not the plan's quota formula
+w = lambda t: t["fresh"] + 1.25 * t["cache_write"] + 0.1 * t["cache_read"] + 5 * t["out"]
+print("TOP RUNS (weighted ~ fresh + 1.25 write + 0.1 read + 5 out):")
+print(f"  {'weight':>9}{'calls':>7}{'ctx first':>11}{'ctx peak':>10}  {'role':15} command / session")
+for t, n, key, path in sorted(runs, key=lambda r: -w(r[0]))[:5]:
+    label = first_cmd(path) if key == "main session" else ""
+    print(f"  {int(w(t)):>9}{n:>7}{t['ctx0']:>11}{t['ctxmax']:>10}  {key:15} {label or os.path.basename(path)[:20]}")
 print()
 print("TOKEN WASTE (transcripts, ~tok = chars / 4):")
 top = sorted(dup.items(), key=lambda x: -x[1][1])[:8]
@@ -314,8 +376,28 @@ PY
      didn't fire, or the loop ran outside a worker pass.
    - Tool results >40k chars → a command dumped whole logs/files; cap it
      (`| tail`, `head`, `Read` with `limit`) in the recipe that ran it.
+   - TOP RUNS: cost ≈ calls × context, so a run with many calls and a
+     high `ctx peak` → many small tool calls (`implement` ALWAYS: batch)
+     or a big task in one session (split the node). `ctx first` is the
+     fixed cost before any work (Claude Code prompt, tools, MCP
+     connectors) — same in every run; the hub can't lower it.
+     `/hub-health` itself in a session already at a high ctx → run it
+     after `/clear`.
+5c. A FEATURE DOC FRESHNESS ⚠ → code under a `verified` doc changed
+   without the doc: its Behavior is no longer proven spec. Suggest
+   `/worker analyst "document <feature>"` (re-check vs code, operator
+   confirms, `Last verified` moves) before the next fix in that feature
+   trusts it. Read-only here — never edit the doc from this skill.
+5d. A PROJECT.md ANCHOR ⚠ → that Traps/Decisions row was confirmed
+   against an older version of its file. Suggest re-checking it in the
+   next worker pass that touches the file (`implement` step 8–9: still
+   true → sha moves to HEAD; wrong → corrected, lesson kept).
+   Then read the Traps table once and list rows that state the same trap
+   twice, or that one row fully covers: propose one merged row keeping
+   both rows' Why/What-to-do text. Never edit, never drop a lesson —
+   the operator decides. None → `duplicates: none`.
 6. `--report <agent-hub-init path>`: write the step 1/1b output plus
-   the step 3-5b findings into
+   the step 3-5d findings into
    `<path>/improvements/report/<YYYY-MM-DD>-#<NN>-hub-health-<project>.md`
    — `<NN>` and the filename follow that repo's
    `.claude/rules/improvements-naming.md` (read it first; next number

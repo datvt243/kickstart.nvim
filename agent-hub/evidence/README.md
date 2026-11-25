@@ -22,6 +22,9 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
 - `## Feature doc` — `<doctrine/features/... path>` or `none`
   (`pick_next` step 5b); plus `## Feature doc changed: <before> →
   <after> — operator: <answer>` if the diff edited it
+- `## Prior fixes` — `fix`/`hotfix` only (`pick_next` step 6b): each hit
+  as `<sha or note path> — <what it changed>`, or `none — <the commands
+  run>`. Leads only; a cause is claimed only with this node's own output
 - `## Diff` — files | file | why |
 - `## Command` — the exact command(s) from `doctrine/MEMORY.md`, test +
   typecheck (unless `n/a — no TypeScript`)
@@ -42,6 +45,9 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
   (`implement` step 6c)
 - `## Noticed, not done` — things noticed outside scope but not fixed
   on your own
+- `## Dead ends` — each abandoned approach + the output line that ruled
+  it out, appended as it happens (`implement` ALWAYS rule); `none`.
+  What a resumed or compacted pass reads first (`pick_next` step 4)
 - `## Seal gate` — record the approval if there was an outward-facing
   action, or "none"
 
@@ -49,6 +55,10 @@ Date in `YYYY-mm-dd` format, slug in kebab-case taken from the task name.
 - Task (verbatim) · Doc (`doctrine/features/<slug>.md`, new|updated) ·
   Mode (spec|backfill) · Outcome (`spec_ready`/`needs_input`/`no_feature`)
 - `## Sources read` — files/doctrine actually read
+- `## Code map` — each code location the change will touch or must
+  match: `` `<file>:<start>-<end>` `` + what is there (1 line); `none`
+  for backfill/`no_feature`. The implementer reads these ranges instead
+  of re-reading whole files
 - `## Questions` — each open question + the operator's answer, or `none`
 - `## Operator confirmation` — backfill only: the operator's verbatim
   "doc is right" (what makes `confirmed by operator` citeable), or `none`

@@ -1,7 +1,7 @@
 ---
 name: issues-ls
 description: "List open GitHub issues for this repo, if it's hosted on GitHub. Read-only, no side effects. Use when picking the next task or reviewing the backlog."
-argument-hint: "[--group] [--state open|closed|all] [gh issue list flags...]"
+argument-hint: "[--group|--batch] [--state open|closed|all] [gh issue list flags...]"
 ---
 
 # /issues-ls — list GitHub issues for this repo
@@ -20,8 +20,8 @@ a GitHub repo — no writes, no approval gate needed.
    work around it (no calling the GitHub REST API directly with a token).
 3. **List issues.** `gh issue list --state open --limit 50 --json
    number,title,labels,state,updatedAt` by default. Remove `--group`
-   (alias `--ground`) from `$ARGUMENTS` first — it's this skill's flag
-   (step 5), never passed to `gh`. If the remaining `$ARGUMENTS`
+   (alias `--ground`) and `--batch` from `$ARGUMENTS` first — they're this
+   skill's flags (step 5), never passed to `gh`. If the remaining `$ARGUMENTS`
    is given, pass it through verbatim as extra flags to `gh issue list`
    instead of `--state open --limit 50` (e.g. `/issues-ls --state all`,
    `/issues-ls --label bug --assignee @me`), still adding the `--json`
@@ -87,6 +87,27 @@ a GitHub repo — no writes, no approval gate needed.
        (more first); `Other` after ranked groups of equal rank;
        `done-dev` stays last.
      - Heading shows the count: `### <TAG> (n)`.
+   - **`--batch` → issues fixable together, fixable-first.** Replaces
+     the tag grouping (wins over `--group` if both given). Same columns
+     and Priority rank as `--group`.
+     - Add `body` to step 3's `--json` fields (only with `--batch`).
+     - **Batch** = issues one change would fix together, judged from
+       title + body: same root cause / error message, same file, module,
+       endpoint or component, explicit cross-refs (`duplicate of #n`,
+       `same as #n`, `related to #n`). Same tag alone isn't enough. No
+       clear link → the issue is its own batch. Don't guess: unsure →
+       separate.
+     - **Blocked** = a `status:` label meaning not fixable now
+       (`waiting-*`, `blocked`, `needs-info`, `on-hold`) or body says
+       `blocked by #n` / `depends on #n` with #n still open → pulled into
+       one `### Blocked` group (keep the reason in Status). `done-dev`
+       stays its own group, last.
+     - Order batches: best (lowest) rank in the batch, then more issues
+       (one fix closes more), then lowest issue number. A batch that
+       another batch depends on (`depends on #n`) goes before it.
+     - Heading: `### Batch <k> — <shared cause/area, ≤ 8 words> (n)`,
+       one line under it: why these go together, plus the next command
+       `/todo "fix #a #b #c"`. Singleton batches skip the "why" line.
 6. **No writes.** Never close/comment/edit/label an issue from this
    command — that's a separate manual `gh issue` call (or `/release`'s
    own issue-closing step), out of scope here. Step 4's `done-dev` is a

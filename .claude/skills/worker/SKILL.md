@@ -21,7 +21,9 @@ exact boundary (`NeverVerifyOwnWork` unaffected).
 1. **Load the bundle** at `haven/workers/<wid>/`: `manifest.yaml`,
    `SOUL.md`, `MEMORY.md` (implementer only — analyst/verifier have none),
    `recipes/*.md`. If the bundle is missing or incomplete, stop and report
-   — don't improvise a worker identity from scratch.
+   — don't improvise a worker identity from scratch. `analyst`/`verifier`:
+   only check the bundle exists (`ls`) — the subagent loads it; reading
+   it here only grows the calling session's context.
 2. **Become that worker**: adopt the identity in `SOUL.md` for this pass
    only. Don't carry over identity from a previous `/worker` call in the
    same session — each call re-loads and re-adopts from the bundle.

@@ -14,7 +14,9 @@
    doc (new Behavior items + a `## Changelog` row), never a 2nd doc for
    the same feature. None → new `doctrine/features/<slug>.md` in the format at the bottom of `INDEX.md`.
 3. Read the code the feature will touch — grep anchors, existing
-   behavior, conventions. Read-only. Backfill mode ("document <feature>"):
+   behavior, conventions. Read-only. Spec mode: record each location as
+   the note's `## Code map` (`file:start-end` + 1 line) — the implementer
+   reads those ranges instead of the whole files. Backfill mode ("document <feature>"):
    describe what the code does today, mark anything that looks
    unintended as an open question, not as Behavior. `Source: backfill
    from code`. The task is a fix, not a feature → document the feature
@@ -31,10 +33,12 @@
    Behavior or Acceptance → `needs_input`, list them. Never pick an
    answer to keep moving. Backfill + every question answered + the
    operator said the doc is right → `Status: verified — confirmed by
-   operator <date>, see <this note>` (INDEX row too). A `feat` spec stays
+   operator <date>, see <this note>` (INDEX row too) + `Last verified:
+   <git rev-parse --short HEAD>`. Same for re-checking a doc
+   `/hub-health` flagged stale. A `feat` spec stays
    `draft` — only the SEAL of its node verifies it.
 6. Evidence: `evidence/analyst/<date>/<slug>-spec.md` — Task (verbatim),
-   Doc path, Sources read (files), Questions + answers, Isolation proof
+   Doc path, Sources read (files), Code map, Questions + answers, Isolation proof
    (what this spawn got that the main session didn't, as in
    `verify_seal` step 1b).
 

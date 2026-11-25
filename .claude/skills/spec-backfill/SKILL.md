@@ -27,7 +27,7 @@ stays `draft`.
 3. **Write each doc** `agent-hub/doctrine/features/<kebab-slug>.md` in the
    Doc format exactly:
    - `Status: draft` · `Source: backfill from code` · `Anchors:` real
-     paths, each confirmed by grep/read.
+     paths, each confirmed by grep/read · `Last verified: -`.
    - `## Behavior` = what the code does today, numbered, observable.
    - Anything that looks unintended, inconsistent, or untested →
      `## Open questions`, never `## Behavior`. Never guess intent.
