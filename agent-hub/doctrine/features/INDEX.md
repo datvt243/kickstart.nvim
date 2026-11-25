@@ -20,6 +20,9 @@
 - Source: feature request | backfill from code
 - Issues: #<n>[, #<n>...]
 - Anchors: `<path>`, `<path>` (real paths, grep-confirmed)
+- Last verified: <short sha of HEAD when the doc was last confirmed
+  against the code> | - (draft). `/hub-health` flags the doc stale when
+  an anchor changed after it in a commit that didn't touch this doc
 
 ## Goal
 <1-3 lines: who needs this and why>

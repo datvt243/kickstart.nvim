@@ -170,7 +170,10 @@ so every hub doesn't reason about it differently.
    `draft` doc: set its `Status:` line to `verified — verified by <this
    verdict note path>`, same in its `doctrine/features/INDEX.md` row. A
    fix SEAL proves one Behavior item, not the whole doc — it leaves a
-   backfilled doc's status as is; (f) a `confirmed` doctrine proposal
+   backfilled doc's status as is; either way, a SEAL whose note cites a
+   doc (`## Feature doc`) sets that doc's `Last verified:` to `git
+   rev-parse --short HEAD` (the shipped commit then touches the doc, so
+   `/hub-health` doesn't count its own anchor edits as drift); (f) a `confirmed` doctrine proposal
    (step 6c): replace that command in `doctrine/MEMORY.md` and append a
    Corrections row (`<old>` / `see doctrine/MEMORY.md`, citing this
    verdict note — never the new value itself) to

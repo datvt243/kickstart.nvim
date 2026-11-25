@@ -17,5 +17,5 @@ reads: [evidence/implementer/, evidence/README.md, haven/diagrams/, doctrine/MEM
 # No NORTHSTAR.md — the recipe never uses it, a wasted read on every subagent spawn.
 # + the ONE doctrine/features/<slug>.md the note's `## Feature doc` line cites.
 writes: [evidence/verifier/, evidence/worker-runs.log]   # and PM status on the diagram
-# + that feature doc's Status line + its INDEX.md row, on SEAL only (step 11e)
+# + that feature doc's Status line + its INDEX.md row, and its Last verified line, on SEAL only (step 11e)
 # + a confirmed command row in doctrine/MEMORY.md + an implementer Corrections row, on SEAL only (step 11f)

@@ -6,11 +6,21 @@
 - Output: `{status: sealed_pending_verifier | reopened_by_test | failed, node,
   diff summary, command, evidence}`
 - NEVER: `status: done` — only the verifier uses a sealed status.
+- ALWAYS: an approach abandoned (still red, diff reverted, wrong cause)
+  → append it to the note's `## Dead ends` right then: what was tried +
+  the output line that ruled it out. Create the note (title lines) if
+  step 10 hasn't run yet — a compaction or crash mid-pass keeps it.
+- ALWAYS: every tool call re-sends the whole context — batch independent
+  reads/greps/checks into one call; lint/typecheck all touched files in
+  one run, fix every reported error, re-run once — never file by file.
 
 ## Steps
 1. Re-read the node + acceptance criteria.
 2. Read every related file before writing — match the existing
-   naming/style/idiom.
+   naming/style/idiom. An analyst spec note for this task
+   (`evidence/analyst/<date>/<slug>-spec*.md`, newest) has a
+   `## Code map` → read those ranges first, a whole file only when a
+   range isn't enough.
 3. Smallest diff — only change what the acceptance criteria require.
    Any comment added/changed follows `doctrine/standards/code-comments.md`
    (incl. its enabled opt-ins).
@@ -43,7 +53,11 @@
    `verify_seal` retires it) or `## Still open` (with a 1-line reason,
    e.g. a later phase). None found → `## Supersedes: none`.
 8–9. If a new bug/trap is found, consider recording it in
-   `doctrine/domains/` or `MEMORY.md`. A `doctrine/MEMORY.md` command
+   `doctrine/domains/` or `MEMORY.md` — a Traps row gets `Anchor`
+   `` `<file>@<git rev-parse --short HEAD>` ``. The diff touches a file
+   an existing row is anchored to → re-check that row: still true →
+   move its sha to HEAD; wrong → correct it per `doctrine/INDEX.md`
+   (keep the lesson). Cite either in the note. A `doctrine/MEMORY.md` command
    failed and a variant passed (e.g. `pytest` missing, `python -m pytest`
    works) → add `## Doctrine proposal: <row>: <old> → <new>` to the note,
    both outputs cited. Don't edit that row yourself — the verifier
